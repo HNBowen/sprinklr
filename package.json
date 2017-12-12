@@ -4,7 +4,8 @@
   "description": "A simple plant watering tracker",
   "main": "index.js",
   "scripts": {
-    "test": "npm test"
+    "test": "npm test",
+    "start": "webpack && node server/index.js"
   },
   "repository": {
     "type": "git",
@@ -15,5 +16,17 @@
   "bugs": {
     "url": "https://github.com/HNBowen/sprinklr/issues"
   },
-  "homepage": "https://github.com/HNBowen/sprinklr#readme"
+  "homepage": "https://github.com/HNBowen/sprinklr#readme",
+  "dependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-preset-env": "^1.6.1",
+    "express": "^4.16.2",
+    "jest": "^21.2.1",
+    "nodemon": "^1.12.5",
+    "path": "^0.12.7",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "webpack": "^3.10.0"
+  }
 }
