@@ -1,0 +1,19 @@
+{
+  "name": "sprinklr",
+  "version": "1.0.0",
+  "description": "A simple plant watering tracker",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HNBowen/sprinklr.git"
+  },
+  "author": "Hank Bowen",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/HNBowen/sprinklr/issues"
+  },
+  "homepage": "https://github.com/HNBowen/sprinklr#readme"
+}
