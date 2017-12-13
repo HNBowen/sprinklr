@@ -1,3 +1,12 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`PlantTile should render correctly 1`] = `""`;
+exports[`PlantTile should render correctly 1`] = `
+<div>
+  <img
+    src="https://pbs.twimg.com/profile_images/424105209871097856/iDClKW3Z.jpeg"
+  />
+  <span>
+    test
+  </span>
+</div>
+`;
