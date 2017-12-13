@@ -7,6 +7,7 @@ import AddPlantButton from '../client/app/components/AddPlantButton.jsx'
 describe('AddPlantButton', function() {
 
   it('should render correctly', function() {
-    expect(1).toBe(1);
+    const wrapper = shallow(<AddPlantButton />)
+    expect(shallowToJson(wrapper)).toMatchSnapshot();
   })
 })

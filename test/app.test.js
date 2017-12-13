@@ -8,8 +8,14 @@ describe('App', function() {
   
 
   it('should render correctly', function() {
-    const output = shallow(<App />)
+    const wrapper = shallow(<App />)
 
-    expect(shallowToJson(output)).toMatchSnapshot();
+    expect(shallowToJson(wrapper)).toMatchSnapshot();
+  })
+
+  //it should render 1 Menu element
+  it('should render 1 Menu component', function() {
+    const wrapper = shallow(<App />)
+    expect(wrapper.find(Menu)).to.have.length(1);
   })
 })
