@@ -8,6 +8,6 @@ describe('OrderButton', function() {
 
   it('should render correctly', function() {
     const wrapper = shallow(<OrderButton />)
-    expect(shallowToJson(wrapper)).toMatchSnapshot();
+    jestExpect(shallowToJson(wrapper)).toMatchSnapshot();
   })
 })

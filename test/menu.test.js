@@ -8,6 +8,6 @@ describe('Menu', function() {
 
   it('should render correctly', function() {
     const wrapper = shallow(<Menu />)
-    expect(shallowToJson(wrapper)).toMatchSnapshot();
+    jestExpect(shallowToJson(wrapper)).toMatchSnapshot();
   })
 })

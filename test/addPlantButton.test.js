@@ -8,6 +8,6 @@ describe('AddPlantButton', function() {
 
   it('should render correctly', function() {
     const wrapper = shallow(<AddPlantButton />)
-    expect(shallowToJson(wrapper)).toMatchSnapshot();
+    jestExpect(shallowToJson(wrapper)).toMatchSnapshot();
   })
 })

@@ -2,7 +2,11 @@ import React from 'react'
 import {shallow} from 'enzyme'
 import {shallowToJson} from 'enzyme-to-json'
 
+
 import App from '../client/app/components/App.jsx'
+import Menu from '../client/app/components/Menu.jsx'
+
+
 
 describe('App', function() {
   
@@ -10,7 +14,7 @@ describe('App', function() {
   it('should render correctly', function() {
     const wrapper = shallow(<App />)
 
-    expect(shallowToJson(wrapper)).toMatchSnapshot();
+    jestExpect(shallowToJson(wrapper)).toMatchSnapshot();
   })
 
   //it should render 1 Menu element
