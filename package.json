@@ -23,6 +23,7 @@
     "babel-loader": "^7.1.2",
     "babel-preset-env": "^1.6.1",
     "enzyme": "^3.2.0",
+    "enzyme-adapter-react-16": "^1.1.0",
     "enzyme-to-json": "^3.2.2",
     "express": "^4.16.2",
     "jest": "^21.2.1",
@@ -30,6 +31,12 @@
     "path": "^0.12.7",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
+    "react-test-renderer": "^16.2.0",
     "webpack": "^3.10.0"
+  },
+  "jest": {
+    "setupFiles": [
+      "./setupTests.js"
+    ]
   }
 }
