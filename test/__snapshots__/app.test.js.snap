@@ -3,5 +3,6 @@
 exports[`App should render correctly 1`] = `
 <div>
   <Menu />
+  <PlantList />
 </div>
 `;
