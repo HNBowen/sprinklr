@@ -29,10 +29,11 @@ describe('PlantList', function() {
   })
 
   it('should pass click handler down to PlantTiles', function() {
-    const wrapper = shallow(<PlantList plants={existingPlants}/>)
+    const clickHandlerMock = () => "hi";
+    const wrapper = shallow(<PlantList plants={existingPlants} handlePlantTileClick={clickHandlerMock}/>)
     const plantTileWrapper = wrapper.find(PlantTile).first();
-    const wrapperHandler = wrapper.props()["handlePlantTileClick"]
-    const plantTileHandler = plantTileWrapper.props()["handleClick"]
-    expect(JSON.stringify(plantTileHandler)).to.equal(JSON.stringify(wrapperHandler))
+    const plantTileHandler = plantTileWrapper.props()["handleClick"];
+    expect(plantTileHandler).to.exist
+    expect(plantTileHandler.toString()).to.equal(clickHandlerMock.toString())
   })
 })
