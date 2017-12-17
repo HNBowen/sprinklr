@@ -10,4 +10,6 @@ describe('AddPlantButton', function() {
     const wrapper = shallow(<AddPlantButton />)
     jestExpect(shallowToJson(wrapper)).toMatchSnapshot();
   })
+
+  //it should display the add plant modal on click
 })

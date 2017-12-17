@@ -35,4 +35,9 @@ describe('PlantTile', function() {
     const wrapper = shallow(<PlantTile plant={plant} />)
     expect(wrapper.find('span').text()).to.equal(plant.name)
   })
+
+  //it should call waterPlant function on click
+
+  //it should change class on click
+  
 })

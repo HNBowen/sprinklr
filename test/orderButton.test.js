@@ -10,4 +10,10 @@ describe('OrderButton', function() {
     const wrapper = shallow(<OrderButton />)
     jestExpect(shallowToJson(wrapper)).toMatchSnapshot();
   })
+
+  //it should call orderPlants function on click
+
+  //it should orderPlants by dryest - wettest on first click
+
+  //it should orderPlants by wettest to dryest on second click
 })

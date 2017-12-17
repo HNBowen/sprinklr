@@ -14,7 +14,9 @@ describe('PlantList', function() {
 
   //it should render PlantTiles from props
   it('should render PlantTiles from props', function() {
-    const wrapper = shallow(<PlantList plants={[{name: 'plant1', img: 'image'},{name: 'plant2', img: 'image'}]}/>)
+    const wrapper = shallow(<PlantList plants={[{name: 'plant1', img: 'image', id: 1},{name: 'plant2', img: 'image', id: 2}]}/>)
     expect(wrapper.find(PlantTile)).to.have.length(2);
   })
+
+  //it should render plants from dryest to wettest on first render
 })

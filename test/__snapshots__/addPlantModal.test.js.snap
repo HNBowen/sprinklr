@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AddPlantModal should render correctly 1`] = `
+<div>
+  <form>
+    Name: 
+    <input
+      data-test-id="plantName"
+      name="name"
+      type="text"
+    />
+    Image: 
+    <input
+      data-test-id="plantImage"
+      name="image"
+      type="fileInput"
+    />
+    <button
+      type="submit"
+    >
+      Add
+    </button>
+  </form>
+</div>
+`;
