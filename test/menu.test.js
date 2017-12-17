@@ -22,17 +22,20 @@ describe('Menu', function() {
   })
 
   it('should pass down handleOrderButtonClick to OrderButton', function() {
-    
-    // const wrapper = shallow(<Menu />);
-    
-    // const wrapperHandler = wrapper.props()["handleOrderButtonClick"];
-    
-    // const childHandler = wrapper.find(OrderButton).props()["handleClick"]
-    
-    // expect(JSON.stringify(childHandler)).to.equal(JSON.stringify(wrapperHandler))
+    const mockOrderButtonHandler = () => {};
+    const wrapper = shallow(<Menu handleOrderButtonClick={mockOrderButtonHandler}/>);
+    const childHandler = wrapper.find(OrderButton).props()["handleClick"]
+
+    expect(childHandler).to.exist
+    expect(childHandler.toString()).to.equal(mockOrderButtonHandler.toString())
   })
 
   it('should pass down handleAddPlantButtonClick to AddPlantButton', function() {
+    const mockAddPlantButtonHandler = () => {};
+    const wrapper = shallow(<Menu handleAddPlantButtonClick={mockAddPlantButtonHandler}/>);
+    const childHandler = wrapper.find(AddPlantButton).props()["handleClick"]
 
+    expect(childHandler).to.exist
+    expect(childHandler.toString()).to.equal(mockAddPlantButtonHandler.toString())
   })
 })

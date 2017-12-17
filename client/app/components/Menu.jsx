@@ -6,8 +6,8 @@ import AddPlantButton from './AddPlantButton.jsx'
 const Menu = (props) => {
   return (
       <div>
-        <OrderButton />
-        <AddPlantButton />
+        <OrderButton handleClick={props.handleOrderButtonClick}/>
+        <AddPlantButton handleClick={props.handleAddPlantButtonClick}/>
       </div>
     )
 }
