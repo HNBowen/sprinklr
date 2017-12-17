@@ -5,6 +5,8 @@ import {shallowToJson} from 'enzyme-to-json'
 import PlantList from '../client/app/components/PlantList.jsx'
 import PlantTile from '../client/app/components/PlantTile.jsx'
 
+import {existingPlants} from '../dummyData.js'
+
 describe('PlantList', function() {
   //it should render correctly
   it('should render correctly', function() {
@@ -14,9 +16,23 @@ describe('PlantList', function() {
 
   //it should render PlantTiles from props
   it('should render PlantTiles from props', function() {
-    const wrapper = shallow(<PlantList plants={[{name: 'plant1', img: 'image', id: 1},{name: 'plant2', img: 'image', id: 2}]}/>)
+    const wrapper = shallow(<PlantList plants={existingPlants}/>)
     expect(wrapper.find(PlantTile)).to.have.length(2);
   })
 
-  //it should render plants from dryest to wettest on first render
+  //it should pass prop Plant down to PlantTiles
+  it('should pass plant prop down to PlantTiles', function() {
+    const wrapper = shallow(<PlantList plants={[existingPlants[0]]}/>)
+    const plantTileWrapper = wrapper.find(PlantTile);
+    const plantTileProps = plantTileWrapper.props()["plant"];
+    expect(JSON.stringify(plantTileProps)).to.equal(JSON.stringify(existingPlants[0]))
+  })
+
+  it('should pass click handler down to PlantTiles', function() {
+    const wrapper = shallow(<PlantList plants={existingPlants}/>)
+    const plantTileWrapper = wrapper.find(PlantTile).first();
+    const wrapperHandler = wrapper.props()["handlePlantTileClick"]
+    const plantTileHandler = plantTileWrapper.props()["handleClick"]
+    expect(JSON.stringify(plantTileHandler)).to.equal(JSON.stringify(wrapperHandler))
+  })
 })

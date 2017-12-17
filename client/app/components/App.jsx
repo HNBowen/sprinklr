@@ -27,6 +27,10 @@ class App extends React.Component {
 
   }
 
+  handlePlantTileClick() {
+
+  }
+
   render() {
     return (
         <div>
@@ -34,7 +38,7 @@ class App extends React.Component {
           <Menu handleOrderButtonClick={this.handleOrderButtonClick.bind(this)}
                 handleAddPlantButtonClick={this.handleAddPlantButtonClick.bind(this)}
           />
-          <PlantList plants={this.state.plants}/>
+          <PlantList plants={this.state.plants} handlePlantTileClick={this.handlePlantTileClick.bind(this)}/>
         </div>
       );
   }

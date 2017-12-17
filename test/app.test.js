@@ -70,6 +70,12 @@ describe('App', function() {
     expect(typeof handler).to.equal("function")
   })
 
+  it('should have a handlePlantTileClick function', function() {
+    const wrapper = shallow(<App />)
+    const handler = wrapper.instance().handlePlantTileClick;
+    expect(handler).to.be.a("function")
+  })
+
   it('should pass plants array from state down to PlantList component', function() {
     const wrapper = shallow(<App />)
     wrapper.setState({"plants": existingPlants})
@@ -84,6 +90,12 @@ describe('App', function() {
     const menuWrapper = wrapper.find(Menu);
     expect(menuWrapper.props()["handleOrderButtonClick"]).to.be.a("function")
     expect(menuWrapper.props()["handleAddPlantButtonClick"]).to.be.a("function")
+  })
+
+  it('should pass handlePlantTileClick handler down to PlantList component', function() {
+    const wrapper = shallow(<App />);
+    const plantListWrapper = wrapper.find(PlantList);
+    expect(plantListWrapper.props()["handlePlantTileClick"]).to.be.a("function")
   })
 
   // it('should call handleOrderButtonClick when OrderButton is clicked', function() {

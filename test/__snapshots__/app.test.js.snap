@@ -10,6 +10,7 @@ exports[`App should render correctly 1`] = `
     handleOrderButtonClick={[Function]}
   />
   <PlantList
+    handlePlantTileClick={[Function]}
     plants={Array []}
   />
 </div>

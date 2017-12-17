@@ -6,7 +6,7 @@ const PlantList = (props) => {
   return (
       <div>
         {props.plants.map(function(plant) {
-          return <PlantTile plant={plant} key={plant.id}/>
+          return <PlantTile plant={plant} key={plant.id} handleClick={props.handlePlantTileClick}/>
         })}
       </div>
     )
