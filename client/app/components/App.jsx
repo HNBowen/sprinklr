@@ -20,14 +20,20 @@ class App extends React.Component {
   }
 
   handleOrderButtonClick() {
-    
+
+  }
+
+  handleAddPlantButtonClick() {
+
   }
 
   render() {
     return (
         <div>
           <h1>Sprinklr</h1>
-          <Menu />
+          <Menu handleOrderButtonClick={this.handleOrderButtonClick.bind(this)}
+                handleAddPlantButtonClick={this.handleAddPlantButtonClick.bind(this)}
+          />
           <PlantList plants={this.state.plants}/>
         </div>
       );

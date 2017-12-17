@@ -5,7 +5,10 @@ exports[`App should render correctly 1`] = `
   <h1>
     Sprinklr
   </h1>
-  <Menu />
+  <Menu
+    handleAddPlantButtonClick={[Function]}
+    handleOrderButtonClick={[Function]}
+  />
   <PlantList
     plants={Array []}
   />
