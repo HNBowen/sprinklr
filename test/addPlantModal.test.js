@@ -31,5 +31,14 @@ describe('AddPlantModal', function() {
     expect(wrapper.find('button')).to.have.length(1);
   })
   //it should call addPlant function on submit
+  it('should call the addPlant function on submit', function() {
+    const mockAddPlant = jest.fn();
+    const wrapper = shallow(<AddPlantModal isVisible={true} handleSubmit={mockAddPlant}/>)
+
+    wrapper.find('form').simulate('submit');
+
+    expect(mockAddPlant.mock.calls.length).to.equal(1);
+
+  })
   
 })
