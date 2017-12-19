@@ -7,7 +7,7 @@ const Menu = (props) => {
   return (
       <div>
         <OrderButton handleClick={props.handleOrderButtonClick}/>
-        <AddPlantButton handleClick={props.handleAddPlantButtonClick}/>
+        <AddPlantButton handleClick={props.displayModal}/>
       </div>
     )
 }

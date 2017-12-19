@@ -42,12 +42,16 @@ class App extends React.Component {
     }
   }
 
+  displayModal() {
+    this.setState({"addPlantModalVisible": !this.state.addPlantModalVisible})
+  }
+
   render() {
     return (
         <div>
           <h1>Sprinklr</h1>
           <Menu handleOrderButtonClick={this.handleOrderButtonClick.bind(this)}
-                handleAddPlantButtonClick={this.handleAddPlantButtonClick.bind(this)}
+                displayModal={this.displayModal.bind(this)}
           />
           <PlantList plants={this.state.plants}
             handlePlantTileClick={this.handlePlantTileClick.bind(this)}

@@ -95,7 +95,7 @@ describe('App', function() {
     const wrapper = shallow(<App />);
     const menuWrapper = wrapper.find(Menu);
     expect(menuWrapper.props()["handleOrderButtonClick"]).to.be.a("function")
-    expect(menuWrapper.props()["handleAddPlantButtonClick"]).to.be.a("function")
+    expect(menuWrapper.props()["displayModal"]).to.be.a("function")
   })
 
   it('should pass handlePlantTileClick handler down to PlantList component', function() {

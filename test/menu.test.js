@@ -30,12 +30,12 @@ describe('Menu', function() {
     expect(childHandler.toString()).to.equal(mockOrderButtonHandler.toString())
   })
 
-  it('should pass down handleAddPlantButtonClick to AddPlantButton', function() {
-    const mockAddPlantButtonHandler = () => {};
-    const wrapper = shallow(<Menu handleAddPlantButtonClick={mockAddPlantButtonHandler}/>);
+  it('should pass down displayModal to AddPlantButton', function() {
+    const mockDisplayModal = () => {};
+    const wrapper = shallow(<Menu displayModal={mockDisplayModal}/>);
     const childHandler = wrapper.find(AddPlantButton).props()["handleClick"]
 
     expect(childHandler).to.exist
-    expect(childHandler.toString()).to.equal(mockAddPlantButtonHandler.toString())
+    expect(childHandler.toString()).to.equal(mockDisplayModal.toString())
   })
 })

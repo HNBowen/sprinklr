@@ -6,7 +6,7 @@ exports[`App should render correctly 1`] = `
     Sprinklr
   </h1>
   <Menu
-    handleAddPlantButtonClick={[Function]}
+    displayModal={[Function]}
     handleOrderButtonClick={[Function]}
   />
   <PlantList

@@ -12,8 +12,15 @@ describe('OrderButton', function() {
   })
 
   //it should call orderPlants function on click
+  it('should call the orderPlants function on click', function() {
 
-  //it should orderPlants by dryest - wettest on first click
+    const mockOrder = jest.fn();
 
-  //it should orderPlants by wettest to dryest on second click
+    const wrapper = shallow(<OrderButton handleClick={mockOrder}/>);
+
+    wrapper.find('button').simulate('click');
+
+    expect(mockOrder.mock.calls.length).to.equal(1);
+  })
+
 })
