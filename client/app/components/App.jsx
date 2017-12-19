@@ -14,21 +14,32 @@ class App extends React.Component {
 
     this.state = {
       "addPlantModalVisible": false,
-      "sort": "none",
+      "sort": false,
       "plants": []
     }
   }
 
   handleOrderButtonClick() {
-
+    this.setState({
+      "sort": !this.state.sort
+    })
   }
 
-  handleAddPlantButtonClick() {
-
+  handleAddPlantButtonClick(newPlant) {
+    //TODO: send plant to database
+    this.state.plants.push(newPlant)
   }
 
-  handlePlantTileClick() {
-
+  handlePlantTileClick(plantId) {
+    //TODO: send updated plant to database
+    var plant;
+    for (var i = 0; i < this.state.plants.length; i++) {
+      if (this.state.plants[i].id === plantId) {
+        var date = new Date();
+        this.state.plants[i]["lastWatered"] = date;
+        break
+      }
+    }
   }
 
   render() {
@@ -38,7 +49,10 @@ class App extends React.Component {
           <Menu handleOrderButtonClick={this.handleOrderButtonClick.bind(this)}
                 handleAddPlantButtonClick={this.handleAddPlantButtonClick.bind(this)}
           />
-          <PlantList plants={this.state.plants} handlePlantTileClick={this.handlePlantTileClick.bind(this)}/>
+          <PlantList plants={this.state.plants}
+            handlePlantTileClick={this.handlePlantTileClick.bind(this)}
+            sort={this.state.sort}
+          />
         </div>
       );
   }

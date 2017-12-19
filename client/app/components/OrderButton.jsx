@@ -2,8 +2,7 @@ import React from 'react'
 
 const OrderButton = (props) => {
   return (
-      <div>
-      </div>
+      <button onClick={props.handleClick}>Order Plants</button>
     )
 }
 

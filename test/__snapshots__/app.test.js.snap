@@ -12,6 +12,7 @@ exports[`App should render correctly 1`] = `
   <PlantList
     handlePlantTileClick={[Function]}
     plants={Array []}
+    sort={false}
   />
 </div>
 `;

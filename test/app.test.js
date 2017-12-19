@@ -46,9 +46,9 @@ describe('App', function() {
     expect(wrapper.state('addPlantModalVisible')).to.equal(false);
   })
 
-  it('should render with state property "sort" set to none', function() {
+  it('should render with state property "sort" set to false', function() {
     const wrapper = shallow(<App />)
-    expect(wrapper.state('sort')).to.equal('none')
+    expect(wrapper.state('sort')).to.be.false
   })
 
   it('should render with state property "plants" and it should be an array', function() {
@@ -85,6 +85,12 @@ describe('App', function() {
 
   })
 
+  it('should pass sort state down to PlantList component', function() {
+    const wrapper = shallow(<App />)
+    const listWrapper = wrapper.find(PlantList);
+    expect(listWrapper.props()["sort"]).to.be.false
+  })
+
   it('should pass click handlers down to Menu component', function() {
     const wrapper = shallow(<App />);
     const menuWrapper = wrapper.find(Menu);
@@ -97,15 +103,5 @@ describe('App', function() {
     const plantListWrapper = wrapper.find(PlantList);
     expect(plantListWrapper.props()["handlePlantTileClick"]).to.be.a("function")
   })
-
-  // it('should call handleOrderButtonClick when OrderButton is clicked', function() {
-  //   const handleOrderButtonClickStub = sinon.spy();
-  //   const wrapper = mount(<App handleOrderButtonClick={handleOrderButtonClickStub}/>);
-  //   wrapper.find(OrderButton).simulate("click")
-  //   expect(handleOrderButtonClickStub.calledOnce).to.equal(true);
-  //   wrapper.unmount();
-
-  // })
-
 
 })
