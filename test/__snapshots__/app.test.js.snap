@@ -10,6 +10,7 @@ exports[`App should render correctly 1`] = `
     handleOrderButtonClick={[Function]}
   />
   <AddPlantModal
+    handleSubmit={[Function]}
     isVisible={false}
   />
   <PlantList

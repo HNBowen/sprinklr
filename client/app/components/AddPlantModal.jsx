@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 const AddPlantModal = (props) => 
   props.isVisible && (
@@ -11,5 +12,9 @@ const AddPlantModal = (props) =>
     </div>
   )
 
+AddPlantModal.propTypes = {
+  isVisible: PropTypes.bool.isRequired,
+  handleSubmit: PropTypes.func.isRequired
+}
 
 export default AddPlantModal

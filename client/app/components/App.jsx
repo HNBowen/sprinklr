@@ -54,7 +54,9 @@ class App extends React.Component {
           <Menu handleOrderButtonClick={this.handleOrderButtonClick.bind(this)}
                 displayModal={this.displayModal.bind(this)}
           />
-          <AddPlantModal isVisible={this.state.addPlantModalVisible} />
+          <AddPlantModal isVisible={this.state.addPlantModalVisible}
+                         handleSubmit={this.handleAddPlantButtonClick.bind(this)}
+          />
           <PlantList plants={this.state.plants}
             handlePlantTileClick={this.handlePlantTileClick.bind(this)}
             sort={this.state.sort}
