@@ -8,6 +8,7 @@ import App from '../client/app/components/App.jsx'
 import Menu from '../client/app/components/Menu.jsx'
 import PlantList from '../client/app/components/PlantList.jsx'
 import OrderButton from '../client/app/components/OrderButton.jsx'
+import AddPlantModal from '../client/app/components/addPlantModal.jsx'
 
 import {existingPlants, plantsToAdd} from '../dummyData.js'
 
@@ -104,6 +105,27 @@ describe('App', function() {
     expect(plantListWrapper.props()["handlePlantTileClick"]).to.be.a("function")
   })
 
+})
+
+describe('displaying the addPlantModal', function() {
+
+  it('on first render, addPlantModal should not be visible', function() {
+    const wrapper = shallow(<App />);
+
+    const addPlantModalWrapper = wrapper.find(AddPlantModal);
+
+    expect(addPlantModalWrapper.length).to.equal(0)
+  })
+
+  it('should display addPlantModal after displayModal is called', function() {
+    const wrapper = shallow(<App />);
+
+    wrapper.instance().displayModal();
+
+    const addPlantModalWrapper = wrapper.find(AddPlantModal);
+    
+    expect(addPlantModalWrapper.length).to.equal(1);
+  })
 })
 
 describe('handleOrderButtonClick', function() {

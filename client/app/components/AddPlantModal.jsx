@@ -1,7 +1,7 @@
 import React from 'react'
 
-const AddPlantModal = (props) => {
-  return (
+const AddPlantModal = (props) => 
+  props.isVisible && (
     <div>
       <form>
         Name: <input type="text" name="name" data-test-id="plantName"/>
@@ -10,6 +10,6 @@ const AddPlantModal = (props) => {
       </form>
     </div>
   )
-}
+
 
 export default AddPlantModal

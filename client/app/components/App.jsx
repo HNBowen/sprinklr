@@ -2,6 +2,7 @@ import React from 'react';
 
 import Menu from './Menu.jsx'
 import PlantList from './PlantList.jsx'
+import AddPlantModal from './AddPlantModal.jsx'
 
 //dummy data for development, remove later
 import { existingPlants, plantsToAdd } from '../../../dummyData.js'
@@ -53,6 +54,7 @@ class App extends React.Component {
           <Menu handleOrderButtonClick={this.handleOrderButtonClick.bind(this)}
                 displayModal={this.displayModal.bind(this)}
           />
+          <AddPlantModal isVisible={this.state.addPlantModalVisible} />
           <PlantList plants={this.state.plants}
             handlePlantTileClick={this.handlePlantTileClick.bind(this)}
             sort={this.state.sort}

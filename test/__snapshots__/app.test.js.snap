@@ -9,6 +9,9 @@ exports[`App should render correctly 1`] = `
     displayModal={[Function]}
     handleOrderButtonClick={[Function]}
   />
+  <AddPlantModal
+    isVisible={false}
+  />
   <PlantList
     handlePlantTileClick={[Function]}
     plants={Array []}
