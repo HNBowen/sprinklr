@@ -157,3 +157,22 @@ describe('handlePlantTileClick', function() {
 
   })
 })
+
+describe('displayModal', function() {
+
+  it('should update addPlantModalVisible to true on first click', function() {
+
+    const wrapper = shallow(<App />);
+    wrapper.instance().displayModal();
+    expect(wrapper.state()["addPlantModalVisible"]).to.be.true;
+  })
+
+  it('should change addPlantModalVisible back to false after second click', function() {
+
+    const wrapper = shallow(<App />);
+
+    wrapper.instance().displayModal();
+    wrapper.instance().displayModal();
+    expect(wrapper.state()["addPlantModalVisible"]).to.be.false
+  })
+})
