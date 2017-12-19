@@ -9,7 +9,7 @@ import Menu from '../client/app/components/Menu.jsx'
 import PlantList from '../client/app/components/PlantList.jsx'
 import OrderButton from '../client/app/components/OrderButton.jsx'
 
-import {existingPlants} from '../dummyData.js'
+import {existingPlants, plantsToAdd} from '../dummyData.js'
 
 
 describe('App', function() {
@@ -104,4 +104,56 @@ describe('App', function() {
     expect(plantListWrapper.props()["handlePlantTileClick"]).to.be.a("function")
   })
 
+})
+
+describe('handleOrderButtonClick', function() {
+
+  it('should change App sort state to true on first click', function() {
+
+    const wrapper = shallow(<App />);
+
+    wrapper.instance().handleOrderButtonClick();
+
+    const sort = wrapper.state()["sort"];
+    expect(sort).to.be.true;
+  })
+
+  it('should change App sort state to false on second click', function() {
+    const wrapper = shallow(<App />);
+
+    wrapper.instance().handleOrderButtonClick();
+    wrapper.instance().handleOrderButtonClick();
+
+    const sort = wrapper.state()["sort"];
+    expect(sort).to.be.false
+  })
+})
+
+describe('handleAddPlantButtonClick', function() {
+
+  it('should add a new plant object to the plants array', function() {
+
+    const wrapper = shallow(<App />);
+
+    wrapper.instance().handleAddPlantButtonClick(plantsToAdd[0]);
+
+    expect(JSON.stringify(wrapper.state()["plants"][0])).to.equal(JSON.stringify(plantsToAdd[0]))
+  })
+})
+
+describe('handlePlantTileClick', function() {
+
+  it('should update the selected plant\'s lastWatered date', function() {
+
+    const wrapper = shallow(<App />);
+    wrapper.setState({"plants": existingPlants});
+    const oldDate = existingPlants[0]["lastWatered"];
+    wrapper.instance().handlePlantTileClick(1);
+    const newDate = wrapper.state()["plants"][0]["lastWatered"];
+
+
+    expect(oldDate < newDate).to.be.true;
+
+
+  })
 })
