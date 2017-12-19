@@ -11,5 +11,13 @@ describe('AddPlantButton', function() {
     jestExpect(shallowToJson(wrapper)).toMatchSnapshot();
   })
 
-  //it should display the add plant modal on click
+  it('should call displayModal when clicked', function() {
+    const mockDisplayModal = jest.fn()
+    const wrapper = shallow(<AddPlantButton displayModal={mockDisplayModal}/>);
+
+    wrapper.find("button").simulate("click")
+
+    expect(mockDisplayModal.mock.calls.length).to.equal(1);
+
+  })
 })

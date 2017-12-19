@@ -2,8 +2,7 @@ import React from 'react'
 
 const AddPlantButton  = (props) => {
   return (
-      <div>
-      </div>
+      <button onClick={props.displayModal}>Add A Plant</button>
     )
 }
 
