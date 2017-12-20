@@ -26,11 +26,13 @@ class App extends React.Component {
     })
   }
 
-  handleAddPlantButtonClick(name, image) {
+  handleAddPlantButtonClick(e) {
+
+    e.preventDefault()
 
     var newPlant = {
-      name: name,
-      img: image,
+      name: e.target.name.value,
+      img: e.target.image.value,
       lastWatered: new Date()
     }
     //TODO: send plant to database to get an ID

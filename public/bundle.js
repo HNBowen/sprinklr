@@ -18331,9 +18331,19 @@ var App = function (_React$Component) {
     }
   }, {
     key: 'handleAddPlantButtonClick',
-    value: function handleAddPlantButtonClick(newPlant) {
-      //TODO: send plant to database
-      this.state.plants.push(newPlant);
+    value: function handleAddPlantButtonClick(e) {
+
+      e.preventDefault();
+      console.log("name: ", e.target.name.value);
+      console.log("img: ", e.target.imgage.value);
+
+      var newPlant = {
+        name: e.target.name,
+        img: e.target.image,
+        lastWatered: new Date()
+        //TODO: send plant to database to get an ID
+        //then:
+      };this.state.plants.push(newPlant);
       this.displayModal();
     }
   }, {

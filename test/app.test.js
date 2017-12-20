@@ -173,7 +173,21 @@ describe('handleAddPlantButtonClick', function() {
 
     const wrapper = shallow(<App />);
 
-    wrapper.instance().handleAddPlantButtonClick(plantsToAdd[0]["name"], plantsToAdd[0]["img"]);
+    const mockEvent = {
+      target: {
+        name: {
+          value: plantsToAdd[0]["name"]
+        },
+        image: {
+          value: plantsToAdd[0]["img"]
+        }
+      },
+      preventDefault: function() {
+
+      }
+    }
+
+    wrapper.instance().handleAddPlantButtonClick(mockEvent);
 
     expect(JSON.stringify(wrapper.state()["plants"][0]["name"])).to.equal(JSON.stringify(plantsToAdd[0]["name"]))
   })
@@ -183,7 +197,21 @@ describe('handleAddPlantButtonClick', function() {
 
     wrapper.instance().displayModal = sinon.spy();
 
-    wrapper.instance().handleAddPlantButtonClick(plantsToAdd[0]);
+    const mockEvent = {
+      target: {
+        name: {
+          value: plantsToAdd[0]["name"]
+        },
+        image: {
+          value: plantsToAdd[0]["img"]
+        }
+      },
+      preventDefault: function() {
+        
+      }
+    }
+
+    wrapper.instance().handleAddPlantButtonClick(mockEvent);
 
     expect(wrapper.instance().displayModal.calledOnce).to.be.true
   })
