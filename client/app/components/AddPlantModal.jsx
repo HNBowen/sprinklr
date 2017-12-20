@@ -14,7 +14,7 @@ const AddPlantModal = (props) =>
 
 AddPlantModal.propTypes = {
   isVisible: PropTypes.bool.isRequired,
-  handleSubmit: PropTypes.func.isRequired
+  handleSubmit: PropTypes.func.isRequired,
 }
 
 export default AddPlantModal

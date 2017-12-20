@@ -26,9 +26,17 @@ class App extends React.Component {
     })
   }
 
-  handleAddPlantButtonClick(newPlant) {
-    //TODO: send plant to database
+  handleAddPlantButtonClick(name, image) {
+
+    var newPlant = {
+      name: name,
+      img: image,
+      lastWatered: new Date()
+    }
+    //TODO: send plant to database to get an ID
+    //then:
     this.state.plants.push(newPlant)
+    this.displayModal();
   }
 
   handlePlantTileClick(plantId) {

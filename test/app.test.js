@@ -173,9 +173,19 @@ describe('handleAddPlantButtonClick', function() {
 
     const wrapper = shallow(<App />);
 
+    wrapper.instance().handleAddPlantButtonClick(plantsToAdd[0]["name"], plantsToAdd[0]["img"]);
+
+    expect(JSON.stringify(wrapper.state()["plants"][0]["name"])).to.equal(JSON.stringify(plantsToAdd[0]["name"]))
+  })
+
+  it('should call displayModal', function() {
+    const wrapper = shallow(<App />);
+
+    wrapper.instance().displayModal = sinon.spy();
+
     wrapper.instance().handleAddPlantButtonClick(plantsToAdd[0]);
 
-    expect(JSON.stringify(wrapper.state()["plants"][0])).to.equal(JSON.stringify(plantsToAdd[0]))
+    expect(wrapper.instance().displayModal.calledOnce).to.be.true
   })
 })
 

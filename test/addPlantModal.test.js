@@ -44,7 +44,15 @@ describe('AddPlantModal', function() {
   })
 
   it('should call addPlant function with args from the form', function() {
+    const mockAddPlant = jest.fn();
+    const wrapper = shallow(<AddPlantModal isVisible={true} handleSubmit={mockAddPlant}/>);
 
+    //set the form data
+
+    wrapper.find('form').simulate('submit');
+
+    expect(mockAddPlant.mock.calls[0][0]).to.equal(plantsToAdd[0]["name"])
+    expect(mockAddPlant.mock.calls[0][1]).to.equal(plantsToAdd[0]["img"])
   })
   
 })

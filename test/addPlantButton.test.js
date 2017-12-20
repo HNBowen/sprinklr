@@ -11,9 +11,9 @@ describe('AddPlantButton', function() {
     jestExpect(shallowToJson(wrapper)).toMatchSnapshot();
   })
 
-  it('should call displayModal when clicked', function() {
+  it('should call handleClick when clicked', function() {
     const mockDisplayModal = jest.fn()
-    const wrapper = shallow(<AddPlantButton displayModal={mockDisplayModal}/>);
+    const wrapper = shallow(<AddPlantButton handleClick={mockDisplayModal}/>);
 
     wrapper.find("button").simulate("click")
 

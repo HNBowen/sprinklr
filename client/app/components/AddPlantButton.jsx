@@ -2,7 +2,7 @@ import React from 'react'
 
 const AddPlantButton  = (props) => {
   return (
-      <button onClick={props.displayModal}>Add A Plant</button>
+      <button onClick={props.handleClick}>Add A Plant</button>
     )
 }
 
