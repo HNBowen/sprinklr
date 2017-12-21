@@ -2,13 +2,15 @@ export const existingPlants = [
   {
     name: "Peace Lily",
     img: "https://cdn.nurserylive.com/images/stories/virtuemart/product/resized/nurserylive-Peace-Lily,-Spathiphyllum-Plant_128x128.jpg",
-    lastWatered: new Date(),
+    lastWatered: new Date(2017, 11, 20),
+    dateAdded: new Date(2017, 8, 31),
     id: 1
   },
   {
     name: "Monstera",
     img: "https://static.wixstatic.com/media/e7be30_b5577954ef5347409f7c4ebaeadce8ce~mv2_d_4288_2848_s_4_2.jpg/v1/fill/w_256,h_256,q_85,usm_0.66_1.00_0.01/e7be30_b5577954ef5347409f7c4ebaeadce8ce~mv2_d_4288_2848_s_4_2.jpg",
-    lastWatered: new Date(),
+    lastWatered: new Date(2017, 11, 21),
+    dateAdded: new Date(2017, 7, 30),
     id: 2
   }
 ];

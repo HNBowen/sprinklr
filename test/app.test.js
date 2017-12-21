@@ -189,7 +189,8 @@ describe('handleAddPlantButtonClick', function() {
 
     wrapper.instance().handleAddPlantButtonClick(mockEvent);
 
-    expect(JSON.stringify(wrapper.state()["plants"][0]["name"])).to.equal(JSON.stringify(plantsToAdd[0]["name"]))
+
+    expect(JSON.stringify(wrapper.state()["plants"][2]["name"])).to.equal(JSON.stringify(plantsToAdd[0]["name"]))
   })
 
   it('should call displayModal', function() {

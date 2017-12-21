@@ -20,6 +20,13 @@ class App extends React.Component {
     }
   }
 
+  //test rendering with dummyData
+  componentDidMount() {
+    this.setState({
+      "plants": existingPlants
+    })
+  }
+
   handleOrderButtonClick() {
     this.setState({
       "sort": !this.state.sort
@@ -29,7 +36,7 @@ class App extends React.Component {
   handleAddPlantButtonClick(e) {
 
     e.preventDefault()
-    
+
     //handle blank inputs
     if(e.target.name.value === "") {
       alert('invalid name')

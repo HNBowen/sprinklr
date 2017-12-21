@@ -13,9 +13,10 @@ exports[`AddPlantModal should render correctly if visible 1`] = `
     />
     Image: 
     <input
+      accept="image/*"
       data-test-id="plantImage"
       name="image"
-      type="fileInput"
+      type="file"
     />
     <button
       type="submit"

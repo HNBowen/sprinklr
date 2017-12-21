@@ -18322,7 +18322,17 @@ var App = function (_React$Component) {
     return _this;
   }
 
+  //test rendering with dummyData
+
+
   _createClass(App, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      this.setState({
+        "plants": _dummyData.existingPlants
+      });
+    }
+  }, {
     key: 'handleOrderButtonClick',
     value: function handleOrderButtonClick() {
       this.setState({
@@ -18513,13 +18523,28 @@ var _PlantTile2 = _interopRequireDefault(_PlantTile);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var PlantList = function PlantList(props) {
-  return _react2.default.createElement(
-    'div',
-    null,
-    props.plants.map(function (plant) {
-      return _react2.default.createElement(_PlantTile2.default, { plant: plant, handleClick: props.handlePlantTileClick, key: plant.id });
-    })
-  );
+
+  if (!props.sort) {
+    return _react2.default.createElement(
+      'div',
+      null,
+      [].concat(props.plants).sort(function (a, b) {
+        return a.dateAdded > b.dateAdded;
+      }).map(function (plant) {
+        return _react2.default.createElement(_PlantTile2.default, { plant: plant, handleClick: props.handlePlantTileClick, key: plant.id });
+      })
+    );
+  } else if (props.sort) {
+    return _react2.default.createElement(
+      'div',
+      null,
+      [].concat(props.plants).sort(function (a, b) {
+        return a.lastWatered > b.lastWatered;
+      }).map(function (plant) {
+        return _react2.default.createElement(_PlantTile2.default, { plant: plant, handleClick: props.handlePlantTileClick, key: plant.id });
+      })
+    );
+  }
 };
 
 exports.default = PlantList;
@@ -19266,13 +19291,15 @@ const existingPlants = [
   {
     name: "Peace Lily",
     img: "https://cdn.nurserylive.com/images/stories/virtuemart/product/resized/nurserylive-Peace-Lily,-Spathiphyllum-Plant_128x128.jpg",
-    lastWatered: new Date(),
+    lastWatered: new Date(2017, 11, 20),
+    dateAdded: new Date(2017, 8, 31),
     id: 1
   },
   {
     name: "Monstera",
     img: "https://static.wixstatic.com/media/e7be30_b5577954ef5347409f7c4ebaeadce8ce~mv2_d_4288_2848_s_4_2.jpg/v1/fill/w_256,h_256,q_85,usm_0.66_1.00_0.01/e7be30_b5577954ef5347409f7c4ebaeadce8ce~mv2_d_4288_2848_s_4_2.jpg",
-    lastWatered: new Date(),
+    lastWatered: new Date(2017, 11, 21),
+    dateAdded: new Date(2017, 7, 30),
     id: 2
   }
 ];

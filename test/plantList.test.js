@@ -37,3 +37,20 @@ describe('PlantList', function() {
     expect(plantTileHandler.toString()).to.equal(clickHandlerMock.toString())
   })
 })
+
+describe('props based rendering', function() {
+
+  it('should render by dateAdded on first render if sort is false', function() {
+    const wrapper = shallow(<PlantList sort={false} plants={existingPlants}/>)
+
+    expect(wrapper.find(PlantTile).get(0)["props"]["plant"]["name"]).to.equal("Monstera")
+    
+
+  })
+
+  it('should render by lastWatered (oldest -> newest) if sort is true', function() {
+    const wrapper = shallow(<PlantList sort={true} plants={existingPlants}/>)
+
+    expect(wrapper.find(PlantTile).get(0)["props"]["plant"]["name"]).to.equal("Peace Lily")
+  })
+})
