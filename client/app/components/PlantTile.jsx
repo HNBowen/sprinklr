@@ -1,12 +1,18 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 const PlantTile = (props) => {
   return (
-      <div>
+      <div onClick={props.handleClick(props.plant.id)}>
         <img src={props.plant.img}/>
         <span>{props.plant.name}</span>
       </div>
     )
+}
+
+PlantTile.propTypes = {
+  plant: PropTypes.object.isRequired,
+  handleClick: PropTypes.func.isRequired
 }
 
 export default PlantTile
