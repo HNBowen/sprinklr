@@ -1,5 +1,5 @@
 import React from 'react'
-import {shallow} from 'enzyme'
+import {shallow, mount} from 'enzyme'
 import {shallowToJson} from 'enzyme-to-json'
 
 import AddPlantModal from '../client/app/components/AddPlantModal.jsx'
@@ -25,6 +25,7 @@ describe('AddPlantModal', function() {
   //it should render with an image upload field
   it('should render wtih an image upload field', function() {
     const wrapper = shallow(<AddPlantModal isVisible={true} handleSubmit={()=>{}}/>);
+
     expect(wrapper.find('[data-test-id="plantImage"]')).to.have.length(1)
   })
   //it should render with a submit button
@@ -41,22 +42,6 @@ describe('AddPlantModal', function() {
 
     expect(mockAddPlant.mock.calls.length).to.equal(1);
 
-  })
-
-  it('should call addPlant function with args from the form', function() {
-    const mockAddPlant = jest.fn();
-    const wrapper = shallow(<AddPlantModal isVisible={true} handleSubmit={mockAddPlant}/>);
-
-    //set the form data
-
-    
-
-    wrapper.find('form').simulate('submit');
-
-    console.log(mockAddPlant.mock.calls[0][0])
-
-    // expect(event.target.name.value).to.equal(plantsToAdd[0]["name"])
-    // expect(event.target.image.value).to.equal(plantsToAdd[0]["img"])
   })
   
 })
