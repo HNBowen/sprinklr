@@ -1,7 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`PlantTile should render correctly 1`] = `
-<div>
+<div
+  onClick={[Function]}
+>
   <img
     src="https://cdn.nurserylive.com/images/stories/virtuemart/product/resized/nurserylive-Peace-Lily,-Spathiphyllum-Plant_128x128.jpg"
   />

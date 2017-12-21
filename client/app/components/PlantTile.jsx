@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 const PlantTile = (props) => {
   return (
-      <div onClick={props.handleClick(props.plant.id)}>
+      <div onClick={function() { props.handleClick(props.plant.id) }}>
         <img src={props.plant.img}/>
         <span>{props.plant.name}</span>
       </div>

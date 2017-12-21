@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 15);
+/******/ 	return __webpack_require__(__webpack_require__.s = 16);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -261,9 +261,9 @@ process.umask = function() { return 0; };
 /* WEBPACK VAR INJECTION */(function(process) {
 
 if (process.env.NODE_ENV === 'production') {
-  module.exports = __webpack_require__(16);
-} else {
   module.exports = __webpack_require__(17);
+} else {
+  module.exports = __webpack_require__(18);
 }
 
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
@@ -895,7 +895,7 @@ module.exports = shallowEqual;
  * 
  */
 
-var isTextNode = __webpack_require__(20);
+var isTextNode = __webpack_require__(21);
 
 /*eslint-disable no-bitwise */
 
@@ -956,6 +956,41 @@ module.exports = focusNode;
 /* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
+/* WEBPACK VAR INJECTION */(function(process) {/**
+ * Copyright (c) 2013-present, Facebook, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+if (process.env.NODE_ENV !== 'production') {
+  var REACT_ELEMENT_TYPE = (typeof Symbol === 'function' &&
+    Symbol.for &&
+    Symbol.for('react.element')) ||
+    0xeac7;
+
+  var isValidElement = function(object) {
+    return typeof object === 'object' &&
+      object !== null &&
+      object.$$typeof === REACT_ELEMENT_TYPE;
+  };
+
+  // By explicitly using `prop-types` you are opting into new development behavior.
+  // http://fb.me/prop-types-in-prod
+  var throwOnDirectAccess = true;
+  module.exports = __webpack_require__(34)(isValidElement, throwOnDirectAccess);
+} else {
+  // By explicitly using `prop-types` you are opting into new production behavior.
+  // http://fb.me/prop-types-in-prod
+  module.exports = __webpack_require__(35)();
+}
+
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
+
+/***/ }),
+/* 16 */
+/***/ (function(module, exports, __webpack_require__) {
+
 "use strict";
 
 
@@ -963,11 +998,11 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactDom = __webpack_require__(18);
+var _reactDom = __webpack_require__(19);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _App = __webpack_require__(27);
+var _App = __webpack_require__(28);
 
 var _App2 = _interopRequireDefault(_App);
 
@@ -976,7 +1011,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 _reactDom2.default.render(_react2.default.createElement(_App2.default, null), document.getElementById('app'));
 
 /***/ }),
-/* 16 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1004,7 +1039,7 @@ isValidElement:K,version:"16.2.0",__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_F
 
 
 /***/ }),
-/* 17 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2369,7 +2404,7 @@ module.exports = react;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 18 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2407,15 +2442,15 @@ if (process.env.NODE_ENV === 'production') {
   // DCE check should happen before ReactDOM bundle executes so that
   // DevTools can report bad minification during injection.
   checkDCE();
-  module.exports = __webpack_require__(19);
+  module.exports = __webpack_require__(20);
 } else {
-  module.exports = __webpack_require__(22);
+  module.exports = __webpack_require__(23);
 }
 
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 19 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2651,7 +2686,7 @@ Z.injectIntoDevTools({findFiberByHostInstance:pb,bundleType:0,version:"16.2.0",r
 
 
 /***/ }),
-/* 20 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2666,7 +2701,7 @@ Z.injectIntoDevTools({findFiberByHostInstance:pb,bundleType:0,version:"16.2.0",r
  * @typechecks
  */
 
-var isNode = __webpack_require__(21);
+var isNode = __webpack_require__(22);
 
 /**
  * @param {*} object The object to check.
@@ -2679,7 +2714,7 @@ function isTextNode(object) {
 module.exports = isTextNode;
 
 /***/ }),
-/* 21 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2707,7 +2742,7 @@ function isNode(object) {
 module.exports = isNode;
 
 /***/ }),
-/* 22 */
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2741,8 +2776,8 @@ var containsNode = __webpack_require__(13);
 var focusNode = __webpack_require__(14);
 var emptyObject = __webpack_require__(5);
 var checkPropTypes = __webpack_require__(7);
-var hyphenateStyleName = __webpack_require__(23);
-var camelizeStyleName = __webpack_require__(25);
+var hyphenateStyleName = __webpack_require__(24);
+var camelizeStyleName = __webpack_require__(26);
 
 /**
  * WARNING: DO NOT manually require this module.
@@ -18109,7 +18144,7 @@ module.exports = reactDom;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 23 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18124,7 +18159,7 @@ module.exports = reactDom;
 
 
 
-var hyphenate = __webpack_require__(24);
+var hyphenate = __webpack_require__(25);
 
 var msPattern = /^ms-/;
 
@@ -18151,7 +18186,7 @@ function hyphenateStyleName(string) {
 module.exports = hyphenateStyleName;
 
 /***/ }),
-/* 24 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18187,7 +18222,7 @@ function hyphenate(string) {
 module.exports = hyphenate;
 
 /***/ }),
-/* 25 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18202,7 +18237,7 @@ module.exports = hyphenate;
 
 
 
-var camelize = __webpack_require__(26);
+var camelize = __webpack_require__(27);
 
 var msPattern = /^-ms-/;
 
@@ -18230,7 +18265,7 @@ function camelizeStyleName(string) {
 module.exports = camelizeStyleName;
 
 /***/ }),
-/* 26 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18265,7 +18300,7 @@ function camelize(string) {
 module.exports = camelize;
 
 /***/ }),
-/* 27 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18281,21 +18316,23 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _Menu = __webpack_require__(28);
+var _Menu = __webpack_require__(29);
 
 var _Menu2 = _interopRequireDefault(_Menu);
 
-var _PlantList = __webpack_require__(31);
+var _PlantList = __webpack_require__(32);
 
 var _PlantList2 = _interopRequireDefault(_PlantList);
 
-var _AddPlantModal = __webpack_require__(33);
+var _AddPlantModal = __webpack_require__(36);
 
 var _AddPlantModal2 = _interopRequireDefault(_AddPlantModal);
 
 var _dummyData = __webpack_require__(37);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -18367,14 +18404,27 @@ var App = function (_React$Component) {
     key: 'handlePlantTileClick',
     value: function handlePlantTileClick(plantId) {
       //TODO: send updated plant to database
-      var plant;
+      console.log("click! called with: ", plantId);
+      var oldPlant, newPlant, index;
       for (var i = 0; i < this.state.plants.length; i++) {
         if (this.state.plants[i].id === plantId) {
-          var date = new Date();
-          this.state.plants[i]["lastWatered"] = date;
+          index = i;
+          oldPlant = this.state.plants[i];
+          console.log('found plant: ', oldPlant);
           break;
         }
       }
+      newPlant = {
+        name: oldPlant["name"],
+        img: oldPlant["img"],
+        id: oldPlant["id"],
+        dateAdded: oldPlant["dateAdded"],
+        lastWatered: new Date()
+      };
+
+      this.setState({
+        plants: [].concat(_toConsumableArray(this.state.plants.slice(0, index)), [newPlant], _toConsumableArray(this.state.plants.slice(index + 1)))
+      });
     }
   }, {
     key: 'displayModal',
@@ -18412,7 +18462,7 @@ var App = function (_React$Component) {
 exports.default = App;
 
 /***/ }),
-/* 28 */
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18426,11 +18476,11 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _OrderButton = __webpack_require__(29);
+var _OrderButton = __webpack_require__(30);
 
 var _OrderButton2 = _interopRequireDefault(_OrderButton);
 
-var _AddPlantButton = __webpack_require__(30);
+var _AddPlantButton = __webpack_require__(31);
 
 var _AddPlantButton2 = _interopRequireDefault(_AddPlantButton);
 
@@ -18448,7 +18498,7 @@ var Menu = function Menu(props) {
 exports.default = Menu;
 
 /***/ }),
-/* 29 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18475,7 +18525,7 @@ var OrderButton = function OrderButton(props) {
 exports.default = OrderButton;
 
 /***/ }),
-/* 30 */
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18502,7 +18552,7 @@ var AddPlantButton = function AddPlantButton(props) {
 exports.default = AddPlantButton;
 
 /***/ }),
-/* 31 */
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18516,7 +18566,7 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _PlantTile = __webpack_require__(32);
+var _PlantTile = __webpack_require__(33);
 
 var _PlantTile2 = _interopRequireDefault(_PlantTile);
 
@@ -18550,38 +18600,6 @@ var PlantList = function PlantList(props) {
 exports.default = PlantList;
 
 /***/ }),
-/* 32 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _react = __webpack_require__(1);
-
-var _react2 = _interopRequireDefault(_react);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var PlantTile = function PlantTile(props) {
-  return _react2.default.createElement(
-    'div',
-    null,
-    _react2.default.createElement('img', { src: props.plant.img }),
-    _react2.default.createElement(
-      'span',
-      null,
-      props.plant.name
-    )
-  );
-};
-
-exports.default = PlantTile;
-
-/***/ }),
 /* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -18596,78 +18614,36 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _propTypes = __webpack_require__(34);
+var _propTypes = __webpack_require__(15);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var AddPlantModal = function AddPlantModal(props) {
-  return props.isVisible && _react2.default.createElement(
+var PlantTile = function PlantTile(props) {
+  return _react2.default.createElement(
     'div',
-    null,
+    { onClick: function onClick() {
+        props.handleClick(props.plant.id);
+      } },
+    _react2.default.createElement('img', { src: props.plant.img }),
     _react2.default.createElement(
-      'form',
-      { onSubmit: function onSubmit(e) {
-          return props.handleSubmit(e);
-        } },
-      'Name: ',
-      _react2.default.createElement('input', { type: 'text', name: 'name', 'data-test-id': 'plantName' }),
-      'Image: ',
-      _react2.default.createElement('input', { type: 'file', name: 'image', accept: 'image/*', 'data-test-id': 'plantImage' }),
-      _react2.default.createElement(
-        'button',
-        { type: 'submit' },
-        'Add'
-      )
+      'span',
+      null,
+      props.plant.name
     )
   );
 };
 
-AddPlantModal.propTypes = {
-  isVisible: _propTypes2.default.bool.isRequired,
-  handleSubmit: _propTypes2.default.func.isRequired
+PlantTile.propTypes = {
+  plant: _propTypes2.default.object.isRequired,
+  handleClick: _propTypes2.default.func.isRequired
 };
 
-exports.default = AddPlantModal;
+exports.default = PlantTile;
 
 /***/ }),
 /* 34 */
-/***/ (function(module, exports, __webpack_require__) {
-
-/* WEBPACK VAR INJECTION */(function(process) {/**
- * Copyright (c) 2013-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-
-if (process.env.NODE_ENV !== 'production') {
-  var REACT_ELEMENT_TYPE = (typeof Symbol === 'function' &&
-    Symbol.for &&
-    Symbol.for('react.element')) ||
-    0xeac7;
-
-  var isValidElement = function(object) {
-    return typeof object === 'object' &&
-      object !== null &&
-      object.$$typeof === REACT_ELEMENT_TYPE;
-  };
-
-  // By explicitly using `prop-types` you are opting into new development behavior.
-  // http://fb.me/prop-types-in-prod
-  var throwOnDirectAccess = true;
-  module.exports = __webpack_require__(35)(isValidElement, throwOnDirectAccess);
-} else {
-  // By explicitly using `prop-types` you are opting into new production behavior.
-  // http://fb.me/prop-types-in-prod
-  module.exports = __webpack_require__(36)();
-}
-
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
-
-/***/ }),
-/* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -19217,7 +19193,7 @@ module.exports = function(isValidElement, throwOnDirectAccess) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 36 */
+/* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -19280,6 +19256,56 @@ module.exports = function() {
   return ReactPropTypes;
 };
 
+
+/***/ }),
+/* 36 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _propTypes = __webpack_require__(15);
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var AddPlantModal = function AddPlantModal(props) {
+  return props.isVisible && _react2.default.createElement(
+    'div',
+    null,
+    _react2.default.createElement(
+      'form',
+      { onSubmit: function onSubmit(e) {
+          return props.handleSubmit(e);
+        } },
+      'Name: ',
+      _react2.default.createElement('input', { type: 'text', name: 'name', 'data-test-id': 'plantName' }),
+      'Image: ',
+      _react2.default.createElement('input', { type: 'file', name: 'image', accept: 'image/*', 'data-test-id': 'plantImage' }),
+      _react2.default.createElement(
+        'button',
+        { type: 'submit' },
+        'Add'
+      )
+    )
+  );
+};
+
+AddPlantModal.propTypes = {
+  isVisible: _propTypes2.default.bool.isRequired,
+  handleSubmit: _propTypes2.default.func.isRequired
+};
+
+exports.default = AddPlantModal;
 
 /***/ }),
 /* 37 */

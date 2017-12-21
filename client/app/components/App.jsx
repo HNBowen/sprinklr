@@ -59,14 +59,26 @@ class App extends React.Component {
 
   handlePlantTileClick(plantId) {
     //TODO: send updated plant to database
-    var plant;
+
+    var oldPlant, newPlant, index;
     for (var i = 0; i < this.state.plants.length; i++) {
       if (this.state.plants[i].id === plantId) {
-        var date = new Date();
-        this.state.plants[i]["lastWatered"] = date;
+        index = i;
+        oldPlant = this.state.plants[i];
         break
       }
     }
+    newPlant = {
+      name: oldPlant["name"],
+      img: oldPlant["img"],
+      id: oldPlant["id"],
+      dateAdded: oldPlant["dateAdded"],
+      lastWatered: new Date()
+    }
+
+    this.setState({
+      plants: [...this.state.plants.slice(0, index), newPlant, ...this.state.plants.slice(index + 1)]
+    })
   }
 
   displayModal() {
