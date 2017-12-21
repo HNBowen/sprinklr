@@ -215,6 +215,88 @@ describe('handleAddPlantButtonClick', function() {
 
     expect(wrapper.instance().displayModal.calledOnce).to.be.true
   })
+
+  it('should alert an error message if called with a blank value for plantName', function() {
+    const wrapper = shallow(<App />)
+
+    const mockEvent = {
+      target: {
+        name: {
+          value: ""
+        },
+        image: {
+          value: plantsToAdd[0]["img"]
+        }
+      },
+      preventDefault: function() {}
+    }
+
+    window.alert = sinon.spy();
+
+    wrapper.instance().handleAddPlantButtonClick(mockEvent);
+    expect(window.alert.calledOnce).to.be.true
+  })
+
+  it('should alert an error message if called with a blank value for plantImg', function() {
+    const wrapper = shallow(<App />);
+
+    const mockEvent = {
+      target: {
+        name: {
+          value: "not_empty"
+        },
+        image: {
+          value: ""
+        }
+      },
+      preventDefault: function() {}
+    }
+
+    window.alert = sinon.spy();
+
+    wrapper.instance().handleAddPlantButtonClick(mockEvent);
+    expect(window.alert.calledOnce).to.be.true
+  })
+
+  it('should alert an error if an invalid image file is uploaded', function() {})
+
+  it('should not call displayModal if an invalid image file is uploaded', function() {})
+
+  it('should not call displayModal if called without name or image specified', function() {
+    const wrapper = shallow(<App />);
+    wrapper.instance().displayModal = sinon.spy();
+
+    const mockEventNoImage = {
+      target: {
+        name: {
+          value: "not_empty"
+        },
+        image: {
+          value: ""
+        }
+      },
+      preventDefault: function() {}
+    }
+
+    wrapper.instance().handleAddPlantButtonClick(mockEventNoImage);
+    expect(wrapper.instance().displayModal.callCount).to.equal(0);
+
+    const mockEventNoName = {
+      target: {
+        name: {
+          value: ""
+        },
+        image: {
+          value: "not_empty"
+        }
+      },
+      preventDefault: function() {}
+    }
+
+    wrapper.instance().handleAddPlantButtonClick(mockEventNoName);
+    expect(wrapper.instance().displayModal.callCount).to.equal(0)
+
+  })
 })
 
 describe('handlePlantTileClick', function() {
