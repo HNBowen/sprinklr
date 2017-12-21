@@ -18334,12 +18334,19 @@ var App = function (_React$Component) {
     value: function handleAddPlantButtonClick(e) {
 
       e.preventDefault();
-      console.log("name: ", e.target.name.value);
-      console.log("img: ", e.target.imgage.value);
+
+      //handle blank inputs
+      if (e.target.name.value === "") {
+        alert('invalid name');
+        return;
+      } else if (e.target.image.value === "") {
+        alert('invalid image');
+        return;
+      }
 
       var newPlant = {
-        name: e.target.name,
-        img: e.target.image,
+        name: e.target.name.value,
+        img: e.target.image.value,
         lastWatered: new Date()
         //TODO: send plant to database to get an ID
         //then:
@@ -18576,11 +18583,13 @@ var AddPlantModal = function AddPlantModal(props) {
     null,
     _react2.default.createElement(
       'form',
-      { onSubmit: props.handleSubmit },
+      { onSubmit: function onSubmit(e) {
+          return props.handleSubmit(e);
+        } },
       'Name: ',
       _react2.default.createElement('input', { type: 'text', name: 'name', 'data-test-id': 'plantName' }),
       'Image: ',
-      _react2.default.createElement('input', { type: 'fileInput', name: 'image', 'data-test-id': 'plantImage' }),
+      _react2.default.createElement('input', { type: 'file', name: 'image', accept: 'image/*', 'data-test-id': 'plantImage' }),
       _react2.default.createElement(
         'button',
         { type: 'submit' },

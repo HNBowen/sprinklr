@@ -6,7 +6,7 @@ const AddPlantModal = (props) =>
     <div>
       <form onSubmit={(e) => props.handleSubmit(e)}>
         Name: <input type="text" name="name" data-test-id="plantName"/>
-        Image: <input type="fileInput" name="image" data-test-id="plantImage"/>
+        Image: <input type="file" name="image" accept="image/*" data-test-id="plantImage"/>
         <button type="submit">Add</button>
       </form>
     </div>

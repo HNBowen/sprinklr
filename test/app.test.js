@@ -258,10 +258,6 @@ describe('handleAddPlantButtonClick', function() {
     expect(window.alert.calledOnce).to.be.true
   })
 
-  it('should alert an error if an invalid image file is uploaded', function() {})
-
-  it('should not call displayModal if an invalid image file is uploaded', function() {})
-
   it('should not call displayModal if called without name or image specified', function() {
     const wrapper = shallow(<App />);
     wrapper.instance().displayModal = sinon.spy();

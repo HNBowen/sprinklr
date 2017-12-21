@@ -28,6 +28,8 @@ class App extends React.Component {
 
   handleAddPlantButtonClick(e) {
 
+    e.preventDefault()
+    
     //handle blank inputs
     if(e.target.name.value === "") {
       alert('invalid name')
@@ -36,7 +38,6 @@ class App extends React.Component {
       alert('invalid image')
       return
     }
-    e.preventDefault()
 
     var newPlant = {
       name: e.target.name.value,
