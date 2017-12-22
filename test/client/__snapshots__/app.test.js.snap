@@ -31,6 +31,18 @@ exports[`App should render correctly 1`] = `
           "lastWatered": 2017-12-21T06:00:00.000Z,
           "name": "Monstera",
         },
+        Object {
+          "dateAdded": 2017-07-30T05:00:00.000Z,
+          "img": "https://d13z1xw8270sfc.cloudfront.net/resize/68491/colocasia_esculenta_2.jpg/128/128/0/",
+          "lastWatered": 2017-11-30T06:00:00.000Z,
+          "name": "Elephant Ear",
+        },
+        Object {
+          "dateAdded": 2017-07-30T05:00:00.000Z,
+          "img": "https://cdn.nurserylive.com/images/stories/virtuemart/product/resized/nurserylive-small-rabbit-foot-fern-1_128x128.png",
+          "lastWatered": 2017-12-15T06:00:00.000Z,
+          "name": "Rabbit's Tail Fern",
+        },
       ]
     }
     sort={false}
