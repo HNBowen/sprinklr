@@ -2,7 +2,7 @@ import React from 'react';
 import {shallow} from 'enzyme'
 import {shallowToJson} from 'enzyme-to-json'
 
-import OrderButton from '../client/app/components/OrderButton.jsx'
+import OrderButton from '../../client/app/components/OrderButton.jsx'
 
 describe('OrderButton', function() {
 

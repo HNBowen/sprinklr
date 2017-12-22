@@ -1,12 +1,14 @@
 const express = require('express');
 const http = require('http');
 const path = require('path');
+const router = require('./router.js')
 
 const app = express();
 
 const server = http.Server(app);
 
-
+//use the router
+app.use('/', router);
 
 //server static assets transpiled by webpack
 app.use('/static', express.static(path.join(__dirname, '../public')))

@@ -2,9 +2,9 @@ import React from 'react'
 import {shallow, mount} from 'enzyme'
 import {shallowToJson} from 'enzyme-to-json'
 
-import AddPlantModal from '../client/app/components/AddPlantModal.jsx'
+import AddPlantModal from '../../client/app/components/AddPlantModal.jsx'
 
-import {plantsToAdd} from '../dummyData.js'
+import {plantsToAdd} from '../../dummyData.js'
 
 describe('AddPlantModal', function() {
   it ('should render correctly if visible', function() {

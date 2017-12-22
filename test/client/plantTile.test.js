@@ -2,9 +2,9 @@ import React from 'react';
 import {shallow} from 'enzyme'
 import {shallowToJson} from 'enzyme-to-json'
 
-import PlantTile from '../client/app/components/PlantTile.jsx'
+import PlantTile from '../../client/app/components/PlantTile.jsx'
 
-import {existingPlants} from '../dummyData.js'
+import {existingPlants} from '../../dummyData.js'
 
 describe('PlantTile', function() {
     

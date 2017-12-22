@@ -4,13 +4,13 @@ import {shallowToJson} from 'enzyme-to-json'
 import sinon from 'sinon';
 
 
-import App from '../client/app/components/App.jsx'
-import Menu from '../client/app/components/Menu.jsx'
-import PlantList from '../client/app/components/PlantList.jsx'
-import OrderButton from '../client/app/components/OrderButton.jsx'
-import AddPlantModal from '../client/app/components/addPlantModal.jsx'
+import App from '../../client/app/components/App.jsx'
+import Menu from '../../client/app/components/Menu.jsx'
+import PlantList from '../../client/app/components/PlantList.jsx'
+import OrderButton from '../../client/app/components/OrderButton.jsx'
+import AddPlantModal from '../../client/app/components/addPlantModal.jsx'
 
-import {existingPlants, plantsToAdd} from '../dummyData.js'
+import {existingPlants, plantsToAdd} from '../../dummyData.js'
 
 
 describe('App', function() {

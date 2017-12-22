@@ -18404,13 +18404,12 @@ var App = function (_React$Component) {
     key: 'handlePlantTileClick',
     value: function handlePlantTileClick(plantId) {
       //TODO: send updated plant to database
-      console.log("click! called with: ", plantId);
+
       var oldPlant, newPlant, index;
       for (var i = 0; i < this.state.plants.length; i++) {
         if (this.state.plants[i].id === plantId) {
           index = i;
           oldPlant = this.state.plants[i];
-          console.log('found plant: ', oldPlant);
           break;
         }
       }

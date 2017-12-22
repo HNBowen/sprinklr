@@ -37,6 +37,7 @@ class App extends React.Component {
 
     e.preventDefault()
 
+
     //handle blank inputs
     if(e.target.name.value === "") {
       alert('invalid name')
@@ -45,6 +46,7 @@ class App extends React.Component {
       alert('invalid image')
       return
     }
+    
 
     var newPlant = {
       name: e.target.name.value,

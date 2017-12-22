@@ -2,10 +2,10 @@ import React from 'react';
 import {shallow} from 'enzyme'
 import {shallowToJson} from 'enzyme-to-json'
 
-import App from '../client/app/components/App.jsx'
-import Menu from '../client/app/components/Menu.jsx'
-import OrderButton from '../client/app/components/OrderButton.jsx'
-import AddPlantButton from '../client/app/components/AddPlantButton.jsx'
+import App from '../../client/app/components/App.jsx'
+import Menu from '../../client/app/components/Menu.jsx'
+import OrderButton from '../../client/app/components/OrderButton.jsx'
+import AddPlantButton from '../../client/app/components/AddPlantButton.jsx'
 
 describe('Menu', function() {
 

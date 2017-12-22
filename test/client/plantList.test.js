@@ -2,10 +2,10 @@ import React from 'react'
 import {shallow} from 'enzyme'
 import {shallowToJson} from 'enzyme-to-json'
 
-import PlantList from '../client/app/components/PlantList.jsx'
-import PlantTile from '../client/app/components/PlantTile.jsx'
+import PlantList from '../../client/app/components/PlantList.jsx'
+import PlantTile from '../../client/app/components/PlantTile.jsx'
 
-import {existingPlants} from '../dummyData.js'
+import {existingPlants} from '../../dummyData.js'
 
 describe('PlantList', function() {
   //it should render correctly
