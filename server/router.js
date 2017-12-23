@@ -20,6 +20,14 @@ router.route('/users/:id')
     })
   })
 
+router.route('/plants')
+  .get(function(req, res) {
+    queries.getAllPlants().then(function(plants) {
+      res.status(200);
+      res.json(plants)
+    })
+  })
+
 
 router.route('/')
   .get(function(req, res) {

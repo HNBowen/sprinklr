@@ -37,7 +37,7 @@ describe('API routes', function() {
   })
 
   describe('/users', function() {
-    it('should return all users', async () => {
+    it('GET /users', async () => {
       let response = await request(app).get("/users");
       expect(response.statusCode).to.equal(200)
       expect(response.body).to.be.an('array')
@@ -47,12 +47,21 @@ describe('API routes', function() {
       expect(response.body[0].password).to.equal('test_user_1_password')
     })
 
-    it('should return a specific user by id', async () => {
+    it('GET /users/:id', async () => {
       let response = await request(app).get("/users/1");
       expect(response.statusCode).to.equal(200);
       expect(response.body.name).to.equal('test_user_1');
       expect(response.body.password).to.equal('test_user_1_password');
       expect(response.body.id).to.equal(1);
+    })
+  })
+
+  describe('/plants', function() {
+    it('GET /plants', async () => {
+      let response = await request(app).get("/plants");
+      expect(response.statusCode).to.equal(200);
+      expect(response.body).to.be.an("array");
+      expect(response.body.length).to.equal(4);
     })
   })
 
