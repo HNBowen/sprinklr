@@ -76,6 +76,14 @@ describe('API routes', function() {
       //returned password should match hash of plaintext password
       let isMatch = await bcrypt.compare(newUser.password, addedUser.body.password)
       expect(isMatch).to.be.true
+
+      //it should 400 if username exists
+      var existingUser = {
+        name: "test_user_1",
+        password: "idk"
+      }
+      let existingUserPost = await request(app).post("/users").send(existingUser);
+      expect(existingUserPost.statusCode).to.equal(400)
     })
   })
 

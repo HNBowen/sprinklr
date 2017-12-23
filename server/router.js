@@ -12,9 +12,15 @@ router.route('/users')
     })
   })
   .post(function(req, res) {
-    queries.addUser(req.body).then(function() {
-      res.status(200)
-      res.end()
+    queries.getUserByUsername(req.body.name).then(function(found) {
+      if(found) {
+        res.status(400);
+        res.end();
+      }
+      queries.addUser(req.body).then(function() {
+        res.status(200)
+        res.end()
+      })
     })
   })
 
