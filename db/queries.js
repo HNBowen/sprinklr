@@ -25,12 +25,12 @@ function getAllPlants() {
   return Plants().select()
 }
 
-function addUser(newUser) {
+async function addUser(newUser) {
+  let hash = await bcrypt.hash(newUser.password, 10);
   return Users().insert({
     name: newUser.name,
-    password: newUser.password
+    password: hash
   })
-
 }
 
 module.exports = {

@@ -20,7 +20,6 @@ router.route('/users')
 
 router.route('/users/:username')
   .get(function(req, res) {
-    console.log("************************", req.params.username)
     queries.getUserByUsername(req.params.username).then(function(user) {
       res.status(200)
       res.json(user)

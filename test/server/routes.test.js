@@ -4,6 +4,7 @@ process.env.NODE_ENV = "test"
 const request = require('supertest');
 const express = require('express')
 const bodyParser = require('body-parser')
+const bcrypt = require('bcrypt')
 const router = require('../../server/router.js')
 const knex = require('../../db/knex.js')
 
@@ -64,8 +65,17 @@ describe('API routes', function() {
       }
       let response = await request(app).post("/users").send(newUser);
 
+      //should respond without error
       expect(response.statusCode).to.equal(200)
 
+      //should be able to retrieve the user
+      let addedUser = await request(app).get("/users/" + newUser.name);
+      expect(addedUser.statusCode).to.equal(200);
+      expect(addedUser.body.name).to.equal(newUser.name)
+
+      //returned password should match hash of plaintext password
+      let isMatch = await bcrypt.compare(newUser.password, addedUser.body.password)
+      expect(isMatch).to.be.true
     })
   })
 
