@@ -11,10 +11,17 @@ router.route('/users')
       res.json(users);
     })
   })
+  .post(function(req, res) {
+    queries.addUser(req.body).then(function() {
+      res.status(200)
+      res.end()
+    })
+  })
 
-router.route('/users/:id')
+router.route('/users/:username')
   .get(function(req, res) {
-    queries.getUserById(req.params.id).then(function(user) {
+    console.log("************************", req.params.username)
+    queries.getUserByUsername(req.params.username).then(function(user) {
       res.status(200)
       res.json(user)
     })

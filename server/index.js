@@ -2,10 +2,14 @@ const express = require('express');
 const http = require('http');
 const path = require('path');
 const router = require('./router.js')
+const bodyParser = require('body-parser')
 
 const app = express();
 
 const server = http.Server(app);
+
+//body parser
+app.use(bodyParser())
 
 //error handling
 //if in development mode, print stacktrace
@@ -26,6 +30,7 @@ app.use(function(err, req, res, next) {
     error: {}
   })
 })
+
 
 //use the router
 app.use('/', router);

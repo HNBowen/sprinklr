@@ -3,10 +3,12 @@ process.env.NODE_ENV = "test"
 
 const request = require('supertest');
 const express = require('express')
+const bodyParser = require('body-parser')
 const router = require('../../server/router.js')
 const knex = require('../../db/knex.js')
 
 var app = express();
+app.use(bodyParser())
 app.use(router);
 
 describe('API routes', function() {
@@ -24,7 +26,8 @@ describe('API routes', function() {
   //node processes won't exit while sockets are still connected
   //when we require knex, it opens up a connection to the database,
   //which while still active will keep jest from exiting the test suite.
-  //After all tests are finished, we kill the connection manually
+  //After all tests are finished, we kill the connection manually.
+  //This github issue helped me solve this: https://github.com/facebook/jest/issues/3686
   afterAll(async () => {
     await knex.destroy()
   })
@@ -47,12 +50,22 @@ describe('API routes', function() {
       expect(response.body[0].password).to.equal('test_user_1_password')
     })
 
-    it('GET /users/:id', async () => {
-      let response = await request(app).get("/users/1");
+    it('GET /users/:username', async () => {
+      let response = await request(app).get("/users/test_user_1");
       expect(response.statusCode).to.equal(200);
       expect(response.body.name).to.equal('test_user_1');
-      expect(response.body.password).to.equal('test_user_1_password');
-      expect(response.body.id).to.equal(1);
+
+    })
+
+    it('POST /users', async () => {
+      var newUser = {
+        name: "test_POST_user",
+        password: "plain_text"
+      }
+      let response = await request(app).post("/users").send(newUser);
+
+      expect(response.statusCode).to.equal(200)
+
     })
   })
 
