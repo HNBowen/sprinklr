@@ -151,6 +151,26 @@ describe('API routes', function() {
     })
 
     test('failed POST /login', async () => {
+      
+      var badUserName = {
+        name: "test_bad_user",
+        password: "none"
+      }
+
+      let badUserNameResponse = await request(app).post("/login").send(badUserName);
+
+      expect(badUserNameResponse.statusCode).to.equal(302);
+      expect(badUserNameResponse.headers.location).to.equal("/login")
+
+      var badPassword = {
+        name: "test_user_login",
+        password: "baddy"
+      }
+
+      let badPasswordResponse = await request(app).post("/login").send(badPassword);
+
+      expect(badPasswordResponse.statusCode).to.equal(302)
+      expect(badPasswordResponse.headers.location).to.equal("/login")
 
     })
   })

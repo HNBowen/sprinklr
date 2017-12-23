@@ -64,18 +64,24 @@ router.route('/login')
     //check password and username against database
     let user = await queries.getUserByUsername(req.body.name);
 
-    let passwordsMatch = await bcrypt.compare(req.body.password, user.password);
-    
-    if (passwordsMatch) {
-      var loggedInUser = {
-          name: user.name,
-          id: user.id
-        }
-      //if successful, create session
-      utils.createSession(req, res, loggedInUser);
-    } else {
+    //if user is undefined, it doesn't exist: redirect
+    if (user === undefined) {
       res.redirect('/login')
+    } else { //otherwise, proceed to compare passwords
+      let passwordsMatch = await bcrypt.compare(req.body.password, user.password);
+      
+      if (passwordsMatch) {
+        var loggedInUser = {
+            name: user.name,
+            id: user.id
+          }
+        //if successful, create session
+        utils.createSession(req, res, loggedInUser);
+      } else {
+        res.redirect('/login')
+      }
     }
+
   })
 
 
