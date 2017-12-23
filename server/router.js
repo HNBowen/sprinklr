@@ -1,5 +1,7 @@
 const express = require('express');
 const queries = require('../db/queries.js')
+const utils = require('./utils.js')
+const bcrypt = require('bcrypt')
 
 var router = express.Router();
 
@@ -55,6 +57,25 @@ router.route('/plants/:id')
       res.status(200);
       res.json(plants)
     })
+  })
+
+router.route('/login')
+  .post(async (req, res) => {
+    //check password and username against database
+    let user = await queries.getUserByUsername(req.body.name);
+
+    let passwordsMatch = await bcrypt.compare(req.body.password, user.password);
+    
+    if (passwordsMatch) {
+      var loggedInUser = {
+          name: user.name,
+          id: user.id
+        }
+      //if successful, create session
+      utils.createSession(req, res, loggedInUser);
+    } else {
+      res.redirect('/login')
+    }
   })
 
 

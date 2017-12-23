@@ -3,6 +3,7 @@ const http = require('http');
 const path = require('path');
 const router = require('./router.js')
 const bodyParser = require('body-parser')
+const session = require('express-session')
 
 const app = express();
 
@@ -10,6 +11,24 @@ const server = http.Server(app);
 
 //body parser
 app.use(bodyParser())
+
+//create a session object
+var sess = {
+  secret: "mostera deliciosa",
+  resave: false,
+  saveUnitialized: true,
+  cookie: {}
+}
+
+//if we are in production, secure the cookie
+if (app.get('env') === "production") {
+   sess.cookie.secure = true;
+   app.set('trust proxy', 1)
+}
+
+//use the session
+app.use(session(sess));
+
 
 //error handling
 //if in development mode, print stacktrace

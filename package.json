@@ -30,6 +30,7 @@
     "enzyme-adapter-react-16": "^1.1.0",
     "enzyme-to-json": "^3.2.2",
     "express": "^4.16.2",
+    "express-session": "^1.15.6",
     "jest": "^21.2.1",
     "knex": "^0.10.0",
     "nodemon": "^1.12.5",

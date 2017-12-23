@@ -4,12 +4,18 @@ process.env.NODE_ENV = "test"
 const request = require('supertest');
 const express = require('express')
 const bodyParser = require('body-parser')
+const session = require('express-session')
 const bcrypt = require('bcrypt')
 const router = require('../../server/router.js')
 const knex = require('../../db/knex.js')
 
 var app = express();
 app.use(bodyParser())
+app.use(session({
+  secret: "Monstera Deliciosa",
+  resave: false,
+  saveUnitialized: true
+}))
 app.use(router);
 
 describe('API routes', function() {
@@ -122,6 +128,30 @@ describe('API routes', function() {
 
       expect(updatedPlants.body.length).to.equal(3);
       expect(updatedPlants.body[2]["name"]).to.equal("Fiddle Leaf")
+    })
+  })
+
+  describe('/login', function() {
+
+    test('successful POST /login', async () => {
+      
+      var user = {
+        name: "test_user_login",
+        password: "test_user_login_password"
+      }
+
+      //create a new user to hash the passwords. Seeded users in database are not hashed
+      let createUserRequest = await request(app).post("/users").send(user);
+
+      let response = await request(app).post("/login").send(user);
+
+      //we should get a redirect
+      expect(response.statusCode).to.equal(302)
+      expect(response.headers.location).to.equal("/")
+    })
+
+    test('failed POST /login', async () => {
+
     })
   })
 
