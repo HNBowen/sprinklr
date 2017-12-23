@@ -12,11 +12,16 @@ function getAllUsers() {
   return Users().select()
 }
 
+function getUserById(id) {
+  return Users().where('id', parseInt(id)).first();
+}
+
 function getAllPlants() {
   return Plants().select()
 }
 
 module.exports = {
   getAllUsers: getAllUsers,
-  getAllPlants: getAllPlants
+  getAllPlants: getAllPlants,
+  getUserById: getUserById
 }

@@ -12,6 +12,15 @@ router.route('/users')
     })
   })
 
+router.route('/users/:id')
+  .get(function(req, res) {
+    queries.getUserById(req.params.id).then(function(user) {
+      res.status(200)
+      res.json(user)
+    })
+  })
+
+
 router.route('/')
   .get(function(req, res) {
     res.status(200);
