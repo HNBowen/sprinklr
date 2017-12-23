@@ -7,6 +7,26 @@ const app = express();
 
 const server = http.Server(app);
 
+//error handling
+//if in development mode, print stacktrace
+if (app.get('env') === 'development') {
+  app.use(function(err, req, res, next) {
+    res.status(err.status || 500);
+    res.json({
+      message: err.message,
+      error: err
+    })
+  })
+}
+//if in production environment, do not print stacktrace
+app.use(function(err, req, res, next) {
+  res.status(err.status || 500);
+  res.json({
+    message: err.message,
+    error: {}
+  })
+})
+
 //use the router
 app.use('/', router);
 

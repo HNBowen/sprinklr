@@ -49,7 +49,7 @@ module.exports.plantsToAdd = [
 module.exports.users = [
   {
     name: "test_user_1",
-    password: "test_user_1_passowrd"
+    password: "test_user_1_password"
   },
   {
     name: "test_user_2",
