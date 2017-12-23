@@ -10,17 +10,19 @@ var app = express();
 app.use(router);
 
 describe('API routes', function() {
-
   // rollback migrations, apply migrations, and re-seed before each test
   beforeEach(async () => {
     await knex.migrate.rollback()
     await knex.migrate.latest()
     await knex.seed.run()
   })
-  // rollback migrations after each test
-  afterEach(async (done) => {
+  // // rollback migrations after each test
+  afterEach(async () => {
     await knex.migrate.rollback()
-    done()
+  })
+
+  afterAll(async () => {
+    await knex.destroy()
   })
 
   describe('the root path', function() {
@@ -42,9 +44,6 @@ describe('API routes', function() {
     })
   })
 
-  describe('plants route', function() {})
-  
-})
 
   //rollback migrations, apply migrations, and re-seed before each test
   // beforeEach(async () => {
@@ -70,3 +69,5 @@ describe('API routes', function() {
   //     expect(response.body[0].password).to.equal('test_user_1_passwowrd')
   //   })
   // })
+  
+})
