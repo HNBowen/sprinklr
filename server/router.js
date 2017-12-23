@@ -39,6 +39,23 @@ router.route('/plants')
       res.json(plants)
     })
   })
+  .post(function(req, res) {
+    queries.getUserByUsername(req.body.user).then(function(user) {
+      var user_id = user.id;
+      queries.addPlant(req.body, user_id).then(function() {
+        res.status(200);
+        res.end();
+      })
+    })
+  })
+
+router.route('/plants/:id')
+  .get(function(req,res) {
+    queries.getPlantsById(req.params.id).then(function(plants) {
+      res.status(200);
+      res.json(plants)
+    })
+  })
 
 
 router.route('/')

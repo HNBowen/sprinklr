@@ -25,6 +25,10 @@ function getAllPlants() {
   return Plants().select()
 }
 
+function getPlantsById(id) {
+  return Plants().where('user_id', id)
+}
+
 async function addUser(newUser) {
   let hash = await bcrypt.hash(newUser.password, 10);
   return Users().insert({
@@ -33,9 +37,21 @@ async function addUser(newUser) {
   })
 }
 
+function addPlant(plant, user_id) {
+  return Plants().insert({
+    name: plant.name,
+    image: plant.img,
+    dateAdded: new Date(),
+    lastWatered: plant.lastWatered,
+    user_id: user_id
+  })
+}
+
 module.exports = {
   getAllUsers: getAllUsers,
   getAllPlants: getAllPlants,
   getUserByUsername: getUserByUsername,
-  addUser: addUser
+  getPlantsById: getPlantsById,
+  addUser: addUser,
+  addPlant: addPlant
 }

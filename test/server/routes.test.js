@@ -94,6 +94,35 @@ describe('API routes', function() {
       expect(response.body).to.be.an("array");
       expect(response.body.length).to.equal(4);
     })
+
+    test('GET /plants/:userId', async () => {
+      let requestUserId = await request(app).get("/users/test_user_1");
+      let userId = requestUserId.body.id;
+      let userPlants = await request(app).get("/plants/" + userId);
+
+      expect(userPlants.statusCode).to.equal(200);
+      expect(userPlants.body).to.be.an('array');
+      expect(userPlants.body.length).to.equal(2);
+    })
+
+    test('POST /plants', async () => {
+      let newPlant = {
+        name: "Fiddle Leaf",
+        img: "https://i.pinimg.com/236x/6f/d3/2e/6fd32e64735e460852ec3c507df10354.jpg",
+        lastWatered: new Date(),
+        user: "test_user_2"
+      };
+      let response = await request(app).post("/plants").send(newPlant);
+
+      expect(response.statusCode).to.equal(200);
+
+      let requestUserId = await request(app).get("/users/test_user_2");
+      let userId = requestUserId.body.id;
+      let updatedPlants = await request(app).get("/plants/" + userId);
+
+      expect(updatedPlants.body.length).to.equal(3);
+      expect(updatedPlants.body[2]["name"]).to.equal("Fiddle Leaf")
+    })
   })
 
   
