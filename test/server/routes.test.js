@@ -5,6 +5,7 @@ const request = require('supertest');
 const express = require('express')
 const bodyParser = require('body-parser')
 const session = require('express-session')
+
 const bcrypt = require('bcrypt')
 const router = require('../../server/router.js')
 const knex = require('../../db/knex.js')
@@ -38,101 +39,144 @@ describe('API routes', function() {
   afterAll(async () => {
     await knex.destroy()
   })
+////////////////////////////////////////////////////////////////////////////////
 
-  describe('the root path', function() {
-    it('should respond to a GET request', async () => {
-      let response = await request(app).get("/")
-      expect(response.statusCode).to.equal(200)
+  describe('protected routes AFTER authentication', function() {
+
+    describe('the root path', function() {
+      it('should respond to a GET request', async () => {
+        let response = await request(app).get("/")
+        expect(response.statusCode).to.equal(200)
+      })
+    })
+
+    describe('/users', function() {
+      it('GET /users', async () => {
+        let response = await request(app).get("/users");
+        expect(response.statusCode).to.equal(200)
+        expect(response.body).to.be.an('array')
+        expect(response.body.length).to.equal(3);
+        expect(response.body[0].id).to.exist;
+        expect(response.body[0].name).to.equal('test_user_1');
+        expect(response.body[0].password).to.equal('test_user_1_password')
+      })
+
+      it('GET /users/:username', async () => {
+        let response = await request(app).get("/users/test_user_1");
+        expect(response.statusCode).to.equal(200);
+        expect(response.body.name).to.equal('test_user_1');
+
+      })
+    })
+
+    describe('/plants', function() {
+
+      var Cookies;
+      beforeEach(async () => {
+        var newUser = {
+            name: "test_POST_user",
+            password: "plain_text"
+          }
+        //create the user
+        await request(app).post("/users").send(newUser);
+        //then log in
+        let loginResponse = await request(app).post("/login").send(newUser);
+        //then save the cookies for use in the tests
+        Cookies = loginResponse.headers['set-cookie'].pop().split(';')[0];;
+      })
+
+      it('GET /plants', function(done) {
+        let response = request(app).get("/plants");
+        response.cookies = Cookies;
+        response.end(function(err, res) {
+          expect(res.statusCode).to.equal(200);
+          expect(res.body).to.be.an("array");
+          expect(res.body.length).to.equal(4);
+          done();
+        })
+      })
+
+      test('GET /plants/:userId', async (done) => {
+        let requestUserId = await request(app).get("/users/test_user_1");
+        let userId = requestUserId.body.id;
+        let userPlants = request(app).get("/plants/" + userId);
+        userPlants.cookies = Cookies;
+
+        userPlants.end(function(err, res) {
+          expect(res.statusCode).to.equal(200);
+          expect(res.body).to.be.an('array');
+          expect(res.body.length).to.equal(2);
+          done()
+        })
+
+      })
+
+      test('POST /plants', async (done) => {
+        let newPlant = {
+          name: "Fiddle Leaf",
+          img: "https://i.pinimg.com/236x/6f/d3/2e/6fd32e64735e460852ec3c507df10354.jpg",
+          lastWatered: new Date(),
+          user: "test_user_2"
+        };
+        let response = request(app).post("/plants").send(newPlant);
+        response.cookies = Cookies;
+
+        response.end(function(err, res) {
+          expect(res.statusCode).to.equal(200);
+
+          let requestUserId = request(app).get("/users/test_user_2");
+          requestUserId.cookies = Cookies;
+
+          requestUserId.end(function(err, res) {
+            let userId = res.body.id;
+            let updatedPlants = request(app).get("/plants/" + userId);
+            updatedPlants.cookies = Cookies
+
+            updatedPlants.end(function(err, res) {
+              expect(res.body.length).to.equal(3);
+              expect(res.body[2]["name"]).to.equal("Fiddle Leaf");
+              done()
+            })
+          })
+        })
+
+      })
     })
   })
 
-  describe('/users', function() {
-    it('GET /users', async () => {
-      let response = await request(app).get("/users");
-      expect(response.statusCode).to.equal(200)
-      expect(response.body).to.be.an('array')
-      expect(response.body.length).to.equal(2);
-      expect(response.body[0].id).to.exist;
-      expect(response.body[0].name).to.equal('test_user_1');
-      expect(response.body[0].password).to.equal('test_user_1_password')
-    })
+  describe('protected routes BEFORE authentication', function() {
 
-    it('GET /users/:username', async () => {
-      let response = await request(app).get("/users/test_user_1");
-      expect(response.statusCode).to.equal(200);
-      expect(response.body.name).to.equal('test_user_1');
+  })
 
-    })
+  describe('unprotected routes', function() {
 
     it('POST /users', async () => {
-      var newUser = {
-        name: "test_POST_user",
-        password: "plain_text"
-      }
-      let response = await request(app).post("/users").send(newUser);
+        var newUser = {
+          name: "test_POST_user",
+          password: "plain_text"
+        }
+        let response = await request(app).post("/users").send(newUser);
 
-      //should respond without error
-      expect(response.statusCode).to.equal(200)
+        //should respond without error
+        expect(response.statusCode).to.equal(200)
 
-      //should be able to retrieve the user
-      let addedUser = await request(app).get("/users/" + newUser.name);
-      expect(addedUser.statusCode).to.equal(200);
-      expect(addedUser.body.name).to.equal(newUser.name)
+        //should be able to retrieve the user
+        let addedUser = await request(app).get("/users/" + newUser.name);
+        expect(addedUser.statusCode).to.equal(200);
+        expect(addedUser.body.name).to.equal(newUser.name)
 
-      //returned password should match hash of plaintext password
-      let isMatch = await bcrypt.compare(newUser.password, addedUser.body.password)
-      expect(isMatch).to.be.true
+        //returned password should match hash of plaintext password
+        let isMatch = await bcrypt.compare(newUser.password, addedUser.body.password)
+        expect(isMatch).to.be.true
 
-      //it should 400 if username exists
-      var existingUser = {
-        name: "test_user_1",
-        password: "idk"
-      }
-      let existingUserPost = await request(app).post("/users").send(existingUser);
-      expect(existingUserPost.statusCode).to.equal(400)
-    })
-  })
-
-  describe('/plants', function() {
-    it('GET /plants', async () => {
-      let response = await request(app).get("/plants");
-      expect(response.statusCode).to.equal(200);
-      expect(response.body).to.be.an("array");
-      expect(response.body.length).to.equal(4);
-    })
-
-    test('GET /plants/:userId', async () => {
-      let requestUserId = await request(app).get("/users/test_user_1");
-      let userId = requestUserId.body.id;
-      let userPlants = await request(app).get("/plants/" + userId);
-
-      expect(userPlants.statusCode).to.equal(200);
-      expect(userPlants.body).to.be.an('array');
-      expect(userPlants.body.length).to.equal(2);
-    })
-
-    test('POST /plants', async () => {
-      let newPlant = {
-        name: "Fiddle Leaf",
-        img: "https://i.pinimg.com/236x/6f/d3/2e/6fd32e64735e460852ec3c507df10354.jpg",
-        lastWatered: new Date(),
-        user: "test_user_2"
-      };
-      let response = await request(app).post("/plants").send(newPlant);
-
-      expect(response.statusCode).to.equal(200);
-
-      let requestUserId = await request(app).get("/users/test_user_2");
-      let userId = requestUserId.body.id;
-      let updatedPlants = await request(app).get("/plants/" + userId);
-
-      expect(updatedPlants.body.length).to.equal(3);
-      expect(updatedPlants.body[2]["name"]).to.equal("Fiddle Leaf")
-    })
-  })
-
-  describe('/login', function() {
-
+        //it should 400 if username exists
+        var existingUser = {
+          name: "test_user_1",
+          password: "idk"
+        }
+        let existingUserPost = await request(app).post("/users").send(existingUser);
+        expect(existingUserPost.statusCode).to.equal(400)
+      })
     test('successful POST /login', async () => {
       
       var user = {
@@ -148,6 +192,7 @@ describe('API routes', function() {
       //we should get a redirect
       expect(response.statusCode).to.equal(302)
       expect(response.headers.location).to.equal("/")
+      console.log('COOKIES -----------------> ', response.headers['set-cookie'].pop().split(';')[0])
     })
 
     test('failed POST /login', async () => {
@@ -174,6 +219,12 @@ describe('API routes', function() {
 
     })
   })
+
+//////////////////////////////////////////////////////////////////////  
+
+  
+
+  
 
   
 })

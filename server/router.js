@@ -5,6 +5,8 @@ const bcrypt = require('bcrypt')
 
 var router = express.Router();
 
+//set up authentication middleware
+router.use('/plants', utils.checkUser)
 
 router.route('/users')
   .get(function(req, res) {
