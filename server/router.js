@@ -8,6 +8,7 @@ var router = express.Router();
 //set up authentication middleware
 router.use('/plants', utils.checkUser)
 router.use('/users', utils.checkUser)
+router.use('/home', utils.checkUser)
 
 
 router.route('/users')
@@ -91,7 +92,7 @@ router.route('/register')
   })
 
 
-router.route('/')
+router.route('/home')
   .get(function(req, res) {
     res.status(200);
     res.send('response')

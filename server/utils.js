@@ -26,7 +26,7 @@ exports.createSession = function(req, res, newUser) {
       //save the user object on the session for easy lookup in subsequent requests
       req.session.user = newUser;
       //send the user to the home page
-      res.redirect("/");
+      res.redirect("/home");
     }
   })
 }

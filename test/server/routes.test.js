@@ -60,10 +60,15 @@ describe('API routes', function() {
 
   describe('protected routes AFTER authentication', function() {
 
-    describe('the root path', function() {
-      it('should respond to a GET request', async () => {
-        let response = await request(app).get("/")
-        expect(response.statusCode).to.equal(200)
+    describe('/home', function() {
+      it('GET /home', (done) => {
+        let response = request(app).get("/home")
+        response.cookies = Cookies
+
+        response.end((err, res) => {
+          expect(res.statusCode).to.equal(200)
+          done();
+        })
       })
     })
 
@@ -163,6 +168,57 @@ describe('API routes', function() {
 
   describe('protected routes BEFORE authentication', function() {
 
+    describe('the root path', function() {
+
+      test('GET /', async () => {
+        let response = await request(app).get('/home');
+
+        expect(response.statusCode).to.equal(302);
+        expect(response.headers.location).to.equal('/login');
+      })
+    })
+
+    describe('/users', function() {
+
+      test('GET /users', async () => {
+        let response = await request(app).get('/users');
+
+        expect(response.statusCode).to.equal(302);
+        expect(response.headers.location).to.equal('/login');
+      })
+
+      test('GET /users/:username', async () => {
+        let response = await request(app).get('/users/test_user_1');
+
+        expect(response.statusCode).to.equal(302);
+        expect(response.headers.location).to.equal('/login');
+      })
+    })
+
+    describe('/plants', function() {
+      test('GET /plants', async () => {
+        let response = await request(app).get('/plants');
+
+        expect(response.statusCode).to.equal(302);
+        expect(response.headers.location).to.equal('/login');
+      })
+
+      test('POST /plants', async () => {
+        let response = await request(app).post('/plants').send({});
+
+        expect(response.statusCode).to.equal(302);
+        expect(response.headers.location).to.equal('/login');
+      })
+
+      test('GET /plants/:userId', async () => {
+        let response = await request(app).get('/plants/123');
+
+        expect(response.statusCode).to.equal(302);
+        expect(response.headers.location).to.equal('/login');
+      })
+
+    })
+
   })
 
   describe('unprotected routes', function() {
@@ -225,7 +281,7 @@ describe('API routes', function() {
 
         //we should get a redirect
         expect(response.statusCode).to.equal(302)
-        expect(response.headers.location).to.equal("/")
+        expect(response.headers.location).to.equal("/home")
       })
 
       test('failed POST /login', async () => {
