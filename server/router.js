@@ -7,24 +7,14 @@ var router = express.Router();
 
 //set up authentication middleware
 router.use('/plants', utils.checkUser)
+router.use('/users', utils.checkUser)
+
 
 router.route('/users')
   .get(function(req, res) {
     queries.getAllUsers().then(function(users) {
       res.status(200)
       res.json(users);
-    })
-  })
-  .post(function(req, res) {
-    queries.getUserByUsername(req.body.name).then(function(found) {
-      if(found) {
-        res.status(400);
-        res.end();
-      }
-      queries.addUser(req.body).then(function() {
-        res.status(200)
-        res.end()
-      })
     })
   })
 
@@ -84,6 +74,20 @@ router.route('/login')
       }
     }
 
+  })
+
+router.route('/register')
+  .post(function(req, res) {
+    queries.getUserByUsername(req.body.name).then(function(found) {
+      if(found) {
+        res.status(400);
+        res.end();
+      }
+      queries.addUser(req.body).then(function() {
+        res.status(200)
+        res.end()
+      })
+    })
   })
 
 

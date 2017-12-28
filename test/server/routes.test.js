@@ -21,13 +21,30 @@ app.use(router);
 
 describe('API routes', function() {
   // rollback migrations, apply migrations, and re-seed before each test
+  // also, grab cookies from an authenticated request to use in future requests
+  var Cookies;
   beforeEach(async () => {
     await knex.migrate.rollback()
     await knex.migrate.latest()
     await knex.seed.run()
+
+    //this part of the beforeEach block makes an authenticated request so we can have 
+    //access to the cookies in future requests.
+    //huge props to João Neto and this GitHub Gist: https://gist.github.com/joaoneto/5152248
+    var newUser = {
+        name: "authenticated_user",
+        password: "plain_text"
+      }
+    //create the user
+    await request(app).post("/register").send(newUser);
+    //then log in
+    let loginResponse = await request(app).post("/login").send(newUser);
+    //then save the cookies for use in the tests
+    Cookies = loginResponse.headers['set-cookie'].pop().split(';')[0];
   })
   // // rollback migrations after each test
   afterEach(async () => {
+    
     await knex.migrate.rollback()
   })
 
@@ -51,39 +68,35 @@ describe('API routes', function() {
     })
 
     describe('/users', function() {
-      it('GET /users', async () => {
-        let response = await request(app).get("/users");
-        expect(response.statusCode).to.equal(200)
-        expect(response.body).to.be.an('array')
-        expect(response.body.length).to.equal(3);
-        expect(response.body[0].id).to.exist;
-        expect(response.body[0].name).to.equal('test_user_1');
-        expect(response.body[0].password).to.equal('test_user_1_password')
+      it('GET /users', (done) => {
+        let response = request(app).get("/users");
+        response.cookies = Cookies;
+        response.end((err, res) => {
+          expect(res.statusCode).to.equal(200)
+          expect(res.body).to.be.an('array')
+          expect(res.body.length).to.equal(3);
+          expect(res.body[0].id).to.exist;
+          expect(res.body[0].name).to.equal('test_user_1');
+          expect(res.body[0].password).to.equal('test_user_1_password')
+          done();
+        })
       })
 
-      it('GET /users/:username', async () => {
-        let response = await request(app).get("/users/test_user_1");
-        expect(response.statusCode).to.equal(200);
-        expect(response.body.name).to.equal('test_user_1');
+      it('GET /users/:username', (done) => {
+        let response = request(app).get("/users/test_user_1");
+        response.cookies = Cookies;
+
+        response.end((err, res) => {
+          expect(res.statusCode).to.equal(200);
+          expect(res.body.name).to.equal('test_user_1');
+          done();
+        })
 
       })
     })
 
     describe('/plants', function() {
 
-      var Cookies;
-      beforeEach(async () => {
-        var newUser = {
-            name: "test_POST_user",
-            password: "plain_text"
-          }
-        //create the user
-        await request(app).post("/users").send(newUser);
-        //then log in
-        let loginResponse = await request(app).post("/login").send(newUser);
-        //then save the cookies for use in the tests
-        Cookies = loginResponse.headers['set-cookie'].pop().split(';')[0];;
-      })
 
       it('GET /plants', function(done) {
         let response = request(app).get("/plants");
@@ -96,17 +109,21 @@ describe('API routes', function() {
         })
       })
 
-      test('GET /plants/:userId', async (done) => {
-        let requestUserId = await request(app).get("/users/test_user_1");
-        let userId = requestUserId.body.id;
-        let userPlants = request(app).get("/plants/" + userId);
-        userPlants.cookies = Cookies;
+      test('GET /plants/:userId', (done) => {
+        let requestUserId = request(app).get("/users/test_user_1");
+        requestUserId.cookies = Cookies;
 
-        userPlants.end(function(err, res) {
-          expect(res.statusCode).to.equal(200);
-          expect(res.body).to.be.an('array');
-          expect(res.body.length).to.equal(2);
-          done()
+        requestUserId.end(function(err, res) {
+          let userId = res.body.id;
+          let userPlants = request(app).get("/plants/" + userId);
+          userPlants.cookies = Cookies;
+
+          userPlants.end(function(err, res) {
+            expect(res.statusCode).to.equal(200);
+            expect(res.body).to.be.an('array');
+            expect(res.body.length).to.equal(2);
+            done()
+          })
         })
 
       })
@@ -150,81 +167,92 @@ describe('API routes', function() {
 
   describe('unprotected routes', function() {
 
-    it('POST /users', async () => {
+
+    describe('/register', function() {
+      it('POST /register', async (done) => {
         var newUser = {
           name: "test_POST_user",
           password: "plain_text"
         }
-        let response = await request(app).post("/users").send(newUser);
+        let response = await request(app).post("/register").send(newUser);
 
         //should respond without error
         expect(response.statusCode).to.equal(200)
 
+
         //should be able to retrieve the user
-        let addedUser = await request(app).get("/users/" + newUser.name);
-        expect(addedUser.statusCode).to.equal(200);
-        expect(addedUser.body.name).to.equal(newUser.name)
+        let addedUser = request(app).get("/users/" + newUser.name);
+        addedUser.cookies = Cookies;
 
-        //returned password should match hash of plaintext password
-        let isMatch = await bcrypt.compare(newUser.password, addedUser.body.password)
-        expect(isMatch).to.be.true
+        addedUser.end((err, res) => {
+          expect(res.statusCode).to.equal(200);
+          expect(res.body.name).to.equal(newUser.name)
 
-        //it should 400 if username exists
-        var existingUser = {
+          //returned password should match hash of plaintext password
+          bcrypt.compare(newUser.password, res.body.password, (err, isMatch) => {
+            expect(isMatch).to.be.true
+            done();
+          })
+        })
+      })
+
+      test('POST /register with duplicate username', async () => {
+        var badUser = {
           name: "test_user_1",
           password: "idk"
         }
-        let existingUserPost = await request(app).post("/users").send(existingUser);
-        expect(existingUserPost.statusCode).to.equal(400)
+
+        let response = await request(app).post("/register").send(badUser);
+        //duplicate usernames should be rejected
+        expect(response.statusCode).to.equal(400);
+
       })
-    test('successful POST /login', async () => {
-      
-      var user = {
-        name: "test_user_login",
-        password: "test_user_login_password"
-      }
-
-      //create a new user to hash the passwords. Seeded users in database are not hashed
-      let createUserRequest = await request(app).post("/users").send(user);
-
-      let response = await request(app).post("/login").send(user);
-
-      //we should get a redirect
-      expect(response.statusCode).to.equal(302)
-      expect(response.headers.location).to.equal("/")
-      console.log('COOKIES -----------------> ', response.headers['set-cookie'].pop().split(';')[0])
     })
 
-    test('failed POST /login', async () => {
-      
-      var badUserName = {
-        name: "test_bad_user",
-        password: "none"
-      }
+    describe('/login', function() {
 
-      let badUserNameResponse = await request(app).post("/login").send(badUserName);
+      test('successful POST /login', async () => {
+        
+        var user = {
+          name: "test_user_login",
+          password: "test_user_login_password"
+        }
 
-      expect(badUserNameResponse.statusCode).to.equal(302);
-      expect(badUserNameResponse.headers.location).to.equal("/login")
+        //create a new user to hash the passwords. Seeded users in database are not hashed
+        let createUserRequest = await request(app).post("/register").send(user);
 
-      var badPassword = {
-        name: "test_user_login",
-        password: "baddy"
-      }
+        let response = await request(app).post("/login").send(user);
 
-      let badPasswordResponse = await request(app).post("/login").send(badPassword);
+        //we should get a redirect
+        expect(response.statusCode).to.equal(302)
+        expect(response.headers.location).to.equal("/")
+      })
 
-      expect(badPasswordResponse.statusCode).to.equal(302)
-      expect(badPasswordResponse.headers.location).to.equal("/login")
+      test('failed POST /login', async () => {
+        
+        var badUserName = {
+          name: "test_bad_user",
+          password: "none"
+        }
 
+        let badUserNameResponse = await request(app).post("/login").send(badUserName);
+
+        expect(badUserNameResponse.statusCode).to.equal(302);
+        expect(badUserNameResponse.headers.location).to.equal("/login")
+
+        var badPassword = {
+          name: "test_user_login",
+          password: "baddy"
+        }
+
+        let badPasswordResponse = await request(app).post("/login").send(badPassword);
+
+        expect(badPasswordResponse.statusCode).to.equal(302)
+        expect(badPasswordResponse.headers.location).to.equal("/login")
+
+      })
     })
   })
 
-//////////////////////////////////////////////////////////////////////  
-
-  
-
-  
-
-  
+//////////////////////////////////////////////////////////////////////    
 })
