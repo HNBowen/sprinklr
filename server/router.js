@@ -53,7 +53,7 @@ router.route('/plants/:id')
   })
 
 router.route('/login')
-  .post(async (req, res) => {
+  .post(async function(req, res) {
     //check password and username against database
     let user = await queries.getUserByUsername(req.body.name);
 
@@ -74,7 +74,6 @@ router.route('/login')
         res.redirect('/login')
       }
     }
-
   })
 
 router.route('/register')

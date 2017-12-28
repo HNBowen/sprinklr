@@ -19,7 +19,7 @@ var config = {
         exclude: ['node-modules'],
         loader : 'babel-loader',
         query: {
-          presets: ['react', 'es2015']
+          presets: ['react', 'es2015', 'env'],
         }
       }
     ]
