@@ -1,0 +1,24 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Login should render correctly 1`] = `
+<div>
+  <form>
+    username: 
+    <input
+      name="username"
+      type="text"
+    />
+    password: 
+    <input
+      name="password"
+      type="text"
+    />
+    <button>
+      Login
+    </button>
+  </form>
+  <button>
+    Register
+  </button>
+</div>
+`;
