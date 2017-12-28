@@ -168,9 +168,9 @@ describe('API routes', function() {
 
   describe('protected routes BEFORE authentication', function() {
 
-    describe('the root path', function() {
+    describe('/home', function() {
 
-      test('GET /', async () => {
+      test('GET /home', async () => {
         let response = await request(app).get('/home');
 
         expect(response.statusCode).to.equal(302);
@@ -222,6 +222,18 @@ describe('API routes', function() {
   })
 
   describe('unprotected routes', function() {
+
+    describe('/', function() {
+      test('GET /', (done) => {
+        let response = request(app).get("/");
+
+        response.end((err, res) => {
+          expect(res.statusCode).to.equal(302);
+          expect(res.headers.location).to.equal('/home')
+          done();
+        })
+      })
+    })
 
 
     describe('/register', function() {

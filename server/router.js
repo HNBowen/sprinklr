@@ -11,6 +11,7 @@ router.use('/users', utils.checkUser)
 router.use('/home', utils.checkUser)
 
 
+
 router.route('/users')
   .get(function(req, res) {
     queries.getAllUsers().then(function(users) {
@@ -95,6 +96,11 @@ router.route('/home')
   .get(function(req, res) {
     res.status(200);
     res.send('response')
+  })
+
+router.route('/')
+  .get(function(req, res) {
+    res.redirect('/home')
   })
 
 module.exports = router;
