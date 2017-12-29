@@ -13,11 +13,15 @@ exports[`Login should render correctly 1`] = `
       name="password"
       type="text"
     />
-    <button>
+    <button
+      onClick={[Function]}
+    >
       Login
     </button>
   </form>
-  <button>
+  <button
+    onClick={[Function]}
+  >
     Register
   </button>
 </div>
