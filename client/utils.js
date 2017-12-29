@@ -32,6 +32,24 @@ export const handleLogin = (e) => {
   })
 }
 
-export const handleRegister = () => {
+export const handleRegister = (e) => {
+
+  e.preventDefault();
+
+  let username = e.target.username.value;
+  let password = e.target.password.value;
+  //handle blank values
+  if (username === "" || password === "") {
+    alert("Invalid username or password")
+    return;
+  }
+  //POST to /login
+  return fetch("/register", {
+    method: "POST",
+    body: {
+      username: username,
+      password: password
+    }
+  })
 
 }
