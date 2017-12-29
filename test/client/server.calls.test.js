@@ -1,4 +1,5 @@
 import {handleLogin, handleRegister} from '../../client/utils.js'
+import sinon from 'sinon'
 import fetchMock from 'fetch-mock'
 
 describe('handleLogin', function() {
@@ -15,7 +16,7 @@ describe('handleLogin', function() {
 
   //retore fetch to unmocked version
   afterAll(function() {
-    fetchMock.restor();
+    fetchMock.restore();
   })
 
   it('should make a POST request to login', function() {
@@ -44,6 +45,60 @@ describe('handleLogin', function() {
       console.error(err)
     })
   })
+
+  it('should alert if called without username or password values', function() {
+    window.alert = sinon.spy();
+
+    let badUsernameEvent = {
+      target: {
+        username: {
+          value: ""
+        },
+        password: {
+          value: "test"
+        }
+      },
+      preventDefault: jest.fn()
+    }
+
+    handleLogin(badUsernameEvent);
+    expect(window.alert.calledOnce).to.be.true;
+
+    let badPasswordEvent = {
+      target: {
+        username: {
+          value: "test"
+        },
+        password: {
+          value: ""
+        }
+      },
+      preventDefault: jest.fn()
+    }
+
+    handleLogin(badPasswordEvent);
+    expect(window.alert.callCount).to.equal(2);
+  })
+
+  it('should prevent default browser behavior', function() {
+    let mockEvent = {
+      target: {
+        username: {
+          value: "test"
+        },
+        password: {
+          value: "test"
+        }
+      },
+      preventDefault: sinon.spy()
+    }
+
+    handleLogin(mockEvent);
+
+    expect(mockEvent.preventDefault.calledOnce).to.be.true
+  })
+
+
 })
 
 describe('handleRegister', function() {
@@ -60,7 +115,7 @@ describe('handleRegister', function() {
 
   //retore fetch to unmocked version
   afterAll(function() {
-    fetchMock.restor();
+    fetchMock.restore();
   })
 
   it('should make a POST request to /register', function() {
@@ -86,6 +141,58 @@ describe('handleRegister', function() {
       //request body should have contained username and pass
       expect(call[1].body).to.deep.equal({username:"test", password: "test"})
     })
+  })
+
+  it('should alert if called with empty values for username or password', function() {
+    window.alert = sinon.spy();
+
+    let badUsernameEvent = {
+      target: {
+        username: {
+          value: ""
+        },
+        password: {
+          value: "test"
+        }
+      },
+      preventDefault: jest.fn()
+    }
+
+    handleRegister(badUsernameEvent);
+    expect(window.alert.calledOnce).to.be.true;
+
+    let badPasswordEvent = {
+      target: {
+        username: {
+          value: "test"
+        },
+        password: {
+          value: ""
+        }
+      },
+      preventDefault: jest.fn()
+    }
+
+    handleRegister(badPasswordEvent);
+    expect(window.alert.callCount).to.equal(2);
+  })
+
+  it('should prevent default browser behavior', function() {
+    let mockEvent = {
+      target: {
+        username: {
+          value: "test"
+        },
+        password: {
+          value: "test"
+        }
+      },
+      preventDefault: sinon.spy()
+    }
+
+    handleRegister(mockEvent);
+
+    expect(mockEvent.preventDefault.calledOnce).to.be.true
   })
 
 })
