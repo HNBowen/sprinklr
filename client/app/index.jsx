@@ -4,15 +4,17 @@ import {BrowserRouter as Router, Route, Link} from 'react-router-dom'
 
 import App from '../app/components/App.jsx';
 import Login from '../app/components/Login.jsx';
+import Register from '../app/components/Register.jsx';
 
-import {handleFormClick} from '../utils.js'
+import {handleLogin, handleRegister} from '../utils.js'
 
 
 
 ReactDOM.render(
     <Router>
       <div>
-        <Route path="/login" render={() => <Login handleClick={handleFormClick}/>}/>
+        <Route path="/login" render={() => <Login handleLogin={handleLogin}/>}/>
+        <Route path="/register" render={() => <Register handleRegister={handleRegister} />}/>
         <Route path="/home/:username" component={App}/>
       </div>
     </Router>,

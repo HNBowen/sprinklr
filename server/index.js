@@ -9,20 +9,31 @@ const app = express();
 
 const server = http.Server(app);
 
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
+
 //body parser
-app.use(bodyParser())
+app.use(bodyParser.urlencoded({ extended: true }))
+app.use(bodyParser.json());
 
 //create a session object
 var sess = {
   secret: "mostera deliciosa",
   resave: false,
-  saveUnitialized: true,
-  cookie: {}
+  saveUninitialized: true,
+  cookie: {
+    maxAge: null
+  }
 }
 
 //if we are in production, secure the cookie
 if (app.get('env') === "production") {
-   sess.cookie.secure = true;
+   sess.cookie = {
+      secure: true
+    };
    app.set('trust proxy', 1)
 }
 
@@ -50,12 +61,12 @@ app.use(function(err, req, res, next) {
   })
 })
 
+//server static assets transpiled by webpack
+app.use('/static', express.static(path.join(__dirname, '../public')))
 
 //use the router
 app.use('/', router);
 
-//server static assets transpiled by webpack
-app.use('/static', express.static(path.join(__dirname, '../public')))
 
 //wildcard route, serve index.html
 app.get('*', function (req, res) {

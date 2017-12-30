@@ -35,7 +35,7 @@ describe('API routes', function() {
     //access to the cookies in future requests.
     //huge props to João Neto and this GitHub Gist: https://gist.github.com/joaoneto/5152248
     var newUser = {
-        name: "authenticated_user",
+        username: "authenticated_user",
         password: "plain_text"
       }
     //create the user
@@ -250,7 +250,7 @@ describe('API routes', function() {
     describe('/register', function() {
       it('POST /register', async (done) => {
         var newUser = {
-          name: "test_POST_user",
+          username: "test_POST_user",
           password: "plain_text"
         }
         let response = await request(app).post("/register").send(newUser);
@@ -261,12 +261,12 @@ describe('API routes', function() {
 
 
         //should be able to retrieve the user
-        let addedUser = request(app).get("/users/" + newUser.name);
+        let addedUser = request(app).get("/users/" + newUser.username);
         addedUser.cookies = Cookies;
 
         addedUser.end((err, res) => {
           expect(res.statusCode).to.equal(200);
-          expect(res.body.name).to.equal(newUser.name)
+          expect(res.body.name).to.equal(newUser.username)
 
           //returned password should match hash of plaintext password
           bcrypt.compare(newUser.password, res.body.password, (err, isMatch) => {
@@ -278,7 +278,7 @@ describe('API routes', function() {
 
       test('POST /register with duplicate username', async () => {
         var badUser = {
-          name: "test_user_1",
+          username: "test_user_1",
           password: "idk"
         }
 
@@ -294,7 +294,7 @@ describe('API routes', function() {
       test('successful POST /login', async () => {
         
         var user = {
-          name: "test_user_login",
+          username: "test_user_login",
           password: "test_user_login_password"
         }
 
@@ -312,7 +312,7 @@ describe('API routes', function() {
       test('failed POST /login', async () => {
         
         var badUserName = {
-          name: "test_bad_user",
+          username: "test_bad_user",
           password: "none"
         }
 
@@ -322,7 +322,7 @@ describe('API routes', function() {
         expect(badUserNameResponse.headers.location).to.equal("/login")
 
         var badPassword = {
-          name: "test_user_login",
+          username: "test_user_login",
           password: "baddy"
         }
 

@@ -11,14 +11,6 @@ promise.polyfill()
 
 // }
 
-export cost handleLFormClick = (e) => {
-  if (e.name === "login") {
-    handleLogin(e)
-  } else if (e.name === "register") {
-    handleRegister(e)
-  }
-}
-
 export const handleLogin = (e) => {
   //prevent default browser behavior
   e.preventDefault();
@@ -30,19 +22,30 @@ export const handleLogin = (e) => {
     alert("Invalid username or password")
     return;
   }
+
+  var body = {
+    username: username,
+    password: password
+  }
   //POST to /login
   return fetch("/login", {
     method: "POST",
-    body: {
-      username: username,
-      password: password
-    }
+    headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+    body: JSON.stringify(body),
+    credentials: 'same-origin'
   })
 }
 
 export const handleRegister = (e) => {
 
   e.preventDefault();
+
+  console.log("handling register submit")
+  console.log("password: ", e.target.password.value)
+  console.log("username; ", e.target.username.value)
 
   let username = e.target.username.value;
   let password = e.target.password.value;
@@ -51,13 +54,20 @@ export const handleRegister = (e) => {
     alert("Invalid username or password")
     return;
   }
+
+  var body = {
+    username: username,
+    password: password
+  }
   //POST to /login
   return fetch("/register", {
     method: "POST",
-    body: {
-      username: username,
-      password: password
-    }
+    headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+    body: JSON.stringify(body),
+    credentials: 'same-origin'
   })
 
 }

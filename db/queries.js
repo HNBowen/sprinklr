@@ -30,13 +30,17 @@ function getPlantsById(id) {
 }
 
 async function addUser(newUser) {
-  let hash = await bcrypt.hash(newUser.password, 10);
-  return Users().insert({
-    name: newUser.name,
-    password: hash
-  }).then(function() {
-    return getUserByUsername(newUser.name)
-  })
+  try {
+    let hash = await bcrypt.hash(newUser.password, 10);
+    return Users().insert({
+      name: newUser.username,
+      password: hash
+    }).then(function() {
+      return getUserByUsername(newUser.username)
+    })
+  } catch(err) {
+    throw new Error(err)
+  }
 }
 
 function addPlant(plant, user_id) {

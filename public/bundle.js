@@ -2339,7 +2339,11 @@ var _Login = __webpack_require__(83);
 
 var _Login2 = _interopRequireDefault(_Login);
 
-var _utils = __webpack_require__(84);
+var _Register = __webpack_require__(84);
+
+var _Register2 = _interopRequireDefault(_Register);
+
+var _utils = __webpack_require__(85);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -2350,7 +2354,10 @@ _reactDom2.default.render(_react2.default.createElement(
     'div',
     null,
     _react2.default.createElement(_reactRouterDom.Route, { path: '/login', render: function render() {
-        return _react2.default.createElement(_Login2.default, { handleLogin: _utils.handleLogin, handleRegister: _utils.handleRegister });
+        return _react2.default.createElement(_Login2.default, { handleLogin: _utils.handleLogin });
+      } }),
+    _react2.default.createElement(_reactRouterDom.Route, { path: '/register', render: function render() {
+        return _react2.default.createElement(_Register2.default, { handleRegister: _utils.handleRegister });
       } }),
     _react2.default.createElement(_reactRouterDom.Route, { path: '/home/:username', component: _App2.default })
   )
@@ -23844,43 +23851,98 @@ var Login = function Login(props) {
   return _react2.default.createElement(
     'div',
     null,
-    'username: ',
-    _react2.default.createElement('input', { type: 'text', name: 'username' }),
-    'password: ',
-    _react2.default.createElement('input', { type: 'text', name: 'password' }),
     _react2.default.createElement(
-      'button',
-      { onClick: function onClick(e) {
+      'form',
+      { onSubmit: function onSubmit(e) {
           return props.handleLogin(e);
         } },
-      'Login'
+      'username: ',
+      _react2.default.createElement('input', { type: 'text', name: 'username' }),
+      'password: ',
+      _react2.default.createElement('input', { type: 'text', name: 'password' }),
+      _react2.default.createElement(
+        'button',
+        { type: 'submit' },
+        'Login'
+      )
     ),
     _react2.default.createElement(
-      'button',
-      { onClick: function onClick(e) {
-          return props.handleRegister(e);
-        } },
-      'Register'
+      'a',
+      { href: '/register' },
+      'New here? Click here to register.'
     )
   );
 };
 
 Login.propTypes = {
-  handleLogin: _propTypes2.default.func.isRequired,
-  handleRegister: _propTypes2.default.func.isRequired
+  handleLogin: _propTypes2.default.func.isRequired
 };
 
 exports.default = Login;
 
 /***/ }),
 /* 84 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _propTypes = __webpack_require__(2);
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Register = function Register(props) {
+  return _react2.default.createElement(
+    'div',
+    null,
+    _react2.default.createElement(
+      'form',
+      { onSubmit: function onSubmit(e) {
+          return props.handleRegister(e);
+        } },
+      'username: ',
+      _react2.default.createElement('input', { type: 'text', name: 'username' }),
+      'password: ',
+      _react2.default.createElement('input', { text: 'text', name: 'password' }),
+      _react2.default.createElement(
+        'button',
+        { type: 'submit' },
+        'Register'
+      )
+    ),
+    _react2.default.createElement(
+      'a',
+      { href: '/login' },
+      'Already have an account? Click here to login.'
+    )
+  );
+};
+
+Register.propTypes = {
+  handleRegister: _propTypes2.default.func.isRequired
+};
+
+exports.default = Register;
+
+/***/ }),
+/* 85 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_isomorphic_fetch__ = __webpack_require__(85);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_isomorphic_fetch__ = __webpack_require__(86);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_isomorphic_fetch___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_isomorphic_fetch__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_es6_promise__ = __webpack_require__(87);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_es6_promise__ = __webpack_require__(88);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_es6_promise___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_es6_promise__);
 //polyfill and support for fetch
 
@@ -23906,13 +23968,20 @@ const handleLogin = (e) => {
     alert("Invalid username or password")
     return;
   }
+
+  var body = {
+    username: username,
+    password: password
+  }
   //POST to /login
   return fetch("/login", {
     method: "POST",
-    body: {
-      username: username,
-      password: password
-    }
+    headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+    body: JSON.stringify(body),
+    credentials: 'same-origin'
   })
 }
 /* harmony export (immutable) */ __webpack_exports__["handleLogin"] = handleLogin;
@@ -23922,6 +23991,10 @@ const handleRegister = (e) => {
 
   e.preventDefault();
 
+  console.log("handling register submit")
+  console.log("password: ", e.target.password.value)
+  console.log("username; ", e.target.username.value)
+
   let username = e.target.username.value;
   let password = e.target.password.value;
   //handle blank values
@@ -23929,13 +24002,20 @@ const handleRegister = (e) => {
     alert("Invalid username or password")
     return;
   }
+
+  var body = {
+    username: username,
+    password: password
+  }
   //POST to /login
   return fetch("/register", {
     method: "POST",
-    body: {
-      username: username,
-      password: password
-    }
+    headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+    body: JSON.stringify(body),
+    credentials: 'same-origin'
   })
 
 }
@@ -23943,19 +24023,19 @@ const handleRegister = (e) => {
 
 
 /***/ }),
-/* 85 */
+/* 86 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // the whatwg-fetch polyfill installs the fetch() function
 // on the global object (window or self)
 //
 // Return that as the export for use in Webpack, Browserify etc.
-__webpack_require__(86);
+__webpack_require__(87);
 module.exports = self.fetch.bind(self);
 
 
 /***/ }),
-/* 86 */
+/* 87 */
 /***/ (function(module, exports) {
 
 (function(self) {
@@ -24422,7 +24502,7 @@ module.exports = self.fetch.bind(self);
 
 
 /***/ }),
-/* 87 */
+/* 88 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(process, global) {var require;/*!
@@ -24564,7 +24644,7 @@ function flush() {
 function attemptVertx() {
   try {
     var r = require;
-    var vertx = __webpack_require__(89);
+    var vertx = __webpack_require__(90);
     vertxNext = vertx.runOnLoop || vertx.runOnContext;
     return useVertxTimer();
   } catch (e) {
@@ -25616,10 +25696,10 @@ return Promise$1;
 
 //# sourceMappingURL=es6-promise.map
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3), __webpack_require__(88)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3), __webpack_require__(89)))
 
 /***/ }),
-/* 88 */
+/* 89 */
 /***/ (function(module, exports) {
 
 var g;
@@ -25646,7 +25726,7 @@ module.exports = g;
 
 
 /***/ }),
-/* 89 */
+/* 90 */
 /***/ (function(module, exports) {
 
 /* (ignored) */

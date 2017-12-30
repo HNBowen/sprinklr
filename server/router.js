@@ -55,11 +55,13 @@ router.route('/plants/:id')
 
 router.route('/login')
   .post(async function(req, res) {
+    console.log("POST RECEIVED TO /login")
     //check password and username against database
-    let user = await queries.getUserByUsername(req.body.name);
+    let user = await queries.getUserByUsername(req.body.username);
 
     //if user is undefined, it doesn't exist: redirect
     if (user === undefined) {
+      console.log("USER NOT FOUND")
       return res.redirect('/login')
     } else { //otherwise, proceed to compare passwords
       let passwordsMatch = await bcrypt.compare(req.body.password, user.password);
@@ -71,9 +73,10 @@ router.route('/login')
             id: user.id
           }
         //if successful, create session
+        console.log("SUCCESSFUL LOGIN")
         utils.createSession(req, res, loggedInUser);
       } else {
-        
+        console.log("PASSWORDS DO NOT MATCH")
         res.redirect('/login')
       }
     }
@@ -81,7 +84,8 @@ router.route('/login')
 
 router.route('/register')
   .post(function(req, res) {
-    queries.getUserByUsername(req.body.name).then(function(found) {
+
+    queries.getUserByUsername(req.body.username).then(function(found) {
       if(found) {
         res.status(400);
         res.end();
@@ -100,6 +104,7 @@ router.route('/register')
 
 router.route('/home/:username')
   .get(function(req, res) {
+    console.log("GET TO /home/:username")
     res.status(200);
     res.send('response')
   })
