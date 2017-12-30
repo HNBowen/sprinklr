@@ -7,12 +7,12 @@ import Login from '../../client/app/components/Login.jsx'
 describe('Login', function() {
 
   it('should render correctly', function() {
-    let wrapper = shallow(<Login handleLogin={()=>{}} handleRegister={()=>{}}/>)
+    let wrapper = shallow(<Login handleLogin={()=>{}} />)
     jestExpect(shallowToJson(wrapper)).toMatchSnapshot();
   })
 
   it('should render with an input field for username', function() {
-    let wrapper = shallow(<Login handleLogin={()=>{}} handleRegister={()=>{}}/>)
+    let wrapper = shallow(<Login handleLogin={()=>{}} />)
 
     let usernameFieldWrapper = wrapper.find('input').get(0)
 
@@ -21,7 +21,7 @@ describe('Login', function() {
   })
 
   it('should render with an input field for password', function() {
-    let wrapper = shallow(<Login handleLogin={()=>{}} handleRegister={()=>{}}/>)
+    let wrapper = shallow(<Login handleLogin={()=>{}} />)
 
     let passwordFieldWrapper = wrapper.find('input').get(1);
 
@@ -29,29 +29,34 @@ describe('Login', function() {
     expect(passwordFieldWrapper.props.name).to.equal('password')
   })
 
-  it('should render with Login and Register buttons', function() {
+  it('should render with a Login button', function() {
 
-    let wrapper = shallow(<Login handleLogin={()=>{}} handleRegister={()=>{}}/>)
+    let wrapper = shallow(<Login handleLogin={()=>{}} />)
 
     let loginButtonWrapper = wrapper.find('button').get(0);
-    let registerButtonWrapper = wrapper.find('button').get(1);
     
     expect(loginButtonWrapper.props.children).to.equal('Login')
-    expect(registerButtonWrapper.props.children).to.equal('Register')
 
   })
 
-  it('should call click handlers when buttons are clicked', function() {
+  it('should render with an anchor tag for registering', function() {
+    let wrapper = shallow(<Login handleLogin={jest.fn()} />)
+
+    let anchorWrapper = wrapper.find('a')
+
+    expect(anchorWrapper).to.exist
+    expect(anchorWrapper.text()).to.equal('New here? Click here to register.')
+    expect(wrapper.find('a[href="/register"]')).to.exist
+  })
+
+  it('should call click handler when the form is submitted', function() {
     let loginMock = jest.fn();
-    let registerMock = jest.fn();
 
-    let wrapper = shallow(<Login handleLogin={loginMock} handleRegister={registerMock} />)
+    let wrapper = shallow(<Login handleLogin={loginMock} />)
 
-    wrapper.find('button').at(0).simulate('click')
-    wrapper.find('button').at(1).simulate('click')
+    wrapper.find('form').simulate('submit')
 
     expect(loginMock.mock.calls.length).to.equal(1);
-    expect(registerMock.mock.calls.length).to.equal(1);
   })
 
 })

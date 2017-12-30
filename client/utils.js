@@ -11,6 +11,14 @@ promise.polyfill()
 
 // }
 
+export cost handleLFormClick = (e) => {
+  if (e.name === "login") {
+    handleLogin(e)
+  } else if (e.name === "register") {
+    handleRegister(e)
+  }
+}
+
 export const handleLogin = (e) => {
   //prevent default browser behavior
   e.preventDefault();

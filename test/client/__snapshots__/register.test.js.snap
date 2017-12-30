@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Login should render correctly 1`] = `
+exports[`Register should render correctly 1`] = `
 <div>
   <form
     onSubmit={[Function]}
@@ -13,18 +13,18 @@ exports[`Login should render correctly 1`] = `
     password: 
     <input
       name="password"
-      type="text"
+      text="text"
     />
     <button
       type="submit"
     >
-      Login
+      Register
     </button>
   </form>
   <a
-    href="/register"
+    href="/login"
   >
-    New here? Click here to register.
+    Already have an account? Click here to login.
   </a>
 </div>
 `;

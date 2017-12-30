@@ -4,19 +4,18 @@ import PropTypes from 'prop-types'
 const Login = (props) => {
   return (
       <div>
-        <form>
+        <form onSubmit={(e) => props.handleLogin(e)}>
           username: <input type="text" name="username"></input>
           password: <input type="text" name="password"></input>
-          <button onClick={props.handleLogin}>Login</button>
+          <button type="submit">Login</button>
         </form>
-        <button onClick={props.handleRegister}>Register</button>
+        <a href="/register">New here? Click here to register.</a>
       </div>
     )
 }
 
 Login.propTypes = {
-  handleLogin: PropTypes.func.isRequired,
-  handleRegister: PropTypes.func.isRequired
+  handleLogin: PropTypes.func.isRequired
 }
 
 export default Login
