@@ -34,6 +34,8 @@ async function addUser(newUser) {
   return Users().insert({
     name: newUser.name,
     password: hash
+  }).then(function() {
+    return getUserByUsername(newUser.name)
   })
 }
 

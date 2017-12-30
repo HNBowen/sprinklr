@@ -24,9 +24,12 @@ describe('API routes', function() {
   // also, grab cookies from an authenticated request to use in future requests
   var Cookies;
   beforeEach(async () => {
-    await knex.migrate.rollback()
-    await knex.migrate.latest()
-    await knex.seed.run()
+    try {
+      await knex.migrate.latest()
+      await knex.seed.run()
+    } catch(err) {
+      throw new Error(err)
+    }
 
     //this part of the beforeEach block makes an authenticated request so we can have 
     //access to the cookies in future requests.
@@ -45,7 +48,11 @@ describe('API routes', function() {
   // // rollback migrations after each test
   afterEach(async () => {
     
-    await knex.migrate.rollback()
+    try {
+      await knex.migrate.rollback()
+    } catch(err) {
+      throw new Error(err)
+    }
   })
 
   //node processes won't exit while sockets are still connected
@@ -54,15 +61,19 @@ describe('API routes', function() {
   //After all tests are finished, we kill the connection manually.
   //This github issue helped me solve this: https://github.com/facebook/jest/issues/3686
   afterAll(async () => {
-    await knex.destroy()
+    try {
+      await knex.destroy()
+    } catch(err) {
+      throw new Error(err)
+    }
   })
 ////////////////////////////////////////////////////////////////////////////////
 
   describe('protected routes AFTER authentication', function() {
 
-    describe('/home', function() {
+    describe('/home/:username', function() {
       it('GET /home', (done) => {
-        let response = request(app).get("/home")
+        let response = request(app).get("/home/authenticated_user")
         response.cookies = Cookies
 
         response.end((err, res) => {
@@ -244,8 +255,9 @@ describe('API routes', function() {
         }
         let response = await request(app).post("/register").send(newUser);
 
-        //should respond without error
-        expect(response.statusCode).to.equal(200)
+        //should respond with a redirect (to home/newUser.name)
+        expect(response.statusCode).to.equal(302)
+        expect(response.headers.location).to.equal('/home/test_POST_user')
 
 
         //should be able to retrieve the user
@@ -287,13 +299,14 @@ describe('API routes', function() {
         }
 
         //create a new user to hash the passwords. Seeded users in database are not hashed
+        
         let createUserRequest = await request(app).post("/register").send(user);
-
+        
         let response = await request(app).post("/login").send(user);
 
         //we should get a redirect
         expect(response.statusCode).to.equal(302)
-        expect(response.headers.location).to.equal("/home")
+        expect(response.headers.location).to.equal("/home/test_user_login")
       })
 
       test('failed POST /login', async () => {

@@ -16,7 +16,8 @@ class App extends React.Component {
     this.state = {
       "addPlantModalVisible": false,
       "sort": false,
-      "plants": []
+      "plants": [],
+      "user": null
     }
   }
 
@@ -25,7 +26,9 @@ class App extends React.Component {
     this.setState({
       "plants": existingPlants
     })
+    //retrieve username from router location
   }
+
 
   handleOrderButtonClick() {
     this.setState({
@@ -88,6 +91,7 @@ class App extends React.Component {
   }
 
   render() {
+
     return (
         <div>
           <h1>Sprinklr</h1>

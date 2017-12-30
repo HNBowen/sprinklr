@@ -60,11 +60,12 @@ router.route('/login')
 
     //if user is undefined, it doesn't exist: redirect
     if (user === undefined) {
-      res.redirect('/login')
+      return res.redirect('/login')
     } else { //otherwise, proceed to compare passwords
       let passwordsMatch = await bcrypt.compare(req.body.password, user.password);
       
       if (passwordsMatch) {
+        
         var loggedInUser = {
             name: user.name,
             id: user.id
@@ -72,6 +73,7 @@ router.route('/login')
         //if successful, create session
         utils.createSession(req, res, loggedInUser);
       } else {
+        
         res.redirect('/login')
       }
     }
@@ -83,16 +85,20 @@ router.route('/register')
       if(found) {
         res.status(400);
         res.end();
+      } else {
+        queries.addUser(req.body).then(function(user) {
+          let newUser = {
+            name: user.name,
+            id: user.id
+          }
+          utils.createSession(req, res, newUser)
+        })
       }
-      queries.addUser(req.body).then(function() {
-        res.status(200)
-        res.end()
-      })
     })
   })
 
 
-router.route('/home')
+router.route('/home/:username')
   .get(function(req, res) {
     res.status(200);
     res.send('response')

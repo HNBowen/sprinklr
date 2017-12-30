@@ -194,5 +194,4 @@ describe('handleRegister', function() {
 
     expect(mockEvent.preventDefault.calledOnce).to.be.true
   })
-
 })
