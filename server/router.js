@@ -48,7 +48,9 @@ router.route('/plants')
 
 router.route('/plants/:id')
   .get(function(req,res) {
+    console.log("GET TO /plants/:id RECEIVED: ", req.params.id)
     queries.getPlantsById(req.params.id).then(function(plants) {
+      console.log("FOUND PLANTS: ", plants)
       res.status(200);
       res.json(plants)
     })

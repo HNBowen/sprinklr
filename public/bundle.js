@@ -2476,7 +2476,11 @@ const fetchPlants = (id) => {
       },
     credentials: 'same-origin'
   }).then((response) => {
-    return response
+    //extract the json data from the fetch response
+    return response.json()
+  }).then((plants) => {
+    //return that json data (an array) to whomever is consuming this fetch promise
+    return plants;
   })
 }
 /* harmony export (immutable) */ __webpack_exports__["fetchPlants"] = fetchPlants;
