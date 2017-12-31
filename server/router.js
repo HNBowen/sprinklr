@@ -37,9 +37,9 @@ router.route('/plants')
     })
   })
   .post(function(req, res) {
-    queries.addPlant(req.body).then(function() {
+    queries.addPlant(req.body).then(function(plantId) {
       res.status(200);
-      res.end();
+      res.json(plantId)
     })
   })
 

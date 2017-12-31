@@ -2502,7 +2502,9 @@ const postPlant = (plant) => {
     credentials: 'same-origin',
     body: JSON.stringify(body)
   }).then((response) => {
-    return response.status;
+    return response.json();
+  }).then((plantId) => {
+    return plantId
   })
 }
 /* harmony export (immutable) */ __webpack_exports__["postPlant"] = postPlant;

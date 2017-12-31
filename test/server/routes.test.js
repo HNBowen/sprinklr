@@ -168,7 +168,10 @@ describe('API routes', function() {
           response.cookies = Cookies;
 
           response.end(function(err, res) {
+            //success status code
             expect(res.statusCode).to.equal(200);
+            //we should also get the plant back (now that it has an id)
+            expect(res.body).to.be.a('number')
 
             let requestUserId = request(app).get("/users/test_user_2");
             requestUserId.cookies = Cookies;

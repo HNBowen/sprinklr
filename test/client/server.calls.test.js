@@ -239,7 +239,7 @@ describe('postPlant', function() {
   }
 
   beforeEach(function() {
-    fetchMock.post("/plants", 200)
+    fetchMock.post("/plants", '5')
   })
 
   afterEach(function() {
@@ -269,9 +269,9 @@ describe('postPlant', function() {
     })
   })
 
-  it('should resolve to the status code', function(done) {
+  it('should resolve to the plant id', function(done) {
     postPlant(plant).then(function(response) {
-      expect(response).to.equal(200)
+      expect(response).to.equal(5)
       done()
     })
   })

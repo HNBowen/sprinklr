@@ -50,6 +50,9 @@ function addPlant(plant) {
     dateAdded: new Date(),
     lastWatered: plant.lastWatered,
     user_id: plant.user_id
+  }).returning('id').then(function(id) {
+    //TODO: I should probably return the image url too, since this will ultimately be created in the server
+    return id[0]
   })
 }
 
