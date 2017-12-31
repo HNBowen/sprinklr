@@ -60,9 +60,10 @@ describe('API routes', function() {
   //which while still active will keep jest from exiting the test suite.
   //After all tests are finished, we kill the connection manually.
   //This github issue helped me solve this: https://github.com/facebook/jest/issues/3686
-  afterAll(async () => {
+  afterAll(async (done) => {
     try {
       await knex.destroy()
+      done()
     } catch(err) {
       throw new Error(err)
     }
@@ -71,13 +72,14 @@ describe('API routes', function() {
 
   describe('protected routes AFTER authentication', function() {
 
-    describe('/home/:username', function() {
+    describe('/home', function() {
       it('GET /home', (done) => {
-        let response = request(app).get("/home/authenticated_user")
+        let response = request(app).get("/home")
         response.cookies = Cookies
 
         response.end((err, res) => {
-          expect(res.statusCode).to.equal(200)
+          expect(res.statusCode).to.equal(302)
+          expect(res.headers.location).to.equal('/home/3')
           done();
         })
       })
@@ -144,35 +146,45 @@ describe('API routes', function() {
 
       })
 
-      test('POST /plants', async (done) => {
+      test('POST /plants', (done) => {
         let newPlant = {
           name: "Fiddle Leaf",
           img: "https://i.pinimg.com/236x/6f/d3/2e/6fd32e64735e460852ec3c507df10354.jpg",
           lastWatered: new Date(),
           user: "test_user_2"
         };
-        let response = request(app).post("/plants").send(newPlant);
-        response.cookies = Cookies;
 
-        response.end(function(err, res) {
-          expect(res.statusCode).to.equal(200);
+        //get test_user_2 id from the database
+        let userIdRequest = request(app).get("/users/" + newPlant.user);
+        userIdRequest.cookies = Cookies;
+        userIdRequest.end(function(err, res) {
+          let userId = res.body.id;
+          
+          //add id to newPlant object
+           newPlant.user_id = userId;
+           
+          //post new plant to database
+          let response = request(app).post("/plants").send(newPlant);
+          response.cookies = Cookies;
 
-          let requestUserId = request(app).get("/users/test_user_2");
-          requestUserId.cookies = Cookies;
+          response.end(function(err, res) {
+            expect(res.statusCode).to.equal(200);
 
-          requestUserId.end(function(err, res) {
-            let userId = res.body.id;
+            let requestUserId = request(app).get("/users/test_user_2");
+            requestUserId.cookies = Cookies;
+
+            //request plants with test_user_2's id
             let updatedPlants = request(app).get("/plants/" + userId);
             updatedPlants.cookies = Cookies
 
+            //verify that added plant it there
             updatedPlants.end(function(err, res) {
               expect(res.body.length).to.equal(3);
               expect(res.body[2]["name"]).to.equal("Fiddle Leaf");
               done()
             })
-          })
+          })  
         })
-
       })
     })
   })
@@ -257,7 +269,7 @@ describe('API routes', function() {
 
         //should respond with a redirect (to home/newUser.name)
         expect(response.statusCode).to.equal(302)
-        expect(response.headers.location).to.equal('/home/test_POST_user')
+        expect(response.headers.location).to.equal('/home/4')
 
 
         //should be able to retrieve the user
@@ -306,7 +318,7 @@ describe('API routes', function() {
 
         //we should get a redirect
         expect(response.statusCode).to.equal(302)
-        expect(response.headers.location).to.equal("/home/test_user_login")
+        expect(response.headers.location).to.equal("/home/4")
       })
 
       test('failed POST /login', async () => {

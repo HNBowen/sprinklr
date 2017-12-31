@@ -96,3 +96,11 @@ export const fetchPlants = (id) => {
     return plants;
   })
 }
+
+export const postPlant = (plant) => {
+
+}
+
+export const waterPlant = (?) => {
+  
+}

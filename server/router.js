@@ -37,20 +37,15 @@ router.route('/plants')
     })
   })
   .post(function(req, res) {
-    queries.getUserByUsername(req.body.user).then(function(user) {
-      var user_id = user.id;
-      queries.addPlant(req.body, user_id).then(function() {
-        res.status(200);
-        res.end();
-      })
+    queries.addPlant(req.body).then(function() {
+      res.status(200);
+      res.end();
     })
   })
 
 router.route('/plants/:id')
   .get(function(req,res) {
-    console.log("GET TO /plants/:id RECEIVED: ", req.params.id)
     queries.getPlantsById(req.params.id).then(function(plants) {
-      console.log("FOUND PLANTS: ", plants)
       res.status(200);
       res.json(plants)
     })
@@ -58,13 +53,13 @@ router.route('/plants/:id')
 
 router.route('/login')
   .post(async function(req, res) {
-    console.log("POST RECEIVED TO /login")
+    
     //check password and username against database
     let user = await queries.getUserByUsername(req.body.username);
 
     //if user is undefined, it doesn't exist: redirect
     if (user === undefined) {
-      console.log("USER NOT FOUND")
+      
       return res.redirect('/login')
     } else { //otherwise, proceed to compare passwords
       let passwordsMatch = await bcrypt.compare(req.body.password, user.password);
@@ -76,10 +71,10 @@ router.route('/login')
             id: user.id
           }
         //if successful, create session
-        console.log("SUCCESSFUL LOGIN")
+        
         utils.createSession(req, res, loggedInUser);
       } else {
-        console.log("PASSWORDS DO NOT MATCH")
+        
         res.redirect('/login')
       }
     }

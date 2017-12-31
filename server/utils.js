@@ -7,17 +7,17 @@ const request = require('request')
 const isLoggedIn = function(req) {
   //if session exists, check if the user has been stored on it
   // !! converts non-boolean to true, undefined/null to false
-  console.log("CHECKING SESSION: ", req.session.id)
+  
   return req.session ? !!req.session.user : false
 }
 
 //check if the user is logged in
 exports.checkUser = function(req, res, next) {
   if (isLoggedIn(req)) {
-    console.log("USER IS LOGGED IN")
+    
     next()
   } else {
-    console.log("USER IS NOT LOGGED IN. REDIRECTING TO /login")
+    
     res.redirect('/login')
   }
 }
@@ -28,10 +28,10 @@ exports.createSession = function(req, res, newUser) {
     if (!err) {
       //save the user object on the session for easy lookup in subsequent requests
       req.session.user = newUser;
-      console.log("USER SAVED ON SESSION: ", req.session.id)
+    
       let url = "/home/" + newUser.id
       //send the user to the home page
-      console.log("SESSION CREATED, REDIRECTING TO:", url);
+    
       
       res.redirect(url);
     }

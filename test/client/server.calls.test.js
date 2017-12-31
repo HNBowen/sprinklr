@@ -222,10 +222,17 @@ describe('fetchPlants', function() {
 
   it('should resolve to an array of objects', function(done) {
     fetchPlants(1).then(function(response) {
-      console.log(response)
       expect(Array.isArray(response)).to.be.true;
       expect(typeof response[0]).to.equal('object')
       done();
     })
   })
+})
+
+describe('postPlant', function() {
+
+})
+
+describe('waterPlant', function() {
+  
 })

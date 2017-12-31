@@ -43,13 +43,13 @@ async function addUser(newUser) {
   }
 }
 
-function addPlant(plant, user_id) {
+function addPlant(plant) {
   return Plants().insert({
     name: plant.name,
     image: plant.img,
     dateAdded: new Date(),
     lastWatered: plant.lastWatered,
-    user_id: user_id
+    user_id: plant.user_id
   })
 }
 
