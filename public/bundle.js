@@ -2510,9 +2510,21 @@ const postPlant = (plant) => {
 /* harmony export (immutable) */ __webpack_exports__["postPlant"] = postPlant;
 
 
-// export const waterPlant = (?) => {
+const waterPlant = (update) => {
+  return fetch("/plants", {
+    method: "PUT",
+    headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+    credentials: 'same-origin',
+    body: JSON.stringify(update)
+  }).then(function(response) {
+    return response.status
+  })
+}
+/* harmony export (immutable) */ __webpack_exports__["waterPlant"] = waterPlant;
 
-// }
 
 /***/ }),
 /* 36 */

@@ -1,4 +1,4 @@
-import {handleLogin, handleRegister, fetchPlants, postPlant} from '../../client/utils.js'
+import {handleLogin, handleRegister, fetchPlants, postPlant, waterPlant} from '../../client/utils.js'
 import sinon from 'sinon'
 import fetchMock from 'fetch-mock'
 
@@ -279,4 +279,45 @@ describe('postPlant', function() {
 
 describe('waterPlant', function() {
 
+  let update = {
+    id: 1,
+    lastWatered: new Date()
+  }
+
+  beforeEach(function() {
+    fetchMock.put("/plants", 200)
+  })
+
+  afterEach(function() {
+    fetchMock.reset()
+  })
+
+  afterAll(function() {
+    fetchMock.restore()
+  })
+
+  it('should make a PUT request to /plants', function(done) {
+    waterPlant(update).then(function() {
+      let call = fetchMock.lastCall();
+
+      expect(call[0]).to.equal("/plants")
+      expect(call[1].method).to.equal("PUT");
+      done()
+    })
+  })
+
+  it('should send the update as the request body', function(done) {
+    waterPlant(update).then(function() {
+      let call = fetchMock.lastCall();
+      expect(call[1].body).to.equal(JSON.stringify(update))
+      done()
+    })
+  })
+
+  it('shoudl resolve to the status code', function(done) {
+    waterPlant(update).then(function(response) {
+      expect(response).to.equal(200)
+      done()
+    })
+  })
 })

@@ -119,6 +119,16 @@ export const postPlant = (plant) => {
   })
 }
 
-// export const waterPlant = (?) => {
-
-// }
+export const waterPlant = (update) => {
+  return fetch("/plants", {
+    method: "PUT",
+    headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+    credentials: 'same-origin',
+    body: JSON.stringify(update)
+  }).then(function(response) {
+    return response.status
+  })
+}
