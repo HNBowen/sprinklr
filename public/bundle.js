@@ -23877,10 +23877,7 @@ var Login = function (_React$Component) {
         _react2.default.createElement(
           'form',
           { onSubmit: function onSubmit(e) {
-              return _this2.props.handleLogin(e).then(function (response) {
-                console.log(response.url.split('/'));
-                var url = '/' + response.url.split('/')[3] + '/' + response.url.split('/')[4];
-                console.log(url);
+              return _this2.props.handleLogin(e).then(function (url) {
                 _this2.props.history.push(url);
               });
             } },
@@ -23931,6 +23928,8 @@ var _propTypes = __webpack_require__(2);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
+var _reactRouterDom = __webpack_require__(46);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var Register = function Register(props) {
@@ -23940,7 +23939,9 @@ var Register = function Register(props) {
     _react2.default.createElement(
       'form',
       { onSubmit: function onSubmit(e) {
-          return props.handleRegister(e);
+          return props.handleRegister(e).then(function (url) {
+            props.history.push(url);
+          });
         } },
       'username: ',
       _react2.default.createElement('input', { type: 'text', name: 'username' }),
@@ -23964,7 +23965,7 @@ Register.propTypes = {
   handleRegister: _propTypes2.default.func.isRequired
 };
 
-exports.default = Register;
+exports.default = (0, _reactRouterDom.withRouter)(Register);
 
 /***/ }),
 /* 85 */
@@ -24014,6 +24015,9 @@ const handleLogin = (e) => {
       },
     body: JSON.stringify(body),
     credentials: 'same-origin'
+  }).then((response) => {
+      var url = '/' + response.url.split('/')[3] + '/' + response.url.split('/')[4];
+      return url;
   })
 }
 /* harmony export (immutable) */ __webpack_exports__["handleLogin"] = handleLogin;
@@ -24022,10 +24026,6 @@ const handleLogin = (e) => {
 const handleRegister = (e) => {
 
   e.preventDefault();
-
-  console.log("handling register submit")
-  console.log("password: ", e.target.password.value)
-  console.log("username; ", e.target.username.value)
 
   let username = e.target.username.value;
   let password = e.target.password.value;
@@ -24048,6 +24048,9 @@ const handleRegister = (e) => {
       },
     body: JSON.stringify(body),
     credentials: 'same-origin'
+  }).then((response) => {
+      var url = '/' + response.url.split('/')[3] + '/' + response.url.split('/')[4];
+      return url;
   })
 
 }

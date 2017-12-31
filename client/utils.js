@@ -36,16 +36,15 @@ export const handleLogin = (e) => {
       },
     body: JSON.stringify(body),
     credentials: 'same-origin'
+  }).then((response) => {
+      var url = '/' + response.url.split('/')[3] + '/' + response.url.split('/')[4];
+      return url;
   })
 }
 
 export const handleRegister = (e) => {
 
   e.preventDefault();
-
-  console.log("handling register submit")
-  console.log("password: ", e.target.password.value)
-  console.log("username; ", e.target.username.value)
 
   let username = e.target.username.value;
   let password = e.target.password.value;
@@ -68,6 +67,9 @@ export const handleRegister = (e) => {
       },
     body: JSON.stringify(body),
     credentials: 'same-origin'
+  }).then((response) => {
+      var url = '/' + response.url.split('/')[3] + '/' + response.url.split('/')[4];
+      return url;
   })
 
 }

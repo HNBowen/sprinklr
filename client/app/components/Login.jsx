@@ -11,10 +11,7 @@ class Login extends React.Component {
   render() {
     return (
         <div>
-          <form onSubmit={(e) => this.props.handleLogin(e).then((response) => {
-            console.log(response.url.split('/'))
-            var url = '/' + response.url.split('/')[3] + '/' + response.url.split('/')[4]
-            console.log(url)
+          <form onSubmit={(e) => this.props.handleLogin(e).then((url) => {
             this.props.history.push(url)
           })}>
             username: <input type="text" name="username"></input>
