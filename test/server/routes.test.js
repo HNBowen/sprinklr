@@ -189,6 +189,40 @@ describe('API routes', function() {
           })  
         })
       })
+
+      test('PUT /plants (update lastWatered)', function(done) {
+
+        let updatedLastWater = new Date();
+
+        let update = {
+          id: 1,
+          lastWatered: updatedLastWater
+        }
+
+        //make PUT request to /plants with update as req.body
+        let putRequest = request(app).put("/plants").send(update)
+        //set cookies
+        putRequest.cookies = Cookies;
+
+        putRequest.end(function(err, res) {
+          //verify that non-error response
+          expect(res.statusCode).to.equal(200)
+          //make get request to /plants
+          let getPlantsRequest = request(app).get("/plants")
+          //set cookies
+          getPlantsRequest.cookies = Cookies;
+          getPlantsRequest.end(function(err, res) {
+            //verify that the plant with id 1 has lastWatered that matches updatedLastWatered
+            for(var plant in res.body) {
+              if (plant.id === 1) {
+                expect(plant.lastWatered).to.equal(updatedLastWater)
+              }
+            }
+            done()                
+          })
+          
+        })
+      })
     })
   })
 

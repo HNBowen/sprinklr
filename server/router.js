@@ -42,6 +42,14 @@ router.route('/plants')
       res.json(plantId)
     })
   })
+  .put(function(req, res) {
+    queries.updatePlant(req.body).then(function() {
+      //TODO: in the future, if a user updates a plant's image, we will want to send back the new S3 url
+      //for now, let's not worry about it
+      res.status(200)
+      res.end();
+    })
+  })
 
 router.route('/plants/:id')
   .get(function(req,res) {

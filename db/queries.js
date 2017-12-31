@@ -56,11 +56,18 @@ function addPlant(plant) {
   })
 }
 
+function updatePlant(update) {
+  return Plants().where('id', update.id)
+    .update({lastWatered: update.lastWatered})
+
+}
+
 module.exports = {
   getAllUsers: getAllUsers,
   getAllPlants: getAllPlants,
   getUserByUsername: getUserByUsername,
   getPlantsById: getPlantsById,
   addUser: addUser,
-  addPlant: addPlant
+  addPlant: addPlant,
+  updatePlant: updatePlant
 }
