@@ -2,6 +2,7 @@ const express = require('express');
 const queries = require('../db/queries.js')
 const utils = require('./utils.js')
 const bcrypt = require('bcrypt')
+const path = require('path')
 
 var router = express.Router();
 
@@ -101,14 +102,28 @@ router.route('/register')
     })
   })
 
-
-router.route('/home/:username')
+//the home route. If the user is logged in, send them to the user's home page: /home/user
+router.route('/home')
   .get(function(req, res) {
-    console.log("GET TO /home/:username")
     res.status(200);
-    res.send('response')
+    res.redirect('/home/' + req.session.user.name)
   })
 
+//the user's home page. If the user is logged in, 
+// router.route('/home/:username')
+//   .get(function(req, res) {
+//     console.log("GET TO /home/:username", req.url)
+//     res.status(200);
+//     res.end()
+//     // res.sendFile(path.join(__dirname, '../client/index.html'));
+//   })
+
+// router.route('/home/static')
+//   .get(function(req, res) {
+//     res.send(express.static(path.join(__dirname, '../public')))
+//   })
+
+//the root route, send to home and check credentials there
 router.route('/')
   .get(function(req, res) {
     res.redirect('/home')

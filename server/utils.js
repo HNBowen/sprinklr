@@ -32,6 +32,7 @@ exports.createSession = function(req, res, newUser) {
       let url = "/home/" + newUser.name
       //send the user to the home page
       console.log("SESSION CREATED, REDIRECTING TO:", url);
+      
       res.redirect(url);
     }
   })
