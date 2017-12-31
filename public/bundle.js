@@ -23565,6 +23565,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 //dummy data for development, remove later
 
 
+var CLOUDINARY_UPLOAD_PRESET = 'sxz0djx3';
+var CLOUDINARY_UPLOAD_URL = 'https://api.cloudinary.com/v1_1/sprinklr/upload';
+
 var App = function (_React$Component) {
   _inherits(App, _React$Component);
 
@@ -23579,6 +23582,9 @@ var App = function (_React$Component) {
       "plants": [],
       "user": null
     };
+
+    _this.handleAddPlantButtonClick = _this.handleAddPlantButtonClick.bind(_this);
+    _this.uploadImage = _this.uploadImage.bind(_this);
     return _this;
   }
 
@@ -23590,17 +23596,15 @@ var App = function (_React$Component) {
     value: function componentDidMount() {
       var _this2 = this;
 
-      console.log("<App /> mounted with user id: ", this.props.match.params.id);
-      //retrieve username from router location
+      //retrieve user id from router location
       var id = this.props.match.params.id;
-      console.log("id: ", id);
+
       this.setState({
         "user": id
       }, function () {
-        console.log("new user state: ", _this2.state["user"]);
         //retrieve user's plants from the database
         (0, _utils.fetchPlants)(_this2.state.user).then(function (plants) {
-          console.log("plants: ", plants);
+
           _this2.setState({
             plants: plants
           });
@@ -23612,6 +23616,23 @@ var App = function (_React$Component) {
     value: function handleOrderButtonClick() {
       this.setState({
         "sort": !this.state.sort
+      });
+    }
+  }, {
+    key: 'uploadImage',
+    value: function uploadImage(file) {
+      //send the uploaded image to Cloudinary with a fetch request
+      //return a promise that resolves to the Cloudinary url for the image
+      var formData = new FormData();
+      formData.append('file', file);
+      formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
+      return fetch(CLOUDINARY_UPLOAD_URL, {
+        method: "POST",
+        body: formData
+      }).then(function (response) {
+        return response.json();
+      }).then(function (response) {
+        return response.secure_url;
       });
     }
   }, {
@@ -23631,17 +23652,36 @@ var App = function (_React$Component) {
 
       var newPlant = {
         name: e.target.name.value,
-        img: e.target.image.value,
-        lastWatered: new Date()
+        lastWatered: new Date(),
+        user_id: this.state.user
+
+        //upload image to hosting, get url
+        //then, post it (with the url) to the database
+      };this.uploadImage(document.getElementById('image_upload').files[0]).then(function (url) {
         //TODO: send plant to database to get an ID
         //then:
-      };this.state.plants.push(newPlant);
-      this.displayModal();
+        newPlant.img = url;
+
+        (0, _utils.postPlant)(newPlant).then(function (plantId) {
+          newPlant.id = plantId;
+          //add the new plant to the state
+          this.state.plants.push(newPlant);
+          //close the modal
+          this.displayModal();
+        }.bind(this));
+      }.bind(this));
     }
   }, {
     key: 'handlePlantTileClick',
     value: function handlePlantTileClick(plantId) {
       //TODO: send updated plant to database
+
+      var updatedDate = new Date();
+
+      (0, _utils.waterPlant)({
+        id: plantId,
+        lastWatered: updatedDate
+      });
 
       var oldPlant, newPlant, index;
       for (var i = 0; i < this.state.plants.length; i++) {
@@ -23656,7 +23696,7 @@ var App = function (_React$Component) {
         img: oldPlant["img"],
         id: oldPlant["id"],
         dateAdded: oldPlant["dateAdded"],
-        lastWatered: new Date()
+        lastWatered: updatedDate
       };
 
       this.setState({
@@ -23913,7 +23953,7 @@ var AddPlantModal = function AddPlantModal(props) {
       'Name: ',
       _react2.default.createElement('input', { type: 'text', name: 'name', 'data-test-id': 'plantName' }),
       'Image: ',
-      _react2.default.createElement('input', { type: 'file', name: 'image', accept: 'image/*', 'data-test-id': 'plantImage' }),
+      _react2.default.createElement('input', { type: 'file', name: 'image', accept: 'image/*', 'data-test-id': 'plantImage', id: 'image_upload' }),
       _react2.default.createElement(
         'button',
         { type: 'submit' },

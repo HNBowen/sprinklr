@@ -4,11 +4,13 @@ import Menu from './Menu.jsx'
 import PlantList from './PlantList.jsx'
 import AddPlantModal from './AddPlantModal.jsx'
 
-import {fetchPlants} from '../../utils.js'
+import {fetchPlants, postPlant, waterPlant} from '../../utils.js'
 
 //dummy data for development, remove later
 import { existingPlants, plantsToAdd } from '../../../dummyData.js'
 
+const CLOUDINARY_UPLOAD_PRESET = 'sxz0djx3';
+const CLOUDINARY_UPLOAD_URL = 'https://api.cloudinary.com/v1_1/sprinklr/upload'
 
 class App extends React.Component {
 
@@ -21,21 +23,23 @@ class App extends React.Component {
       "plants": [],
       "user": null
     }
+
+    this.handleAddPlantButtonClick = this.handleAddPlantButtonClick.bind(this)
+    this.uploadImage = this.uploadImage.bind(this)
   }
 
   //test rendering with dummyData
   componentDidMount() {
-    console.log("<App /> mounted with user id: ", this.props.match.params.id)
-    //retrieve username from router location
+    
+    //retrieve user id from router location
     let id = this.props.match.params.id;
-    console.log("id: ", id)
+    
     this.setState({
       "user": id
     }, () => {
-      console.log("new user state: ", this.state["user"])
       //retrieve user's plants from the database
       fetchPlants(this.state.user).then((plants) => {
-        console.log("plants: ", plants)
+        
         this.setState({
           plants: plants
         })
@@ -48,6 +52,22 @@ class App extends React.Component {
   handleOrderButtonClick() {
     this.setState({
       "sort": !this.state.sort
+    })
+  }
+
+  uploadImage(file) {
+    //send the uploaded image to Cloudinary with a fetch request
+    //return a promise that resolves to the Cloudinary url for the image
+    let formData = new FormData();
+    formData.append('file', file)
+    formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET)
+    return fetch(CLOUDINARY_UPLOAD_URL, {
+      method: "POST",
+      body: formData
+    }).then(function(response) {
+      return response.json()
+    }).then(function(response) {
+      return response.secure_url
     })
   }
 
@@ -64,21 +84,42 @@ class App extends React.Component {
       alert('invalid image')
       return
     }
-    
 
     var newPlant = {
       name: e.target.name.value,
-      img: e.target.image.value,
-      lastWatered: new Date()
+      lastWatered: new Date(),
+      user_id: this.state.user
     }
-    //TODO: send plant to database to get an ID
-    //then:
-    this.state.plants.push(newPlant)
-    this.displayModal();
+    
+    //upload image to hosting, get url
+    //then, post it (with the url) to the database
+    this.uploadImage(document.getElementById('image_upload').files[0])
+    .then(function(url) {
+      //TODO: send plant to database to get an ID
+      //then:
+      newPlant.img = url;
+
+      postPlant(newPlant).then(function(plantId) {
+        newPlant.id = plantId;
+        //add the new plant to the state
+        this.state.plants.push(newPlant)
+        //close the modal
+        this.displayModal();
+      }.bind(this))
+    }.bind(this))
+    
+
   }
 
   handlePlantTileClick(plantId) {
     //TODO: send updated plant to database
+
+    let updatedDate = new Date();
+
+    waterPlant({
+      id: plantId,
+      lastWatered: updatedDate
+    })
 
     var oldPlant, newPlant, index;
     for (var i = 0; i < this.state.plants.length; i++) {
@@ -93,7 +134,7 @@ class App extends React.Component {
       img: oldPlant["img"],
       id: oldPlant["id"],
       dateAdded: oldPlant["dateAdded"],
-      lastWatered: new Date()
+      lastWatered: updatedDate
     }
 
     this.setState({
