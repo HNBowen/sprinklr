@@ -46,7 +46,7 @@ async function addUser(newUser) {
 function addPlant(plant) {
   return Plants().insert({
     name: plant.name,
-    image: plant.img,
+    image: plant.image,
     dateAdded: new Date(),
     lastWatered: plant.lastWatered,
     user_id: plant.user_id

@@ -2488,7 +2488,7 @@ const fetchPlants = (id) => {
 const postPlant = (plant) => {
   let body = {
     name: plant.name,
-    img: plant.img,
+    image: plant.image,
     lastWatered: plant.lastWatered,
     user_id: plant.user_id
   }
@@ -23660,7 +23660,7 @@ var App = function (_React$Component) {
       };this.uploadImage(document.getElementById('image_upload').files[0]).then(function (url) {
         //TODO: send plant to database to get an ID
         //then:
-        newPlant.img = url;
+        newPlant.image = url;
 
         (0, _utils.postPlant)(newPlant).then(function (plantId) {
           newPlant.id = plantId;
@@ -23693,7 +23693,7 @@ var App = function (_React$Component) {
       }
       newPlant = {
         name: oldPlant["name"],
-        img: oldPlant["img"],
+        image: oldPlant["image"],
         id: oldPlant["id"],
         dateAdded: oldPlant["dateAdded"],
         lastWatered: updatedDate
@@ -23904,7 +23904,7 @@ var PlantTile = function PlantTile(props) {
     { onClick: function onClick() {
         props.handleClick(props.plant.id);
       } },
-    _react2.default.createElement('img', { src: props.plant.img }),
+    _react2.default.createElement('img', { src: props.plant.image }),
     _react2.default.createElement(
       'span',
       null,

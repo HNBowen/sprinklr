@@ -107,7 +107,7 @@ router.route('/register')
     })
   })
 
-//the home route. If the user is logged in, send them to the user's home page: /home/user
+//the home route. If the user is logged in, send them to the user's home page: /home/userId
 router.route('/home')
   .get(function(req, res) {
     res.status(200);

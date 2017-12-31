@@ -75,7 +75,6 @@ class App extends React.Component {
 
     e.preventDefault()
 
-
     //handle blank inputs
     if(e.target.name.value === "") {
       alert('invalid name')
@@ -97,7 +96,7 @@ class App extends React.Component {
     .then(function(url) {
       //TODO: send plant to database to get an ID
       //then:
-      newPlant.img = url;
+      newPlant.image = url;
 
       postPlant(newPlant).then(function(plantId) {
         newPlant.id = plantId;
@@ -107,8 +106,6 @@ class App extends React.Component {
         this.displayModal();
       }.bind(this))
     }.bind(this))
-    
-
   }
 
   handlePlantTileClick(plantId) {
@@ -131,7 +128,7 @@ class App extends React.Component {
     }
     newPlant = {
       name: oldPlant["name"],
-      img: oldPlant["img"],
+      image: oldPlant["image"],
       id: oldPlant["id"],
       dateAdded: oldPlant["dateAdded"],
       lastWatered: updatedDate

@@ -99,7 +99,7 @@ export const fetchPlants = (id) => {
 export const postPlant = (plant) => {
   let body = {
     name: plant.name,
-    img: plant.img,
+    image: plant.image,
     lastWatered: plant.lastWatered,
     user_id: plant.user_id
   }
