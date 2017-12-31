@@ -80,7 +80,6 @@ export const handleRegister = (e) => {
 }
 
 export const fetchPlants = (id) => {
-  console.log('fetching plants for user: ', id)
   return fetch("/plants/" + id, {
     method: "GET",
     headers: {
@@ -98,9 +97,26 @@ export const fetchPlants = (id) => {
 }
 
 export const postPlant = (plant) => {
+  let body = {
+    name: plant.name,
+    img: plant.img,
+    lastWatered: plant.lastWatered,
+    user_id: plant.user_id
+  }
 
+  return fetch("/plants", {
+    method: "POST",
+    headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+    credentials: 'same-origin',
+    body: JSON.stringify(body)
+  }).then((response) => {
+    return response.status;
+  })
 }
 
-export const waterPlant = (?) => {
-  
-}
+// export const waterPlant = (?) => {
+
+// }

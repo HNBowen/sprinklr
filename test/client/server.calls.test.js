@@ -1,4 +1,4 @@
-import {handleLogin, handleRegister, fetchPlants} from '../../client/utils.js'
+import {handleLogin, handleRegister, fetchPlants, postPlant} from '../../client/utils.js'
 import sinon from 'sinon'
 import fetchMock from 'fetch-mock'
 
@@ -231,8 +231,52 @@ describe('fetchPlants', function() {
 
 describe('postPlant', function() {
 
+  let plant = {
+    name: "test",
+    img: "test_img.jpg",
+    lastWatered: new Date(),
+    user_id: 1,
+  }
+
+  beforeEach(function() {
+    fetchMock.post("/plants", 200)
+  })
+
+  afterEach(function() {
+    fetchMock.reset()
+  })
+
+  afterAll(function() {
+    fetchMock.restore()
+  })
+
+  it('should make a POST request to /plants', function(done) {
+    postPlant(plant).then(function(response) {
+      let call = fetchMock.lastCall();
+
+      expect(call[0]).to.equal('/plants')
+      expect(call[1].method).to.equal('POST')
+      done()
+    })
+  })
+
+  it('should send a plant object in the request body', function(done) {
+    postPlant(plant).then(function() {
+      let call = fetchMock.lastCall();
+
+      expect(call[1].body).to.equal(JSON.stringify(plant))
+      done()
+    })
+  })
+
+  it('should resolve to the status code', function(done) {
+    postPlant(plant).then(function(response) {
+      expect(response).to.equal(200)
+      done()
+    })
+  })
 })
 
 describe('waterPlant', function() {
-  
+
 })
