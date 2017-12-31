@@ -1,5 +1,5 @@
 //polyfill and support for fetch
-import "isomorphic-fetch"
+// import "isomorphic-fetch"
 import promise from 'es6-promise'
 promise.polyfill()
 
@@ -37,8 +37,11 @@ export const handleLogin = (e) => {
     body: JSON.stringify(body),
     credentials: 'same-origin'
   }).then((response) => {
+      //return the last pieces of the URL so React Router can handle routing clien-side
       var url = '/' + response.url.split('/')[3] + '/' + response.url.split('/')[4];
       return url;
+  }).catch((err) => {
+    throw new Error(err)
   })
 }
 
@@ -70,6 +73,22 @@ export const handleRegister = (e) => {
   }).then((response) => {
       var url = '/' + response.url.split('/')[3] + '/' + response.url.split('/')[4];
       return url;
+  }).catch((err) => {
+    throw new Error(err)
   })
 
+}
+
+export const fetchPlants = (id) => {
+  console.log('fetching plants for user: ', id)
+  return fetch("/plants/" + id, {
+    method: "GET",
+    headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+    credentials: 'same-origin'
+  }).then((response) => {
+    return response
+  })
 }

@@ -29,7 +29,7 @@ exports.createSession = function(req, res, newUser) {
       //save the user object on the session for easy lookup in subsequent requests
       req.session.user = newUser;
       console.log("USER SAVED ON SESSION: ", req.session.id)
-      let url = "/home/" + newUser.name
+      let url = "/home/" + newUser.id
       //send the user to the home page
       console.log("SESSION CREATED, REDIRECTING TO:", url);
       

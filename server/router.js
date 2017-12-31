@@ -106,7 +106,7 @@ router.route('/register')
 router.route('/home')
   .get(function(req, res) {
     res.status(200);
-    res.redirect('/home/' + req.session.user.name)
+    res.redirect('/home/' + req.session.user.id)
   })
 
 //the user's home page. If the user is logged in, 

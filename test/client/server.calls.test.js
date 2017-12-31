@@ -1,4 +1,4 @@
-import {handleLogin, handleRegister} from '../../client/utils.js'
+import {handleLogin, handleRegister, fetchPlants} from '../../client/utils.js'
 import sinon from 'sinon'
 import fetchMock from 'fetch-mock'
 
@@ -39,7 +39,7 @@ describe('handleLogin', function() {
       //method should be POST
       expect(call[1].method).to.equal('POST');
       //body should contain username and password
-      expect(call[1].body).to.deep.equal({username: 'test', password: 'test'})
+      expect(call[1].body).to.deep.equal(JSON.stringify({username: 'test', password: 'test'}))
     })
     .catch(function(err) {
       console.error(err)
@@ -139,7 +139,7 @@ describe('handleRegister', function() {
       //method should have been POST
       expect(call[1].method).to.equal('POST')
       //request body should have contained username and pass
-      expect(call[1].body).to.deep.equal({username:"test", password: "test"})
+      expect(call[1].body).to.deep.equal(JSON.stringify({username:"test", password: "test"}))
     })
   })
 
@@ -193,5 +193,30 @@ describe('handleRegister', function() {
     handleRegister(mockEvent);
 
     expect(mockEvent.preventDefault.calledOnce).to.be.true
+  })
+})
+
+describe('fetchPlants', function() {
+  beforeEach(function() {
+    fetchMock.get("/plants/1", [{}])
+  })
+
+  afterEach(function() {
+    fetchMock.reset();
+  })
+
+  afterAll(function() {
+    fetchMock.restore();
+  })
+
+  it('should make a GET request to /plants/:id', function(done) {
+    fetchPlants(1).then(function(response) {
+
+      let call = fetchMock.lastCall()
+
+      expect(call[0]).to.equal("/plants/1")
+      expect(call[1].method).to.equal("GET")
+      done()
+    })
   })
 })

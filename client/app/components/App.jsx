@@ -4,6 +4,8 @@ import Menu from './Menu.jsx'
 import PlantList from './PlantList.jsx'
 import AddPlantModal from './AddPlantModal.jsx'
 
+import {fetchPlants} from '../../utils.js'
+
 //dummy data for development, remove later
 import { existingPlants, plantsToAdd } from '../../../dummyData.js'
 
@@ -23,10 +25,23 @@ class App extends React.Component {
 
   //test rendering with dummyData
   componentDidMount() {
-    this.setState({
-      "plants": existingPlants
-    })
+    console.log("<App /> mounted with user id: ", this.props.match.params.id)
     //retrieve username from router location
+    let id = this.props.match.params.id;
+    console.log("id: ", id)
+    this.setState({
+      "user": id
+    }, () => {
+      console.log("new user state: ", this.state["user"])
+      //retrieve user's plants from the database
+      fetchPlants(this.state.user).then((plants) => {
+        console.log("plants: ", plants)
+        this.setState({
+          plants: plants
+        })
+      })
+    })
+
   }
 
 

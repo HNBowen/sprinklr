@@ -15,7 +15,7 @@ ReactDOM.render(
       <div>
         <Route path="/login" render={() => <Login handleLogin={handleLogin}/>}/>
         <Route path="/register" render={() => <Register handleRegister={handleRegister} />}/>
-        <Route path="/home/:username" component={App}/>
+        <Route path="/home/:id" component={App}/>
       </div>
     </Router>,
   document.getElementById('app'));
