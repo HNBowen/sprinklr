@@ -115,13 +115,18 @@ router.route('/home')
   })
 
 //the user's home page. If the user is logged in, 
-// router.route('/home/:username')
-//   .get(function(req, res) {
-//     console.log("GET TO /home/:username", req.url)
-//     res.status(200);
-//     res.end()
-//     // res.sendFile(path.join(__dirname, '../client/index.html'));
-//   })
+router.route('/home/:username')
+  .get(function(req, res) {
+    console.log("GET TO /home/:username", req.url)
+    //check if url matches user
+    if (req.url !== "/home/" + req.session.user.id) {
+      //if it doesn't, send them to the home url that does match the user
+      res.redirect("/home/" + req.session.user.id)
+    } else {
+      //if it does, serve up index.html
+      res.sendFile(path.join(__dirname, '../client/index.html'));
+    }    
+  })
 
 // router.route('/home/static')
 //   .get(function(req, res) {
