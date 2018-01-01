@@ -107,6 +107,15 @@ router.route('/register')
     })
   })
 
+router.route("/logout")
+  .get(function(req, res) {
+    req.session.destroy((err) => {
+      if (!err) {
+        res.redirect("/login")
+      }
+    })
+  })
+
 //the home route. If the user is logged in, send them to the user's home page: /home/userId
 router.route('/home')
   .get(function(req, res) {

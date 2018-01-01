@@ -382,6 +382,23 @@ describe('API routes', function() {
 
       })
     })
+
+    describe('/logout', function() {
+
+      test('GET /logout', async () => {
+
+        //make the request
+        let logoutResponse = await request(app).get("/logout");
+        //verify that we get a redirect status code (302)
+        expect(logoutResponse.statusCode).to.equal(302)
+        //verify that the redirect route is /login
+        expect(logoutResponse.headers.location).to.equal("/login")
+        //verify that the session was destroyed by making a request to protected resource
+        expect(logoutResponse.headers['set-cookie']).to.not.exist
+
+
+      })
+    })
   })
 
 //////////////////////////////////////////////////////////////////////    
