@@ -2526,6 +2526,16 @@ const waterPlant = (update) => {
 /* harmony export (immutable) */ __webpack_exports__["waterPlant"] = waterPlant;
 
 
+const handleLogout = () => {
+  return fetch("/logout", {
+    method: "GET"
+  }).then(function(response) {
+    return response.status
+  })
+}
+/* harmony export (immutable) */ __webpack_exports__["handleLogout"] = handleLogout;
+
+
 /***/ }),
 /* 36 */
 /***/ (function(module, exports, __webpack_require__) {

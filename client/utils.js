@@ -132,3 +132,11 @@ export const waterPlant = (update) => {
     return response.status
   })
 }
+
+export const handleLogout = () => {
+  return fetch("/logout", {
+    method: "GET"
+  }).then(function(response) {
+    return response.status
+  })
+}

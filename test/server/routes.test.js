@@ -393,7 +393,7 @@ describe('API routes', function() {
         expect(logoutResponse.statusCode).to.equal(302)
         //verify that the redirect route is /login
         expect(logoutResponse.headers.location).to.equal("/login")
-        //verify that the session was destroyed by making a request to protected resource
+        //verify that the session was destroyed by expecting the cookies to no longer exist
         expect(logoutResponse.headers['set-cookie']).to.not.exist
 
 

@@ -1,4 +1,10 @@
-import {handleLogin, handleRegister, fetchPlants, postPlant, waterPlant} from '../../client/utils.js'
+import { handleLogin,
+         handleRegister,
+         fetchPlants,
+         postPlant,
+         waterPlant,
+         handleLogout
+       } from '../../client/utils.js'
 import sinon from 'sinon'
 import fetchMock from 'fetch-mock'
 
@@ -233,7 +239,7 @@ describe('postPlant', function() {
 
   let plant = {
     name: "test",
-    img: "test_img.jpg",
+    image: "test_img.jpg",
     lastWatered: new Date(),
     user_id: 1,
   }
@@ -319,5 +325,31 @@ describe('waterPlant', function() {
       expect(response).to.equal(200)
       done()
     })
+  })
+
+  describe('handleLogout', function() {
+
+    it('should make a GET request to /logout', function(done) {
+      fetchMock.get("/logout", 302)
+
+      handleLogout().then(function() {
+        let call = fetchMock.lastCall();
+        expect(call[0]).to.equal("/logout")
+        expect(call[1].method).to.equal("GET")
+        fetchMock.reset()
+        done()
+      })
+    })
+
+    it('should resolve to the status code', function(done) {
+      fetchMock.get("/logout", 302);
+      handleLogout().then(function(response) {
+        expect(response).to.equal(302)
+        fetchMock.reset()
+        fetchMock.restore();
+        done();
+      })
+    })
+
   })
 })
