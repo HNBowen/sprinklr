@@ -126,7 +126,6 @@ router.route('/home')
 //the user's home page. If the user is logged in, 
 router.route('/home/:username')
   .get(function(req, res) {
-    console.log("GET TO /home/:username", req.url)
     //check if url matches user
     if (req.url !== "/home/" + req.session.user.id) {
       //if it doesn't, send them to the home url that does match the user

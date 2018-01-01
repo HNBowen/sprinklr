@@ -135,7 +135,8 @@ export const waterPlant = (update) => {
 
 export const handleLogout = () => {
   return fetch("/logout", {
-    method: "GET"
+    method: "GET",
+    credentials: 'same-origin'
   }).then(function(response) {
     return response.status
   })

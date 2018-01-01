@@ -1,10 +1,11 @@
 import React from 'react';
+import {withRouter} from 'react-router-dom'
 
 import Menu from './Menu.jsx'
 import PlantList from './PlantList.jsx'
 import AddPlantModal from './AddPlantModal.jsx'
 
-import {fetchPlants, postPlant, waterPlant} from '../../utils.js'
+import {fetchPlants, postPlant, waterPlant, handleLogout} from '../../utils.js'
 
 //dummy data for development, remove later
 import { existingPlants, plantsToAdd } from '../../../dummyData.js'
@@ -24,8 +25,13 @@ class App extends React.Component {
       "user": null
     }
 
+    //set bindings for functions
     this.handleAddPlantButtonClick = this.handleAddPlantButtonClick.bind(this)
     this.uploadImage = this.uploadImage.bind(this)
+    this.handleLogoutClick = this.handleLogoutClick.bind(this)
+    this.handleOrderButtonClick = this.handleOrderButtonClick.bind(this)
+    this.displayModal = this.displayModal.bind(this)
+    this.handlePlantTileClick = this.handlePlantTileClick.bind(this)
   }
 
   //test rendering with dummyData
@@ -143,19 +149,27 @@ class App extends React.Component {
     this.setState({"addPlantModalVisible": !this.state.addPlantModalVisible})
   }
 
+  handleLogoutClick() {
+    handleLogout().then((response) => {
+      console.log(response)
+      this.props.history.push("/login")
+    })
+  }
+
   render() {
 
     return (
         <div>
           <h1>Sprinklr</h1>
-          <Menu handleOrderButtonClick={this.handleOrderButtonClick.bind(this)}
-                displayModal={this.displayModal.bind(this)}
+          <button onClick={this.handleLogoutClick}>Logout</button>
+          <Menu handleOrderButtonClick={this.handleOrderButtonClick}
+                displayModal={this.displayModal}
           />
           <AddPlantModal isVisible={this.state.addPlantModalVisible}
-                         handleSubmit={this.handleAddPlantButtonClick.bind(this)}
+                         handleSubmit={this.handleAddPlantButtonClick}
           />
           <PlantList plants={this.state.plants}
-            handlePlantTileClick={this.handlePlantTileClick.bind(this)}
+            handlePlantTileClick={this.handlePlantTileClick}
             sort={this.state.sort}
           />
         </div>
@@ -163,4 +177,4 @@ class App extends React.Component {
   }
 }
 
-export default App;
+export default withRouter(App);

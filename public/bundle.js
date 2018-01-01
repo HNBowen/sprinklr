@@ -2528,7 +2528,8 @@ const waterPlant = (update) => {
 
 const handleLogout = () => {
   return fetch("/logout", {
-    method: "GET"
+    method: "GET",
+    credentials: 'same-origin'
   }).then(function(response) {
     return response.status
   })
@@ -23546,6 +23547,8 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
+var _reactRouterDom = __webpack_require__(15);
+
 var _Menu = __webpack_require__(77);
 
 var _Menu2 = _interopRequireDefault(_Menu);
@@ -23591,10 +23594,14 @@ var App = function (_React$Component) {
       "sort": false,
       "plants": [],
       "user": null
-    };
 
-    _this.handleAddPlantButtonClick = _this.handleAddPlantButtonClick.bind(_this);
+      //set bindings for functions
+    };_this.handleAddPlantButtonClick = _this.handleAddPlantButtonClick.bind(_this);
     _this.uploadImage = _this.uploadImage.bind(_this);
+    _this.handleLogoutClick = _this.handleLogoutClick.bind(_this);
+    _this.handleOrderButtonClick = _this.handleOrderButtonClick.bind(_this);
+    _this.displayModal = _this.displayModal.bind(_this);
+    _this.handlePlantTileClick = _this.handlePlantTileClick.bind(_this);
     return _this;
   }
 
@@ -23719,6 +23726,16 @@ var App = function (_React$Component) {
       this.setState({ "addPlantModalVisible": !this.state.addPlantModalVisible });
     }
   }, {
+    key: 'handleLogoutClick',
+    value: function handleLogoutClick() {
+      var _this3 = this;
+
+      (0, _utils.handleLogout)().then(function (response) {
+        console.log(response);
+        _this3.props.history.push("/login");
+      });
+    }
+  }, {
     key: 'render',
     value: function render() {
 
@@ -23730,14 +23747,19 @@ var App = function (_React$Component) {
           null,
           'Sprinklr'
         ),
-        _react2.default.createElement(_Menu2.default, { handleOrderButtonClick: this.handleOrderButtonClick.bind(this),
-          displayModal: this.displayModal.bind(this)
+        _react2.default.createElement(
+          'button',
+          { onClick: this.handleLogoutClick },
+          'Logout'
+        ),
+        _react2.default.createElement(_Menu2.default, { handleOrderButtonClick: this.handleOrderButtonClick,
+          displayModal: this.displayModal
         }),
         _react2.default.createElement(_AddPlantModal2.default, { isVisible: this.state.addPlantModalVisible,
-          handleSubmit: this.handleAddPlantButtonClick.bind(this)
+          handleSubmit: this.handleAddPlantButtonClick
         }),
         _react2.default.createElement(_PlantList2.default, { plants: this.state.plants,
-          handlePlantTileClick: this.handlePlantTileClick.bind(this),
+          handlePlantTileClick: this.handlePlantTileClick,
           sort: this.state.sort
         })
       );
@@ -23747,7 +23769,7 @@ var App = function (_React$Component) {
   return App;
 }(_react2.default.Component);
 
-exports.default = App;
+exports.default = (0, _reactRouterDom.withRouter)(App);
 
 /***/ }),
 /* 77 */

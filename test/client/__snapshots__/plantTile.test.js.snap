@@ -4,9 +4,7 @@ exports[`PlantTile should render correctly 1`] = `
 <div
   onClick={[Function]}
 >
-  <img
-    src="https://cdn.nurserylive.com/images/stories/virtuemart/product/resized/nurserylive-Peace-Lily,-Spathiphyllum-Plant_128x128.jpg"
-  />
+  <img />
   <span>
     Peace Lily
   </span>

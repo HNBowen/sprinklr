@@ -71,7 +71,6 @@ app.use('/', router);
 
 //wildcard route, serve index.html
 app.get('*', function (req, res) {
-  console.log("INSIDE WILD CARD ROUTE", req.url)
   res.sendFile(path.join(__dirname, '../client/index.html'));
 });
 
