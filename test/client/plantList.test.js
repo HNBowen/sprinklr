@@ -17,7 +17,7 @@ describe('PlantList', function() {
   //it should render PlantTiles from props
   it('should render PlantTiles from props', function() {
     const wrapper = shallow(<PlantList plants={existingPlants} handlePlantTileClick={jest.fn()}/>)
-    expect(wrapper.find(PlantTile)).to.have.length(2);
+    expect(wrapper.find(PlantTile)).to.have.length(4);
   })
 
   //it should pass prop Plant down to PlantTiles
@@ -43,12 +43,12 @@ describe('props based rendering', function() {
   it('should render by dateAdded on first render if sort is false', function() {
     const wrapper = shallow(<PlantList sort={false} plants={existingPlants} handlePlantTileClick={jest.fn()}/>)
 
-    expect(wrapper.find(PlantTile).get(0)["props"]["plant"]["name"]).to.equal("Monstera")
+    expect(wrapper.find(PlantTile).get(0)["props"]["plant"]["name"]).to.equal("Elephant Ear")
   })
 
   it('should render by lastWatered (oldest -> newest) if sort is true', function() {
     const wrapper = shallow(<PlantList sort={true} plants={existingPlants} handlePlantTileClick={jest.fn()}/>)
 
-    expect(wrapper.find(PlantTile).get(0)["props"]["plant"]["name"]).to.equal("Peace Lily")
+    expect(wrapper.find(PlantTile).get(0)["props"]["plant"]["name"]).to.equal("Elephant Ear")
   })
 })

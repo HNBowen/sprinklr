@@ -1,55 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`App should render correctly 1`] = `
-<div>
-  <h1>
-    Sprinklr
-  </h1>
-  <Menu
-    displayModal={[Function]}
-    handleOrderButtonClick={[Function]}
-  />
-  <AddPlantModal
-    handleSubmit={[Function]}
-    isVisible={false}
-  />
-  <PlantList
-    handlePlantTileClick={[Function]}
-    plants={
-      Array [
-        Object {
-          "dateAdded": 2017-10-01T05:00:00.000Z,
-          "id": 1,
-          "img": "https://cdn.nurserylive.com/images/stories/virtuemart/product/resized/nurserylive-Peace-Lily,-Spathiphyllum-Plant_128x128.jpg",
-          "lastWatered": 2017-12-20T06:00:00.000Z,
-          "name": "Peace Lily",
-          "user": "test_user_1",
-        },
-        Object {
-          "dateAdded": 2017-08-30T05:00:00.000Z,
-          "id": 2,
-          "img": "https://static.wixstatic.com/media/e7be30_b5577954ef5347409f7c4ebaeadce8ce~mv2_d_4288_2848_s_4_2.jpg/v1/fill/w_256,h_256,q_85,usm_0.66_1.00_0.01/e7be30_b5577954ef5347409f7c4ebaeadce8ce~mv2_d_4288_2848_s_4_2.jpg",
-          "lastWatered": 2017-12-21T06:00:00.000Z,
-          "name": "Monstera",
-          "user": "test_user_1",
-        },
-        Object {
-          "dateAdded": 2017-07-30T05:00:00.000Z,
-          "img": "https://d13z1xw8270sfc.cloudfront.net/resize/68491/colocasia_esculenta_2.jpg/128/128/0/",
-          "lastWatered": 2017-11-30T06:00:00.000Z,
-          "name": "Elephant Ear",
-          "user": "test_user_2",
-        },
-        Object {
-          "dateAdded": 2017-07-30T05:00:00.000Z,
-          "img": "https://cdn.nurserylive.com/images/stories/virtuemart/product/resized/nurserylive-small-rabbit-foot-fern-1_128x128.png",
-          "lastWatered": 2017-12-15T06:00:00.000Z,
-          "name": "Rabbit's Tail Fern",
-          "user": "test_user_2",
-        },
-      ]
-    }
-    sort={false}
-  />
-</div>
+<Route
+  render={[Function]}
+/>
 `;
