@@ -1,12 +1,20 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`PlantTile should render correctly 1`] = `
-<div
-  onClick={[Function]}
->
-  <img />
+<div>
+  <button>
+    x
+  </button>
+  <img
+    onClick={[Function]}
+    src="https://cdn.nurserylive.com/images/stories/virtuemart/product/resized/nurserylive-Peace-Lily,-Spathiphyllum-Plant_128x128.jpg"
+  />
   <span>
     Peace Lily
+  </span>
+  <span>
+    Last watered: 
+    Wed Dec 20 2017
   </span>
 </div>
 `;
