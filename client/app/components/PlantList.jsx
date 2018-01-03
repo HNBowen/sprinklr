@@ -10,7 +10,7 @@ const PlantList = (props) => {
           {[].concat(props.plants)
              .sort((a, b) => {return a.dateAdded > b.dateAdded})
              .map((plant) => {
-                return <PlantTile plant={plant} handleClick={props.handlePlantTileClick} key={plant.id} />
+                return <PlantTile plant={plant} handleClick={props.handlePlantTileClick} handleDelete={props.handleDelete} key={plant.id} />
              })
           }
         </div>
@@ -22,7 +22,7 @@ const PlantList = (props) => {
             [].concat(props.plants)
               .sort((a, b) => { return a.lastWatered > b.lastWatered})
               .map((plant) => {
-                return <PlantTile plant={plant} handleClick={props.handlePlantTileClick} key={plant.id} />
+                return <PlantTile plant={plant} handleClick={props.handlePlantTileClick} handleDelete={props.handleDelete} key={plant.id} />
               })
           }
         </div>

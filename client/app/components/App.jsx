@@ -5,7 +5,13 @@ import Menu from './Menu.jsx'
 import PlantList from './PlantList.jsx'
 import AddPlantModal from './AddPlantModal.jsx'
 
-import {fetchPlants, postPlant, waterPlant, handleLogout} from '../../utils.js'
+import {fetchPlants,
+        postPlant,
+        waterPlant,
+        handleLogout,
+        deletePlant,
+        findIndexById
+      } from '../../utils.js'
 
 //dummy data for development, remove later
 import { existingPlants, plantsToAdd } from '../../../dummyData.js'
@@ -32,6 +38,7 @@ class App extends React.Component {
     this.handleOrderButtonClick = this.handleOrderButtonClick.bind(this)
     this.displayModal = this.displayModal.bind(this)
     this.handlePlantTileClick = this.handlePlantTileClick.bind(this)
+    this.handleDelete = this.handleDelete.bind(this)
   }
 
   //test rendering with dummyData
@@ -155,6 +162,20 @@ class App extends React.Component {
     })
   }
 
+  handleDelete(plantId) {
+    deletePlant(plantId).then(function(response){
+      //if response is 200, remove from state
+      if (response === 200) {
+        //find the plant's index in the plants array
+        let index = findIndexById(this.state.plants, plantId)
+        //slice it out
+        this.setState({
+          plants: [...this.state.plants.slice(0,index), ...this.state.plants.slice(index + 1)]
+        })
+      }
+    }.bind(this))
+  }
+
   render() {
 
     return (
@@ -170,6 +191,7 @@ class App extends React.Component {
           <PlantList plants={this.state.plants}
             handlePlantTileClick={this.handlePlantTileClick}
             sort={this.state.sort}
+            handleDelete={this.handleDelete}
           />
         </div>
       );

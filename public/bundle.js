@@ -2548,6 +2548,16 @@ const deletePlant = (plantId) => {
 /* harmony export (immutable) */ __webpack_exports__["deletePlant"] = deletePlant;
 
 
+const findIndexById = (array, id) => {
+  for (var i = 0; i < array.length; i++) {
+    if (array[i].id === id) {
+      return i
+    }
+  }
+}
+/* harmony export (immutable) */ __webpack_exports__["findIndexById"] = findIndexById;
+
+
 /***/ }),
 /* 36 */
 /***/ (function(module, exports, __webpack_require__) {
@@ -23613,6 +23623,7 @@ var App = function (_React$Component) {
     _this.handleOrderButtonClick = _this.handleOrderButtonClick.bind(_this);
     _this.displayModal = _this.displayModal.bind(_this);
     _this.handlePlantTileClick = _this.handlePlantTileClick.bind(_this);
+    _this.handleDelete = _this.handleDelete.bind(_this);
     return _this;
   }
 
@@ -23746,6 +23757,21 @@ var App = function (_React$Component) {
       });
     }
   }, {
+    key: 'handleDelete',
+    value: function handleDelete(plantId) {
+      (0, _utils.deletePlant)(plantId).then(function (response) {
+        //if response is 200, remove from state
+        if (response === 200) {
+          //find the plant's index in the plants array
+          var index = (0, _utils.findIndexById)(this.state.plants, plantId);
+          //slice it out
+          this.setState({
+            plants: [].concat(_toConsumableArray(this.state.plants.slice(0, index)), _toConsumableArray(this.state.plants.slice(index + 1)))
+          });
+        }
+      }.bind(this));
+    }
+  }, {
     key: 'render',
     value: function render() {
 
@@ -23770,7 +23796,8 @@ var App = function (_React$Component) {
         }),
         _react2.default.createElement(_PlantList2.default, { plants: this.state.plants,
           handlePlantTileClick: this.handlePlantTileClick,
-          sort: this.state.sort
+          sort: this.state.sort,
+          handleDelete: this.handleDelete
         })
       );
     }
@@ -23901,7 +23928,7 @@ var PlantList = function PlantList(props) {
       [].concat(props.plants).sort(function (a, b) {
         return a.dateAdded > b.dateAdded;
       }).map(function (plant) {
-        return _react2.default.createElement(_PlantTile2.default, { plant: plant, handleClick: props.handlePlantTileClick, key: plant.id });
+        return _react2.default.createElement(_PlantTile2.default, { plant: plant, handleClick: props.handlePlantTileClick, handleDelete: props.handleDelete, key: plant.id });
       })
     );
   } else if (props.sort) {
@@ -23911,7 +23938,7 @@ var PlantList = function PlantList(props) {
       [].concat(props.plants).sort(function (a, b) {
         return a.lastWatered > b.lastWatered;
       }).map(function (plant) {
-        return _react2.default.createElement(_PlantTile2.default, { plant: plant, handleClick: props.handlePlantTileClick, key: plant.id });
+        return _react2.default.createElement(_PlantTile2.default, { plant: plant, handleClick: props.handlePlantTileClick, handleDelete: props.handleDelete, key: plant.id });
       })
     );
   }
@@ -23946,7 +23973,9 @@ var PlantTile = function PlantTile(props) {
     null,
     _react2.default.createElement(
       'button',
-      { onClick: props.handleDelete(props.plant.id) },
+      { onClick: function onClick() {
+          props.handleDelete(props.plant.id);
+        } },
       'x'
     ),
     _react2.default.createElement('img', { src: props.plant.image, onClick: function onClick() {

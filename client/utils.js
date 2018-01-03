@@ -150,3 +150,11 @@ export const deletePlant = (plantId) => {
     return response.status
   })
 }
+
+export const findIndexById = (array, id) => {
+  for (var i = 0; i < array.length; i++) {
+    if (array[i].id === id) {
+      return i
+    }
+  }
+}

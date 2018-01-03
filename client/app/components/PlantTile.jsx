@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 const PlantTile = (props) => {
   return (
       <div>
-        <button onClick={props.handleDelete(props.plant.id)}>x</button>
+        <button onClick={function() { props.handleDelete(props.plant.id) }}>x</button>
         <img src={props.plant.image} onClick={function() { props.handleClick(props.plant.id) }}/>
         <span>{props.plant.name}</span>
         <span>Last watered: {props.plant.lastWatered}</span>
