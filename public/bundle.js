@@ -23669,7 +23669,7 @@ var App = function (_React$Component) {
 
       var newPlant = {
         name: e.target.name.value,
-        lastWatered: new Date(),
+        lastWatered: new Date().toDateString(),
         user_id: this.state.user
 
         //upload image to hosting, get url
@@ -23692,7 +23692,7 @@ var App = function (_React$Component) {
     value: function handlePlantTileClick(plantId) {
       //TODO: send updated plant to database
 
-      var updatedDate = new Date();
+      var updatedDate = new Date().toDateString();
 
       (0, _utils.waterPlant)({
         id: plantId,
@@ -23940,6 +23940,12 @@ var PlantTile = function PlantTile(props) {
       'span',
       null,
       props.plant.name
+    ),
+    _react2.default.createElement(
+      'span',
+      null,
+      'Last watered: ',
+      props.plant.lastWatered
     )
   );
 };

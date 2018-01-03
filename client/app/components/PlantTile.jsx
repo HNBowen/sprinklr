@@ -6,6 +6,7 @@ const PlantTile = (props) => {
       <div onClick={function() { props.handleClick(props.plant.id) }}>
         <img src={props.plant.image}/>
         <span>{props.plant.name}</span>
+        <span>Last watered: {props.plant.lastWatered}</span>
       </div>
     )
 }

@@ -150,7 +150,7 @@ describe('API routes', function() {
         let newPlant = {
           name: "Fiddle Leaf",
           img: "https://i.pinimg.com/236x/6f/d3/2e/6fd32e64735e460852ec3c507df10354.jpg",
-          lastWatered: new Date(),
+          lastWatered: new Date().toDateString(),
           user: "test_user_2"
         };
 
@@ -192,7 +192,7 @@ describe('API routes', function() {
 
       test('PUT /plants (update lastWatered)', function(done) {
 
-        let updatedLastWater = new Date();
+        let updatedLastWater = new Date().toDateString();
 
         let update = {
           id: 1,

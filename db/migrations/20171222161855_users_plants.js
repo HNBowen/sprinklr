@@ -9,8 +9,8 @@ exports.up = function(knex, Promise) {
     table.increments();
     table.string('name');
     table.string('image');
-    table.date('dateAdded');
-    table.date('lastWatered');
+    table.string('dateAdded');
+    table.string('lastWatered');
     table.integer('user_id').notNullable().references('id').inTable('users');
     })
   })

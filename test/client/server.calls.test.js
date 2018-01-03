@@ -240,7 +240,7 @@ describe('postPlant', function() {
   let plant = {
     name: "test",
     image: "test_img.jpg",
-    lastWatered: new Date(),
+    lastWatered: new Date().toDateString(),
     user_id: 1,
   }
 
@@ -287,7 +287,7 @@ describe('waterPlant', function() {
 
   let update = {
     id: 1,
-    lastWatered: new Date()
+    lastWatered: new Date().toDateString()
   }
 
   beforeEach(function() {

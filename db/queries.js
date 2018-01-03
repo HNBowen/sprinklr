@@ -47,7 +47,7 @@ function addPlant(plant) {
   return Plants().insert({
     name: plant.name,
     image: plant.image,
-    dateAdded: new Date(),
+    dateAdded: new Date().toDateString(),
     lastWatered: plant.lastWatered,
     user_id: plant.user_id
   }).returning('id').then(function(id) {

@@ -92,7 +92,7 @@ class App extends React.Component {
 
     var newPlant = {
       name: e.target.name.value,
-      lastWatered: new Date(),
+      lastWatered: new Date().toDateString(),
       user_id: this.state.user
     }
     
@@ -100,7 +100,7 @@ class App extends React.Component {
     //then, post it (with the url) to the database
     this.uploadImage(document.getElementById('image_upload').files[0])
     .then(function(url) {
-      
+
       newPlant.image = url;
 
       postPlant(newPlant).then(function(plantId) {
@@ -116,7 +116,7 @@ class App extends React.Component {
   handlePlantTileClick(plantId) {
     //TODO: send updated plant to database
 
-    let updatedDate = new Date();
+    let updatedDate = new Date().toDateString();
 
     waterPlant({
       id: plantId,
