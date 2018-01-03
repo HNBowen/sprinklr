@@ -51,11 +51,19 @@ router.route('/plants')
     })
   })
 
+//get request to this route treats id as the user_id, while delete request treats id as plant_id
+//would have designed this differently in hind-sight but too late now :(
 router.route('/plants/:id')
   .get(function(req,res) {
     queries.getPlantsById(req.params.id).then(function(plants) {
       res.status(200);
       res.json(plants)
+    })
+  })
+  .delete(function(req, res) {
+    queries.deletePlantByPlantId(req.params.id).then(function() {
+      res.status(200)
+      res.end();
     })
   })
 

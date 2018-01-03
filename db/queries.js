@@ -59,7 +59,11 @@ function addPlant(plant) {
 function updatePlant(update) {
   return Plants().where('id', update.id)
     .update({lastWatered: update.lastWatered})
+}
 
+function deletePlantByPlantId(plantId) {
+  return Plants().where('id', plantId)
+    .delete()
 }
 
 module.exports = {
@@ -69,5 +73,6 @@ module.exports = {
   getPlantsById: getPlantsById,
   addUser: addUser,
   addPlant: addPlant,
-  updatePlant: updatePlant
+  updatePlant: updatePlant,
+  deletePlantByPlantId: deletePlantByPlantId
 }

@@ -223,6 +223,35 @@ describe('API routes', function() {
           
         })
       })
+
+      test('DELETE /plants/:id', function(done) {
+        //make a delete request to /plants/1
+        let deleteRequest = request(app).delete("/plants/1")
+        deleteRequest.cookies = Cookies
+
+        deleteRequest.end(function(err, res) {
+          //assert 200 status code
+          expect(res.statusCode).to.equal(200)
+          //then make a get request to /plants
+          let plantsRequest = request(app).get("/plants")
+          plantsRequest.cookies = Cookies
+
+          plantsRequest.end(function(err, res) {
+            //assert length of return array is 3
+            expect(res.body.length).to.equal(3);
+            //iterate through the return array and verify that there is no plant w/ id=1
+            let found = false;
+            for (var plant in res.body) {
+              if (plant.id === 1) {
+                found = true;
+              }
+            }
+            expect(found).to.be.false
+            done()
+          })
+          
+        })
+      })
     })
   })
 
