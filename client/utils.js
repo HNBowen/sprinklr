@@ -141,3 +141,12 @@ export const handleLogout = () => {
     return response.status
   })
 }
+
+export const deletePlant = (plantId) => {
+  return fetch("/plants/" + plantId, {
+    method: "DELETE",
+    credentials: 'same-origin'
+  }).then((response) => {
+    return response.status
+  })
+}

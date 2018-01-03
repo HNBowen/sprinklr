@@ -3,7 +3,8 @@ import { handleLogin,
          fetchPlants,
          postPlant,
          waterPlant,
-         handleLogout
+         handleLogout,
+         deletePlant
        } from '../../client/utils.js'
 import sinon from 'sinon'
 import fetchMock from 'fetch-mock'
@@ -351,5 +352,37 @@ describe('waterPlant', function() {
       })
     })
 
+  })
+})
+
+describe('deletePlant', function() {
+
+  beforeEach(function() {
+    fetchMock.delete("/plants/1", 200)
+  })
+
+  afterEach(function() {
+    fetchMock.reset()
+  })
+
+  afterAll(function() {
+    fetchMock.restore()
+  })
+
+  it('should make a DELETE request to /plants/:id', function(done) {
+    deletePlant(1).then(function(response) {
+      let call = fetchMock.lastCall();
+
+      expect(call[0]).to.equal("/plants/1")
+      expect(call[1].method).to.equal("DELETE")
+      done()
+    })
+  })
+
+  it('should resolve to the status code', function(done) {
+    deletePlant(1).then(function(response) {
+      expect(response).to.equal(200)
+      done()
+    })
   })
 })

@@ -2537,6 +2537,17 @@ const handleLogout = () => {
 /* harmony export (immutable) */ __webpack_exports__["handleLogout"] = handleLogout;
 
 
+const deletePlant = (plantId) => {
+  return fetch("/plants/" + plantId, {
+    method: "DELETE",
+    credentials: 'same-origin'
+  }).then((response) => {
+    return response.status
+  })
+}
+/* harmony export (immutable) */ __webpack_exports__["deletePlant"] = deletePlant;
+
+
 /***/ }),
 /* 36 */
 /***/ (function(module, exports, __webpack_require__) {
