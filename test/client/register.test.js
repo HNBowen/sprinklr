@@ -10,7 +10,7 @@ describe('Register', function() {
 
   let wrapper;
   beforeEach(function() {
-    wrapper = shallow(<Register handleRegister={jest.fn()}/>);
+    wrapper = shallow(<Register.WrappedComponent handleRegister={jest.fn()}/>);
   });
 
   it('should render correctly', function() {
@@ -35,7 +35,7 @@ describe('Register', function() {
 
   it('should call handleRegister when form is submitted', function() {
     let mockHandler = jest.fn();
-    wrapper = shallow(<Register handleRegister={mockHandler} />)
+    wrapper = shallow(<Register.WrappedComponent handleRegister={mockHandler} />)
 
     wrapper.find('form').simulate('submit')
     expect(mockHandler.mock.calls.length).to.equal(1);

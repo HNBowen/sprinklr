@@ -23675,8 +23675,7 @@ var App = function (_React$Component) {
         //upload image to hosting, get url
         //then, post it (with the url) to the database
       };this.uploadImage(document.getElementById('image_upload').files[0]).then(function (url) {
-        //TODO: send plant to database to get an ID
-        //then:
+
         newPlant.image = url;
 
         (0, _utils.postPlant)(newPlant).then(function (plantId) {

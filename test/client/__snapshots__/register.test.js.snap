@@ -1,7 +1,30 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Register should render correctly 1`] = `
-<Route
-  render={[Function]}
-/>
+<div>
+  <form
+    onSubmit={[Function]}
+  >
+    username: 
+    <input
+      name="username"
+      type="text"
+    />
+    password: 
+    <input
+      name="password"
+      text="text"
+    />
+    <button
+      type="submit"
+    >
+      Register
+    </button>
+  </form>
+  <a
+    href="/login"
+  >
+    Already have an account? Click here to login.
+  </a>
+</div>
 `;

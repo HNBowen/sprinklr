@@ -2,6 +2,7 @@ import React from 'react'
 import {shallow, mount} from 'enzyme'
 import {shallowToJson} from 'enzyme-to-json'
 import sinon from 'sinon';
+import fetchMock from 'fetch-mock'
 
 
 import App from '../../client/app/components/App.jsx'
@@ -14,17 +15,28 @@ import {existingPlants, plantsToAdd} from '../../dummyData.js'
 
 
 describe('App', function() {
+
+  beforeEach(function() {
+    fetchMock.post("/plants", "5")
+    fetchMock.get("/plants/1", [{}])
+    fetchMock.put("/plants", 200)
+    fetchMock.get("/logout", 302)
+  })
+
+  afterAll(function() {
+    fetchMock.restore()
+  })
   
 
   it('should render correctly', function() {
-    const wrapper = shallow(<App />)
+    const wrapper = shallow(<App.WrappedComponent match={{params: {id: 1}}}/>)
 
     jestExpect(shallowToJson(wrapper)).toMatchSnapshot();
   })
 
   //it should render a title h1 tag
   it('should render an h1 tag with text "Sprinklr"', function() {
-    const wrapper = shallow(<App />)
+    const wrapper = shallow(<App.WrappedComponent match={{params: {id: 1}}}/>)
 
     expect(wrapper.find('h1')).to.have.length(1);
     expect(wrapper.find('h1').text()).to.equal("Sprinklr");
@@ -32,53 +44,53 @@ describe('App', function() {
 
   //it should render 1 Menu element
   it('should render 1 Menu component', function() {
-    const wrapper = shallow(<App />)
+    const wrapper = shallow(<App.WrappedComponent match={{params: {id: 1}}}/>)
     expect(wrapper.find(Menu)).to.have.length(1);
   })
 
   //it should render 1 PlantList component
   it('should render 1 PlantList component', function() {
-    const wrapper = shallow(<App />)
+    const wrapper = shallow(<App.WrappedComponent match={{params: {id: 1}}}/>)
     expect(wrapper.find(PlantList)).to.have.length(1);
   })
 
   it('should render with state property "addPlantModalVisible" set to false', function() {
-    const wrapper = shallow(<App />)
+    const wrapper = shallow(<App.WrappedComponent match={{params: {id: 1}}}/>)
     expect(wrapper.state('addPlantModalVisible')).to.equal(false);
   })
 
   it('should render with state property "sort" set to false', function() {
-    const wrapper = shallow(<App />)
+    const wrapper = shallow(<App.WrappedComponent match={{params: {id: 1}}}/>)
     expect(wrapper.state('sort')).to.be.false
   })
 
   it('should render with state property "plants" and it should be an array', function() {
-    const wrapper = shallow(<App />)
+    const wrapper = shallow(<App.WrappedComponent match={{params: {id: 1}}}/>)
     const plants = wrapper.state("plants");
     expect(plants).to.not.equal(undefined)
     expect(Array.isArray(plants)).to.equal(true)
   })
 
   it('should have handleOrderButtonClick function', function() {
-    const wrapper = shallow(<App />)
+    const wrapper = shallow(<App.WrappedComponent match={{params: {id: 1}}}/>)
     const handler = wrapper.instance().handleOrderButtonClick;
     expect(typeof handler).to.equal("function");
   })
 
   it('should have handleAddPlantButtonClick function', function() {
-    const wrapper = shallow(<App />)
+    const wrapper = shallow(<App.WrappedComponent match={{params: {id: 1}}}/>)
     const handler = wrapper.instance().handleAddPlantButtonClick;
     expect(typeof handler).to.equal("function")
   })
 
   it('should have a handlePlantTileClick function', function() {
-    const wrapper = shallow(<App />)
+    const wrapper = shallow(<App.WrappedComponent match={{params: {id: 1}}}/>)
     const handler = wrapper.instance().handlePlantTileClick;
     expect(handler).to.be.a("function")
   })
 
   it('should pass plants array from state down to PlantList component', function() {
-    const wrapper = shallow(<App />)
+    const wrapper = shallow(<App.WrappedComponent match={{params: {id: 1}}}/>)
     wrapper.setState({"plants": existingPlants})
     const listWrapper = wrapper.find(PlantList);
     const listWrapperPlants = listWrapper.props()["plants"]
@@ -87,20 +99,20 @@ describe('App', function() {
   })
 
   it('should pass sort state down to PlantList component', function() {
-    const wrapper = shallow(<App />)
+    const wrapper = shallow(<App.WrappedComponent match={{params: {id: 1}}}/>)
     const listWrapper = wrapper.find(PlantList);
     expect(listWrapper.props()["sort"]).to.be.false
   })
 
   it('should pass click handlers down to Menu component', function() {
-    const wrapper = shallow(<App />);
+    const wrapper = shallow(<App.WrappedComponent match={{params: {id: 1}}}/>);
     const menuWrapper = wrapper.find(Menu);
     expect(menuWrapper.props()["handleOrderButtonClick"]).to.be.a("function")
     expect(menuWrapper.props()["displayModal"]).to.be.a("function")
   })
 
   it('should pass handlePlantTileClick handler down to PlantList component', function() {
-    const wrapper = shallow(<App />);
+    const wrapper = shallow(<App.WrappedComponent match={{params: {id: 1}}}/>);
     const plantListWrapper = wrapper.find(PlantList);
     expect(plantListWrapper.props()["handlePlantTileClick"]).to.be.a("function")
   })
@@ -109,10 +121,19 @@ describe('App', function() {
 
 describe('displaying the addPlantModal', function() {
 
+  beforeEach(function() {
+    fetchMock.post("/plants", "5")
+    fetchMock.get("/plants/1", [{}])
+    fetchMock.put("/plants", 200)
+    fetchMock.get("/logout", 302)
+  })
 
+  afterAll(function() {
+    fetchMock.restore()
+  })
 
   it('on first render, addPlantModal should not be visible', function() {
-    const wrapper = shallow(<App />);
+    const wrapper = shallow(<App.WrappedComponent match={{params: {id: 1}}}/>);
 
     const addPlantModalWrapper = wrapper.find(AddPlantModal);
 
@@ -121,7 +142,7 @@ describe('displaying the addPlantModal', function() {
 
   it('should display addPlantModal after displayModal is called', function() {
     //enzyme cannot test for this reliably 
-    const wrapper = shallow(<App />);
+    const wrapper = shallow(<App.WrappedComponent match={{params: {id: 1}}}/>);
 
     wrapper.instance().displayModal();
     wrapper.update();
@@ -133,7 +154,7 @@ describe('displaying the addPlantModal', function() {
   it('should remove addPlantModal after second call to displayModal', function() {
     //enzyme cannot test for this reliably 
 
-    const wrapper = shallow(<App />);
+    const wrapper = shallow(<App.WrappedComponent match={{params: {id: 1}}}/>);
 
     wrapper.instance().displayModal();
     wrapper.instance().displayModal();
@@ -146,9 +167,20 @@ describe('displaying the addPlantModal', function() {
 
 describe('handleOrderButtonClick', function() {
 
+  beforeEach(function() {
+    fetchMock.post("/plants", "5")
+    fetchMock.get("/plants/1", [{}])
+    fetchMock.put("/plants", 200)
+    fetchMock.get("/logout", 302)
+  })
+
+  afterAll(function() {
+    fetchMock.restore()
+  })
+
   it('should change App sort state to true on first click', function() {
 
-    const wrapper = shallow(<App />);
+    const wrapper = shallow(<App.WrappedComponent match={{params: {id: 1}}}/>);
 
     wrapper.instance().handleOrderButtonClick();
 
@@ -157,7 +189,7 @@ describe('handleOrderButtonClick', function() {
   })
 
   it('should change App sort state to false on second click', function() {
-    const wrapper = shallow(<App />);
+    const wrapper = shallow(<App.WrappedComponent match={{params: {id: 1}}}/>);
 
     wrapper.instance().handleOrderButtonClick();
     wrapper.instance().handleOrderButtonClick();
@@ -169,9 +201,20 @@ describe('handleOrderButtonClick', function() {
 
 describe('handleAddPlantButtonClick', function() {
 
+  beforeEach(function() {
+    fetchMock.post("/plants", "5")
+    fetchMock.get("/plants/1", [{}])
+    fetchMock.put("/plants", 200)
+    fetchMock.get("/logout", 302)
+  })
+
+  afterAll(function() {
+    fetchMock.restore()
+  })
+
   it('should add a new plant object to the plants array', function() {
 
-    const wrapper = shallow(<App />);
+    const wrapper = shallow(<App.WrappedComponent match={{params: {id: 1}}}/>);
 
     const mockEvent = {
       target: {
@@ -194,7 +237,7 @@ describe('handleAddPlantButtonClick', function() {
   })
 
   it('should call displayModal', function() {
-    const wrapper = shallow(<App />);
+    const wrapper = shallow(<App.WrappedComponent match={{params: {id: 1}}}/>);
 
     wrapper.instance().displayModal = sinon.spy();
 
@@ -218,7 +261,7 @@ describe('handleAddPlantButtonClick', function() {
   })
 
   it('should alert an error message if called with a blank value for plantName', function() {
-    const wrapper = shallow(<App />)
+    const wrapper = shallow(<App.WrappedComponent match={{params: {id: 1}}}/>)
 
     const mockEvent = {
       target: {
@@ -239,7 +282,7 @@ describe('handleAddPlantButtonClick', function() {
   })
 
   it('should alert an error message if called with a blank value for plantImg', function() {
-    const wrapper = shallow(<App />);
+    const wrapper = shallow(<App.WrappedComponent match={{params: {id: 1}}}/>);
 
     const mockEvent = {
       target: {
@@ -260,7 +303,7 @@ describe('handleAddPlantButtonClick', function() {
   })
 
   it('should not call displayModal if called without name or image specified', function() {
-    const wrapper = shallow(<App />);
+    const wrapper = shallow(<App.WrappedComponent match={{params: {id: 1}}}/>);
     wrapper.instance().displayModal = sinon.spy();
 
     const mockEventNoImage = {
@@ -298,9 +341,20 @@ describe('handleAddPlantButtonClick', function() {
 
 describe('handlePlantTileClick', function() {
 
+  beforeEach(function() {
+    fetchMock.post("/plants", "5")
+    fetchMock.get("/plants/1", [{}])
+    fetchMock.put("/plants", 200)
+    fetchMock.get("/logout", 302)
+  })
+
+  afterAll(function() {
+    fetchMock.restore()
+  })
+
   it('should update the selected plant\'s lastWatered date', function() {
 
-    const wrapper = shallow(<App />);
+    const wrapper = shallow(<App.WrappedComponent match={{params: {id: 1}}}/>);
     wrapper.setState({"plants": existingPlants});
     const oldDate = existingPlants[0]["lastWatered"];
     wrapper.instance().handlePlantTileClick(1);
@@ -315,16 +369,27 @@ describe('handlePlantTileClick', function() {
 
 describe('displayModal', function() {
 
+  beforeEach(function() {
+    fetchMock.post("/plants", "5")
+    fetchMock.get("/plants/1", [{}])
+    fetchMock.put("/plants", 200)
+    fetchMock.get("/logout", 302)
+  })
+
+  afterAll(function() {
+    fetchMock.restore()
+  })
+
   it('should update addPlantModalVisible to true on first click', function() {
 
-    const wrapper = shallow(<App />);
+    const wrapper = shallow(<App.WrappedComponent match={{params: {id: 1}}}/>);
     wrapper.instance().displayModal();
     expect(wrapper.state()["addPlantModalVisible"]).to.be.true;
   })
 
   it('should change addPlantModalVisible back to false after second click', function() {
 
-    const wrapper = shallow(<App />);
+    const wrapper = shallow(<App.WrappedComponent match={{params: {id: 1}}}/>);
 
     wrapper.instance().displayModal();
     wrapper.instance().displayModal();
