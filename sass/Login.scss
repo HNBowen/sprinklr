@@ -1,3 +1,107 @@
-.login-page {
-  background-image: url("../assets/brina-blum-215893.jpg")
+/* variables for font styles*/
+
+$font-stack: "American Typewriter", sans-serif;
+
+@mixin font-color($color) {
+  -webkit-text-fill-color: $color;
+  -moz-text-fill-color: $color;
+  -ms-text-fill-color: $color;
+  text-fill-color: $color;
 }
+
+/*/// Stroke font-character
+/// @param  {Integer} $stroke - Stroke width
+/// @param  {Color}   $color  - Stroke color
+/// @return {List}            - text-shadow list*/
+
+@function stroke($stroke, $color) {
+  $shadow: ();
+  $from: $stroke*-1;
+  @for $i from $from through $stroke {
+   @for $j from $from through $stroke {
+      $shadow: append($shadow, $i*1px $j*1px 0 $color, comma);
+    }
+  }
+  @return $shadow;
+}
+/*/// Stroke font-character
+/// @param  {Integer} $stroke - Stroke width
+/// @param  {Color}   $color  - Stroke color
+/// @return {Style}           - text-shadow*/
+@mixin stroke($stroke, $color) {
+  text-shadow: stroke($stroke, $color);
+}
+
+
+/*// Flexbox display*/
+@mixin flexbox() {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+}
+
+/*// Flex Flow Direction
+// - applies to: flex containers
+// row | row-reverse | column | column-reverse*/
+@mixin flex-direction($direction) {
+  -webkit-flex-direction: $direction;
+     -moz-flex-direction: $direction;
+      -ms-flex-direction: $direction;
+          flex-direction: $direction;
+}
+
+
+/*// Axis Alignment
+// - applies to: flex containers
+// flex-start | flex-end | center | space-between | space-around */
+@mixin justify-content($justify) {
+  -webkit-justify-content: $justify;
+     -moz-justify-content: $justify;
+      -ms-justify-content: $justify;
+          justify-content: $justify;
+            -ms-flex-pack: $justify;
+}
+
+/*// Cross-axis Alignment
+// - applies to: flex containers
+// flex-start | flex-end | center | baseline | stretch */
+@mixin align-items($align) {
+  -webkit-align-items: $align;
+     -moz-align-items: $align;
+      -ms-align-items: $align;
+          align-items: $align;
+}
+
+
+.login-page {
+  background-image: url("../assets/brina-blum-215893.jpg");
+  background-size: cover;
+  background-position: center;
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  @include flexbox();
+  @include flex-direction(column);
+  @include justify-content(center);
+  @include align-items(center);
+}
+
+.login-form {
+  @include flexbox();
+  @include flex-direction(column);
+  @include justify-content(center);
+  @include align-items(center)
+}
+
+/*
+  
+  - .login-page background image should be centered
+  - .login-form should be centered
+  - .login-title should be above the .login-form
+  - same font family for all text -> save in a var
+  - same font fill and border -> save in a var
+  - .regsiter-link should be below .login-form
+
+*/
