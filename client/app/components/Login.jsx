@@ -2,6 +2,9 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import {withRouter} from 'react-router-dom'
 
+//styles
+import '../../../sass/Login.scss'
+
 class Login extends React.Component {
 
   constructor(props) {
@@ -10,7 +13,7 @@ class Login extends React.Component {
 
   render() {
     return (
-        <div>
+        <div className="login-page">
           <form onSubmit={(e) => this.props.handleLogin(e).then((url) => {
             this.props.history.push(url)
           })}>
