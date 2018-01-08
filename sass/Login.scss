@@ -122,7 +122,6 @@ $font-stack: "American Typewriter", sans-serif;
 .login-form {
   @include flexbox();
   @include flex-direction(column);
-  @include justify-content(center);
   @include align-items(center)
   @include border-radius(7px)
   background-color: rgba(249, 218, 208, 0.5);
@@ -144,6 +143,13 @@ $font-stack: "American Typewriter", sans-serif;
   @include border-radius(7px);
   border: solid grey 1px;
   text-align: center;
+  
+  /* sizing & position: mobile */
+  @media only screen and (max-width: 414px) {
+    width: 66%;
+    height: 15%;
+    margin-top: 15%;
+  }
 }
 
 .login-button {
@@ -152,9 +158,13 @@ $font-stack: "American Typewriter", sans-serif;
   @include border-radius(7px);
   border: solid grey 1px;
   background-color: white;
-  /* sizing & position: mobile */
   /* sizing & position tablet */
   /* sizing & position: desktop */
+  /* sizing & position: mobile */
+  @media only screen and (max-width: 414px) {
+    margin-top: 15%;
+    height: 10%;
+  }
 }
 
 .register-link {
