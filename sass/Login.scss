@@ -109,12 +109,13 @@ $font-stack: "American Typewriter", sans-serif;
   @include align-items(center);
   @include justify-content(center);
   /* sizing & position: desktop */
+  width: 33%;
+  margin-top: 10%;
+  margin-bottom:5%;
   /* sizing & position tablet */
   @media only screen and (max-width: 768px) {
-    width: 50%;
     height: 7%;
     margin-top: 30%;
-    margin-bottom: 5%;
   };
   /* sizing & position: mobile */
   @media only screen and (max-width: 414px) {
@@ -132,8 +133,10 @@ $font-stack: "American Typewriter", sans-serif;
   @include border-radius(7px)
   background-color: rgba(249, 218, 208, 0.5);
   /* sizing & position: desktop */
+  height: 33%;
+  width: 20%;
   /* sizing & position tablet */
-  @media only screen and (min-width: 768px) {
+  @media only screen and (max-width: 768px) {
     width: 30%;
     height: 25%;
   };
@@ -150,15 +153,17 @@ $font-stack: "American Typewriter", sans-serif;
   @include border-radius(7px);
   border: solid grey 1px;
   text-align: center;
+  /* sizing and position: desktop*/
+  width: 66%;
+  height: 13%;
+  margin-top: 15%;
   /* sizing and position: tablet */
   @media only screen and (max-width: 768px) {
-
+    height: 15%;
   };
   /* sizing & position: mobile */
   @media only screen and (max-width: 414px) {
-    width: 66%;
     height: 15%;
-    margin-top: 15%;
   }
 }
 
@@ -168,24 +173,19 @@ $font-stack: "American Typewriter", sans-serif;
   @include border-radius(7px);
   border: solid grey 1px;
   background-color: white;
-  /* sizing & position: desktop */
-  /* sizing & position tablet */
-  @media only screen and (max-width: 768px) {
+  margin-top: 15%;
+  width: 33%;
+  height: 10%;
 
-  };
-  /* sizing & position: mobile */
-  @media only screen and (max-width: 414px) {
-    margin-top: 15%;
-    height: 10%;
-  }
 }
 
 .register-link {
   @include font-color(white);
   /* sizing & position: desktop */
+  margin-top: 5%;
   /* sizing & position tablet */
   @media only screen and (max-width: 768px) {
-
+    font-size: 20px;
   };
   /* sizing & position: mobile */
   @media only screen and (max-width: 414px) {
