@@ -14,14 +14,15 @@ class Login extends React.Component {
   render() {
     return (
         <div className="login-page">
+          <span className="login-title">Sprinklr</span>
           <form onSubmit={(e) => this.props.handleLogin(e).then((url) => {
             this.props.history.push(url)
-          })}>
-            username: <input type="text" name="username"></input>
-            password: <input type="text" name="password"></input>
-            <button type="submit">Login</button>
+          })} className="login-form">
+            <input type="text" name="username" placeholder="username" className="login-form-input"></input>
+            <input type="password" name="password" placeholder="password" className="login-form-input"></input>
+            <button type="submit" className="login-button">Login</button>
           </form>
-          <a href="/register">New here? Click here to register.</a>
+          <a href="/register" className="register-link">New here? Click here to register.</a>
         </div>
       )
   }

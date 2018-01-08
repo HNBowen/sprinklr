@@ -8,6 +8,9 @@ import Register from '../app/components/Register.jsx';
 
 import {handleLogin, handleRegister} from '../utils.js'
 
+//style for the html and body
+import '../../sass/body.scss'
+
 
 
 ReactDOM.render(

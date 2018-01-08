@@ -2589,6 +2589,8 @@ var _Register2 = _interopRequireDefault(_Register);
 
 var _utils = __webpack_require__(35);
 
+__webpack_require__(93);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 _reactDom2.default.render(_react2.default.createElement(
@@ -2615,6 +2617,9 @@ _reactDom2.default.render(_react2.default.createElement(
 //render App
 //url is /register
 //render Register
+
+
+//style for the html and body
 
 /***/ }),
 /* 37 */
@@ -25401,25 +25406,28 @@ var Login = function (_React$Component) {
         'div',
         { className: 'login-page' },
         _react2.default.createElement(
+          'span',
+          { className: 'login-title' },
+          'Sprinklr'
+        ),
+        _react2.default.createElement(
           'form',
           { onSubmit: function onSubmit(e) {
               return _this2.props.handleLogin(e).then(function (url) {
                 _this2.props.history.push(url);
               });
-            } },
-          'username: ',
-          _react2.default.createElement('input', { type: 'text', name: 'username' }),
-          'password: ',
-          _react2.default.createElement('input', { type: 'text', name: 'password' }),
+            }, className: 'login-form' },
+          _react2.default.createElement('input', { type: 'text', name: 'username', placeholder: 'username', className: 'login-form-input' }),
+          _react2.default.createElement('input', { type: 'password', name: 'password', placeholder: 'password', className: 'login-form-input' }),
           _react2.default.createElement(
             'button',
-            { type: 'submit' },
+            { type: 'submit', className: 'login-button' },
             'Login'
           )
         ),
         _react2.default.createElement(
           'a',
-          { href: '/register' },
+          { href: '/register', className: 'register-link' },
           'New here? Click here to register.'
         )
       );
@@ -25467,27 +25475,30 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var Register = function Register(props) {
   return _react2.default.createElement(
     'div',
-    null,
+    { className: 'login-page' },
+    _react2.default.createElement(
+      'span',
+      { className: 'login-title' },
+      'Sprinklr'
+    ),
     _react2.default.createElement(
       'form',
       { onSubmit: function onSubmit(e) {
           return props.handleRegister(e).then(function (url) {
             props.history.push(url);
           });
-        } },
-      'username: ',
-      _react2.default.createElement('input', { type: 'text', name: 'username' }),
-      'password: ',
-      _react2.default.createElement('input', { text: 'text', name: 'password' }),
+        }, className: 'login-form' },
+      _react2.default.createElement('input', { type: 'text', name: 'username', placeholder: 'username', className: 'login-form-input' }),
+      _react2.default.createElement('input', { text: 'text', name: 'password', placeholder: 'password', className: 'login-form-input' }),
       _react2.default.createElement(
         'button',
-        { type: 'submit' },
+        { type: 'submit', className: 'login-button' },
         'Register'
       )
     ),
     _react2.default.createElement(
       'a',
-      { href: '/login' },
+      { href: '/login', className: 'register-link' },
       'Already have an account? Click here to login.'
     )
   );
@@ -25498,6 +25509,15 @@ Register.propTypes = {
 };
 
 exports.default = (0, _reactRouterDom.withRouter)(Register);
+
+/***/ }),
+/* 90 */,
+/* 91 */,
+/* 92 */,
+/* 93 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
 
 /***/ })
 /******/ ]);
